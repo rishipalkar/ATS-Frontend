@@ -1,0 +1,114 @@
+<div class="layout">
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <h2 class="logo">ATS Pro</h2>
+
+    <nav>
+      <a class="active">View Candidates</a>
+      <a>Screening Pipeline</a>
+      <a>View JDs</a>
+      <a>Feedback</a>
+      <a>Dashboard</a>
+    </nav>
+
+    <div class="user">
+      <p>HR Admin</p>
+      <small>hr@company.com</small>
+    </div>
+  </aside>
+
+  <!-- MAIN CONTENT -->
+  <div class="main">
+    <!-- HEADER -->
+    <div class="header">
+      <h2>Spring 2026 Engineering Drive</h2>
+      <span class="status">Active</span>
+    </div>
+
+    <!-- JOB DESCRIPTION -->
+    <div class="card jd">
+      <div class="jd-header">
+        <h3>Job Description Reference</h3>
+        <button class="view-btn" (click)="openJDModal()">View Full JD</button>
+      </div>
+
+      <p class="collapsed">Frontend Engineer role overview...</p>
+    </div>
+
+    <!-- MODAL -->
+    <div class="modal-overlay" *ngIf="isJDModalOpen">
+      <div class="modal">
+        <div class="modal-header">
+          <h3>Job Description</h3>
+          <button class="close-btn" (click)="closeJDModal()">✖</button>
+        </div>
+
+        <div class="modal-body">
+          <p>
+            Frontend Engineer (Spring 2026 Campus Drive)<br /><br />
+
+            We are looking for a passionate Frontend Engineer...<br /><br />
+
+            <strong>Requirements:</strong><br />
+            • 2+ years experience<br />
+            • React / TypeScript<br />
+            • Strong UI skills<br />
+            • Clean code practices
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- CONTROLS -->
+    <div class="controls">
+      <div class="range-box">
+        <label>Select Range: {{ selectedRange }}</label>
+        <input type="range" min="1" max="10" [(ngModel)]="selectedRange" />
+      </div>
+
+      <button class="scan-btn" (click)="onScan()">Scan</button>
+    </div>
+
+    <!-- TABLE -->
+    <div class="table-card">
+      <div class="table-header">
+        <span>CANDIDATE</span>
+        <span>EXPERIENCE & SKILLS</span>
+        <span>RESUME</span>
+        <span>ATS SCORE</span>
+        <span>STATUS</span>
+      </div>
+
+      <div
+        *ngFor="let c of paginatedCandidates; let i = index"
+        class="row"
+        [class.disabled]="!isClickable(i)"
+        (click)="onCandidateClick(c, i)"
+      >
+        <div>
+          <strong>{{ c.name }}</strong>
+          <p class="sub">{{ c.role }}</p>
+        </div>
+
+        <div>
+          {{ c.experience }} years
+          <div class="tags">
+            <span *ngFor="let skill of c.skills">{{ skill }}</span>
+          </div>
+        </div>
+
+        <div class="link">View</div>
+        <div class="muted">Not scanned</div>
+        <div>
+          <span class="badge">{{ c.status }}</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- PAGINATION -->
+    <div class="pagination">
+      <button (click)="prevPage()">Previous</button>
+      <button (click)="nextPage()">Next</button>
+    </div>
+  </div>
+</div>

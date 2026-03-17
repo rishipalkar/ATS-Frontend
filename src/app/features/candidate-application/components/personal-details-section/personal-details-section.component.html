@@ -1,0 +1,96 @@
+<section class="form-section" [formGroup]="formGroup">
+  <h2>Personal Details</h2>
+
+  <div class="form-grid">
+    <div class="form-field">
+      <label for="firstName">First Name</label>
+      <input id="firstName" type="text" formControlName="firstName" />
+    </div>
+
+    <div class="form-field">
+      <label for="lastName">Last Name</label>
+      <input id="lastName" type="text" formControlName="lastName" />
+    </div>
+
+    <div class="form-field">
+      <label for="email">Email</label>
+      <input id="email" type="email" formControlName="email" />
+    </div>
+
+    <div class="form-field">
+      <label for="phoneNumber">Phone Number</label>
+      <input id="phoneNumber" type="tel" formControlName="phoneNumber" />
+    </div>
+
+    <div class="form-field full-width">
+      <label for="addressLine1">Address Line 1</label>
+      <input id="addressLine1" type="text" formControlName="addressLine1" />
+    </div>
+
+    <div class="form-field full-width">
+      <label for="addressLine2">Address Line 2</label>
+      <input id="addressLine2" type="text" formControlName="addressLine2" />
+    </div>
+
+    <div class="form-field full-width">
+      <label for="addressLine3">Address Line 3</label>
+      <input id="addressLine3" type="text" formControlName="addressLine3" />
+    </div>
+
+    <div class="form-field">
+      <label for="country">Country</label>
+      <select id="country" formControlName="country">
+        <option value="">Select country</option>
+        <option *ngFor="let country of countries" [value]="country">{{ country }}</option>
+      </select>
+    </div>
+
+    <div class="form-field">
+      <label for="state">State</label>
+      <input id="state" type="text" formControlName="state" />
+    </div>
+
+    <div class="form-field">
+      <label for="city">City</label>
+      <input id="city" type="text" formControlName="city" />
+    </div>
+
+    <div class="form-field">
+      <label for="pinCode">Pin Code</label>
+      <input id="pinCode" type="text" formControlName="pinCode" />
+    </div>
+
+    <div class="form-field full-width">
+      <label for="linkedInUrl">LinkedIn URL</label>
+      <input id="linkedInUrl" type="url" formControlName="linkedInUrl" />
+    </div>
+
+    <div class="form-field">
+      <label for="highestQualification">Highest Qualification</label>
+      <select id="highestQualification" formControlName="highestQualification">
+        <option value="">Select qualification</option>
+        <option *ngFor="let qualification of qualifications" [value]="qualification">
+          {{ qualification }}
+        </option>
+      </select>
+    </div>
+
+    <div class="form-field">
+      <label for="otherQualifications">Other Qualification</label>
+      <input id="otherQualifications" type="text" formControlName="otherQualifications" />
+    </div>
+
+    <div class="form-field">
+      <label for="verificationIdType">Verification ID Type</label>
+      <select id="verificationIdType" formControlName="verificationIdType">
+        <option value="">Select ID type</option>
+        <option *ngFor="let id of verificationIds" [value]="id">{{ id }}</option>
+      </select>
+    </div>
+
+    <div class="form-field">
+      <label for="verificationIdValue">Verification ID Number</label>
+      <input id="verificationIdValue" type="text" formControlName="verificationIdValue" />
+    </div>
+  </div>
+</section>

@@ -1,0 +1,55 @@
+<div class="page-container">
+
+  <!-- FORM -->
+  <form *ngIf="!isSubmitted" [formGroup]="candidateForm" (ngSubmit)="onSubmit()">
+
+    <app-page-header
+      title="Candidate Application Form"
+      subtitle="Fill all required details carefully">
+    </app-page-header>
+
+    <app-personal-details-section [formGroup]="personalDetailsGroup"></app-personal-details-section>
+
+    <app-employment-screening-section [formGroup]="employmentScreeningGroup"></app-employment-screening-section>
+
+    <app-resume-upload-section
+      [resumeJson]="resumeJsonPreview"
+      (resumeSelected)="onResumeSelected($event)">
+    </app-resume-upload-section>
+
+    <app-referral-section [formGroup]="referralGroup"></app-referral-section>
+
+    <app-diversity-section [formGroup]="diversityGroup"></app-diversity-section>
+
+    <!-- Terms -->
+    <section class="form-section" [formGroup]="declarationsGroup">
+      <label class="checkbox">
+        <input type="checkbox" formControlName="acceptedTerms" />
+        I accept the terms and conditions
+      </label>
+    </section>
+
+    <!-- Submit -->
+    <div class="submit-container">
+      <button type="submit">
+        {{ isSubmitting ? 'Submitting...' : 'Submit Application' }}
+      </button>
+    </div>
+
+  </form>
+
+  <!-- SUCCESS UI -->
+  <div class="success-card" *ngIf="isSubmitted">
+    <div class="icon">🎉</div>
+
+    <h2>Profile Created Successfully!</h2>
+
+    <p>
+      Your profile has been submitted successfully.<br />
+      Our team will review your application and notify you soon.
+    </p>
+
+
+  </div>
+
+</div>

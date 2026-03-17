@@ -1,0 +1,13 @@
+<section class="form-section">
+  <h2>Resume Upload</h2>
+
+  <div class="upload-box">
+    <label for="resumeFile">Upload Resume</label>
+    <input id="resumeFile" type="file" accept=".pdf,.doc,.docx,.txt" (change)="onFileChange($event)" />
+  </div>
+
+  <div class="json-preview" *ngIf="resumeJson">
+    <h3>Resume JSON Preview</h3>
+    <pre>{{ resumeJson | json }}</pre>
+  </div>
+</section>

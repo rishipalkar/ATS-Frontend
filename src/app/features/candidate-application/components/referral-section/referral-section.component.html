@@ -1,0 +1,25 @@
+<section class="form-section" [formGroup]="formGroup">
+  <h2>Employee Referral</h2>
+
+  <div class="radio-group section-gap">
+    <label><input type="radio" [value]="true" formControlName="hasEmployeeReferral" /> Yes</label>
+    <label><input type="radio" [value]="false" formControlName="hasEmployeeReferral" /> No</label>
+  </div>
+
+  <div class="form-grid three-column" *ngIf="formGroup.get('hasEmployeeReferral')?.value === true">
+    <div class="form-field">
+      <label for="employeeName">Employee Name</label>
+      <input id="employeeName" type="text" formControlName="employeeName" />
+    </div>
+
+    <div class="form-field">
+      <label for="designation">Designation</label>
+      <input id="designation" type="text" formControlName="designation" />
+    </div>
+
+    <div class="form-field">
+      <label for="referralId">Referral ID</label>
+      <input id="referralId" type="text" formControlName="referralId" />
+    </div>
+  </div>
+</section>

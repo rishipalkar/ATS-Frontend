@@ -1,0 +1,109 @@
+<section class="form-section" [formGroup]="formGroup">
+  <h2>Employment Screening</h2>
+
+  <div class="question-card">
+    <label>Are you currently employed?</label>
+    <div class="radio-group">
+      <label><input type="radio" [value]="true" formControlName="currentlyEmployed" /> Yes</label>
+      <label><input type="radio" [value]="false" formControlName="currentlyEmployed" /> No</label>
+    </div>
+  </div>
+
+  <div class="question-card" *ngIf="formGroup.get('currentlyEmployed')?.value === true">
+    <label>Are you currently on a notice period?</label>
+    <div class="radio-group">
+      <label><input type="radio" [value]="true" formControlName="onNoticePeriod" /> Yes</label>
+      <label><input type="radio" [value]="false" formControlName="onNoticePeriod" /> No</label>
+    </div>
+  </div>
+  
+  <div class="question-card"
+     *ngIf="formGroup.get('currentlyEmployed')?.value === true 
+            && formGroup.get('onNoticePeriod')?.value === true">
+
+  <label>Notice Period Duration (in days)</label>
+
+  <input
+    type="number"
+    formControlName="noticePeriodDuration"
+    placeholder="Enter number of days"
+  />
+
+</div>
+
+  <div class="question-card">
+    <label>Have you worked with us before?</label>
+    <div class="radio-group">
+      <label><input type="radio" [value]="true" formControlName="workedWithUsBefore" /> Yes</label>
+      <label><input type="radio" [value]="false" formControlName="workedWithUsBefore" /> No</label>
+    </div>
+  </div>
+
+  <div class="question-card">
+    <label>Have you worked with any other previous organization?</label>
+    <div class="radio-group">
+      <label><input type="radio" [value]="true" formControlName="workedWithPreviousOrganization" /> Yes</label>
+      <label><input type="radio" [value]="false" formControlName="workedWithPreviousOrganization" /> No</label>
+    </div>
+  </div>
+
+  <div class="question-card">
+    <label>Any legal obligation or conflict of interest?</label>
+    <div class="radio-group">
+      <label><input type="radio" [value]="true" formControlName="hasLegalObligationConflict" /> Yes</label>
+      <label><input type="radio" [value]="false" formControlName="hasLegalObligationConflict" /> No</label>
+    </div>
+  </div>
+
+  <div class="question-card">
+    <label>Any conduct or employment issue?</label>
+    <div class="radio-group">
+      <label><input type="radio" [value]="true" formControlName="hasConductEmploymentIssue" /> Yes</label>
+      <label><input type="radio" [value]="false" formControlName="hasConductEmploymentIssue" /> No</label>
+    </div>
+  </div>
+
+  <div class="question-card">
+    <label>Any adjustments needed during interview process?</label>
+    <div class="radio-group">
+      <label><input type="radio" [value]="true" formControlName="needsInterviewAdjustments" /> Yes</label>
+      <label><input type="radio" [value]="false" formControlName="needsInterviewAdjustments" /> No</label>
+    </div>
+    <textarea
+      *ngIf="formGroup.get('needsInterviewAdjustments')?.value === true"
+      rows="3"
+      formControlName="interviewAdjustmentsDetails"
+      placeholder="Describe required adjustments"
+    ></textarea>
+  </div>
+
+  <div class="question-card">
+    <label>Do you have legal right to work here?</label>
+    <div class="radio-group">
+      <label><input type="radio" [value]="true" formControlName="hasLegalRightToWork" /> Yes</label>
+      <label><input type="radio" [value]="false" formControlName="hasLegalRightToWork" /> No</label>
+    </div>
+  </div>
+
+  <div class="question-card">
+    <label>Do you have any criminal record to disclose?</label>
+    <div class="radio-group">
+      <label><input type="radio" [value]="true" formControlName="hasCriminalRecord" /> Yes</label>
+      <label><input type="radio" [value]="false" formControlName="hasCriminalRecord" /> No</label>
+    </div>
+    <textarea
+      *ngIf="formGroup.get('hasCriminalRecord')?.value === true"
+      rows="3"
+      formControlName="criminalRecordDetails"
+      placeholder="Provide details"
+    ></textarea>
+  </div>
+
+  <div class="question-card">
+    <label>Have you been dismissed by previous employer?</label>
+    <div class="radio-group">
+      <label><input type="radio" [value]="true" formControlName="dismissedByPreviousEmployer" /> Yes</label>
+      <label><input type="radio" [value]="false" formControlName="dismissedByPreviousEmployer" /> No</label>
+    </div>
+  </div>
+</section>

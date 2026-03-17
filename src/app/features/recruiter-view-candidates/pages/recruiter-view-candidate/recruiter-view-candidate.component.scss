@@ -1,0 +1,232 @@
+.layout {
+  display: flex;
+  height: 100vh;
+  background: #f5f7fb;
+}
+
+/* SIDEBAR */
+.sidebar {
+  width: 240px;
+  background: white;
+  border-right: 1px solid #e5e7eb;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.logo {
+  margin-bottom: 20px;
+}
+
+.sidebar nav {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.sidebar a {
+  padding: 8px;
+  border-radius: 6px;
+  cursor: pointer;
+  color: #374151;
+}
+
+.sidebar a.active {
+  background: #e0e7ff;
+  color: #4f46e5;
+}
+
+.user {
+  font-size: 12px;
+  color: gray;
+}
+
+/* MAIN */
+.main {
+  flex: 1;
+  padding: 20px;
+  overflow-y: auto;
+}
+
+/* HEADER */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.status {
+  background: #dcfce7;
+  color: #16a34a;
+  padding: 4px 10px;
+  border-radius: 10px;
+}
+
+/* CARD */
+.card {
+  background: white;
+  border-radius: 10px;
+  padding: 15px;
+  margin-top: 15px;
+  border: 1px solid #e5e7eb;
+  cursor: pointer;
+}
+
+.jd-header {
+  display: flex;
+  justify-content: space-between;
+}
+
+/* CONTROLS */
+.controls {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 15px;
+}
+
+.scan-btn {
+  background: #4f46e5;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+}
+
+/* TABLE */
+.table-card {
+  background: white;
+  margin-top: 15px;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.table-header {
+  display: grid;
+  grid-template-columns: 2fr 3fr 1fr 1fr 1fr;
+  background: #f1f5f9;
+  padding: 10px;
+  font-weight: bold;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 2fr 3fr 1fr 1fr 1fr;
+  padding: 12px;
+  border-top: 1px solid #e5e7eb;
+  cursor: pointer;
+}
+
+.row:hover {
+  background: #f9fafb;
+}
+
+.disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+/* TAGS */
+.tags span {
+  background: #eef2ff;
+  padding: 3px 6px;
+  margin-right: 5px;
+  border-radius: 6px;
+  font-size: 12px;
+}
+
+.sub {
+  font-size: 12px;
+  color: gray;
+}
+
+.link {
+  color: #4f46e5;
+}
+
+.muted {
+  color: gray;
+}
+
+.badge {
+  background: #fef3c7;
+  padding: 4px 10px;
+  border-radius: 10px;
+}
+
+/* PAGINATION */
+.pagination {
+  margin-top: 15px;
+  display: flex;
+  justify-content: space-between;
+}
+/* BUTTON */
+.view-btn {
+  background: #4f46e5;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+/* MODAL OVERLAY */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+
+  background: rgba(0, 0, 0, 0.5);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  z-index: 9999;   /* 🔥 VERY IMPORTANT */
+}
+
+/* MODAL BOX */
+.modal {
+  background: white;
+  width: 600px;
+  max-width: 90%;
+  border-radius: 10px;
+  padding: 20px;
+
+  position: relative;
+  z-index: 10000;  /* ensure above everything */
+}
+/* HEADER */
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.close-btn {
+  border: none;
+  background: none;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+/* BODY */
+.modal-body {
+  margin-top: 15px;
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+/* ANIMATION */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}

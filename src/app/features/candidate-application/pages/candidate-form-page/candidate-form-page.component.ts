@@ -29,7 +29,6 @@ export class CandidateFormPageComponent {
         ],
         addressLine1: ['', ],
         addressLine2: [''],
-        addressLine3: [''],
         country: ['', ],
         state: ['', ],
         city: ['', ],
@@ -39,6 +38,7 @@ export class CandidateFormPageComponent {
         otherQualifications: [''],
         verificationIdType: ['', ],
         verificationIdValue: ['', ],
+        verificationDocument: [null, ],
       }),
 
 
@@ -46,16 +46,15 @@ export class CandidateFormPageComponent {
         currentlyEmployed: [null, ],
         onNoticePeriod: [null],
         noticePeriodDuration : [''],
-        workedWithUsBefore: [null, ],
-        workedWithPreviousOrganization: [null, ],
+        // workedWithUsBefore: [null, ],
         hasLegalObligationConflict: [null, ],
         hasConductEmploymentIssue: [null, ],
         needsInterviewAdjustments: [null, ],
         interviewAdjustmentsDetails: [''],
         hasLegalRightToWork: [null, ],
-        hasCriminalRecord: [null, ],
-        criminalRecordDetails: [''],
-        dismissedByPreviousEmployer: [null, ],
+        // hasCriminalRecord: [null, ],
+        // criminalRecordDetails: [''],
+        // dismissedByPreviousEmployer: [null, ],
       }),
 
       referral: this.fb.group({
@@ -67,12 +66,8 @@ export class CandidateFormPageComponent {
 
       diversity: this.fb.group({
         dateOfBirth: ['', ],
-        race: [''],
-        sexualOrientation: [''],
         genderIdentity: [''],
-        pronoun: [''],
         disability: [''],
-        militaryService: [''],
       }),
 
       declarations: this.fb.group({

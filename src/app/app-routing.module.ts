@@ -6,12 +6,11 @@ import { RecruiterViewCandidateComponent } from './features/recruiter-view-candi
 import { ReportPageComponent } from './features/recruiter-view-candidates/pages/report-page/report-page.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'candidate/apply', pathMatch: 'full' },
-  { path: 'candidate/apply', component: CandidateFormPageComponent },
+  { path: '', redirectTo: 'candidate/fill-application', pathMatch: 'full' },
   {path : '',redirectTo : 'recruiter/view-candidate',pathMatch:'full'},
   {path : 'recruiter/view-candidate',component : RecruiterViewCandidateComponent},
   {path : 'recruiter',component : RecruiterViewCandidateComponent},
-  {path : 'candidate',component : CandidateFormPageComponent},
+  {path : 'candidate/fill-application',component : CandidateFormPageComponent},
   {path : 'recruiter/report',component : ReportPageComponent},
   {path : 'report',component : ReportPageComponent},
 

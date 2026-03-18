@@ -70,40 +70,39 @@
     </div>
 
     <!-- TABLE -->
-    <div class="table-card">
-      <div class="table-header">
-        <span>CANDIDATE</span>
-        <span>EXPERIENCE & SKILLS</span>
-        <span>RESUME</span>
-        <span>ATS SCORE</span>
-        <span>STATUS</span>
-      </div>
+    <table>
+      <tr>
+        <th>Name</th>
+        <th>Experience</th>
+        <th>ATS Score</th>
+        <th>Status</th>
+        <th>Action</th>
+      </tr>
 
-      <div
-        *ngFor="let c of paginatedCandidates; let i = index"
-        class="row"
-        [class.disabled]="!isClickable(i)"
-        (click)="onCandidateClick(c, i)"
-      >
-        <div>
-          <strong>{{ c.name }}</strong>
-          <p class="sub">{{ c.role }}</p>
-        </div>
+      <tr *ngFor="let c of candidates">
+        <td>{{ c.name }}</td>
+        <td>{{ c.experience }} yrs</td>
 
-        <div>
-          {{ c.experience }} years
-          <div class="tags">
-            <span *ngFor="let skill of c.skills">{{ skill }}</span>
-          </div>
-        </div>
+        <td>
+          <span *ngIf="c.status === 'Completed'; else notScanned">
+            {{ c.atsScore }}%
+          </span>
+          <ng-template #notScanned>Not Scanned</ng-template>
+        </td>
 
-        <div class="link">View</div>
-        <div class="muted">Not scanned</div>
-        <div>
-          <span class="badge">{{ c.status }}</span>
-        </div>
-      </div>
-    </div>
+        <td>{{ c.status }}</td>
+
+        <td>
+          <button
+            *ngIf="c.status === 'Completed'"
+            class="view-btn"
+            (click)="viewReport(c)"
+          >
+            View Report
+          </button>
+        </td>
+      </tr>
+    </table>
 
     <!-- PAGINATION -->
     <div class="pagination">

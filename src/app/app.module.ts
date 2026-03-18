@@ -14,6 +14,7 @@ import { PageHeaderComponent } from './core/shared/components/page-header/page-h
 
 import { RecruiterViewCandidateComponent } from './features/recruiter-view-candidates/pages/recruiter-view-candidate/recruiter-view-candidate.component';
 import { RouterModule } from '@angular/router';
+import { ReportPageComponent } from './features/recruiter-view-candidates/pages/report-page/report-page.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,7 @@ import { RouterModule } from '@angular/router';
     ReferralSectionComponent,
     DiversitySectionComponent,
     PageHeaderComponent, 
-    RecruiterViewCandidateComponent,
+    RecruiterViewCandidateComponent, ReportPageComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, ReactiveFormsModule,FormsModule,RouterModule],
   providers: [],

@@ -1,0 +1,200 @@
+.dashboard-wrapper {
+  display: flex;
+  min-height: 100vh;
+  background: #f4f7fe;
+  color: #1a1a1a;
+  font-family: 'Segoe UI', Roboto, sans-serif;
+}
+
+/* Sidebar Styling */
+.sidebar {
+  width: 320px;
+  background: #ffffff;
+  padding: 40px 25px;
+  border-right: 1px solid #e0e7ff;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  position: sticky;
+  top: 0;
+}
+
+/* Circular Progress Animation */
+.progress-ring {
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  background: conic-gradient(#4f46e5 calc(var(--percent) * 1%), #eef2ff 0);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: auto;
+  transition: all 1s ease-in-out;
+
+  .inner-circle {
+    width: 150px;
+    height: 150px;
+    background: white;
+    border-radius: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-shadow: inset 0 0 10px rgba(0,0,0,0.05);
+
+    .main-score { font-size: 38px; font-weight: 800; color: #4f46e5; }
+    .score-label { font-size: 12px; color: #6b7280; text-transform: uppercase; }
+  }
+}
+
+/* Main Content Styling */
+.report-content {
+  flex-grow: 1;
+  padding: 50px;
+  overflow-y: auto;
+
+  header {
+    margin-bottom: 40px;
+    h1 { font-size: 32px; font-weight: 800; margin: 0; }
+    .tagline { color: #6b7280; margin-top: 5px; }
+  }
+}
+
+.card {
+  background: white;
+  border-radius: 20px;
+  padding: 25px;
+  margin-bottom: 25px;
+  box-shadow: 0 10px 25px -5px rgba(0,0,0,0.03);
+  
+  h3 { font-size: 16px; margin-bottom: 20px; color: #4b5563; text-transform: uppercase; letter-spacing: 1px; }
+}
+
+/* Risk & Bar Fills */
+.bar-bg {
+  background: #f3f4f6;
+  height: 10px;
+  border-radius: 10px;
+  overflow: hidden;
+  margin: 10px 0;
+}
+
+.bar-fill {
+  height: 100%;
+  background: #10b981;
+  transition: width 1.5s cubic-bezier(0.1, 0, 0.1, 1);
+}
+
+.high-risk .bar-fill { background: #ef4444; }
+
+/* Career Landmarks & Timeline */
+.timeline {
+  border-left: 2px dashed #e5e7eb;
+  padding-left: 20px;
+  margin-left: 10px;
+
+  .milestone {
+    position: relative;
+    margin-bottom: 20px;
+    
+    .landmark-icon { position: absolute; left: -32px; background: white; padding: 2px; }
+    strong { font-size: 18px; color: #1e1b4b; }
+  }
+}
+
+.ai-text { line-height: 1.8; color: #4b5563; font-size: 15px; }
+
+/* Capability Box in Sidebar */
+.capability-box {
+  background: #f8fafc;
+  padding: 15px;
+  border-radius: 12px;
+  text-align: center;
+  
+  label { font-size: 12px; text-transform: uppercase; color: #64748b; font-weight: 600; }
+  .big-num { display: block; font-size: 28px; font-weight: 800; color: #0f172a; margin: 5px 0; }
+  
+  .mini-bar {
+    height: 6px; background: #e2e8f0; border-radius: 10px; overflow: hidden;
+    .fill { height: 100%; background: #6366f1; transition: width 1s ease; }
+  }
+}
+
+/* Risk Labels Fix */
+.risk-labels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  margin-top: 5px;
+  .status { font-weight: 700; color: #10b981; }
+  &.high-risk .status { color: #ef4444; }
+}
+
+/* Preferences Layout */
+.pref-layout {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  .huge-text { font-size: 42px; font-weight: 800; color: #4f46e5; }
+  .sub-prefs p { margin: 5px 0; font-size: 14px; color: #4b5563; }
+}
+
+/* Fix the sidebar stats alignment */
+.mini-stats {
+  margin-top: auto; /* Pushes to the bottom of sidebar */
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+
+  .stat-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #f1f5f9;
+    
+    .label { color: #64748b; font-size: 14px; }
+    .value { font-weight: 700; color: #1e293b; }
+    .danger { color: #ef4444; }
+  }
+}
+
+/* Fix the Progress Ring to be centered */
+.score-circle-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px 0;
+}
+
+.highlight {
+  text-align: center;
+  background: linear-gradient(135deg, #4f46e5, #6366f1);
+  color: white;
+}
+
+.big-score {
+  font-size: 60px;
+  font-weight: 900;
+  margin-top: 10px;
+}
+
+.card p {
+  margin: 8px 0;
+  font-size: 15px;
+}
+
+.card h2 {
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+.yes {
+  color: #10b981;
+  font-weight: 700;
+}
+
+.no {
+  color: #ef4444;
+  font-weight: 700;
+}

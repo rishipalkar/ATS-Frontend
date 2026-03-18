@@ -8,6 +8,13 @@
       <label><input type="radio" [value]="false" formControlName="currentlyEmployed" /> No</label>
     </div>
   </div>
+  <div class="question-card">
+    <label>Are you willing to relocate?</label>
+    <div class="radio-group">
+      <label><input type="radio" [value]="true" formControlName="willingToRelocate" /> Yes</label>
+      <label><input type="radio" [value]="false" formControlName="willingToRelocate" /> No</label>
+    </div>
+  </div>
 
   <div class="question-card" *ngIf="formGroup.get('currentlyEmployed')?.value === true">
     <label>Are you currently on a notice period?</label>

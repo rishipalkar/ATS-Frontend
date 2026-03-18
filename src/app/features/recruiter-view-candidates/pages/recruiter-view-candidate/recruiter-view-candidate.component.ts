@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 interface Candidate {
   name: string;
@@ -6,99 +7,19 @@ interface Candidate {
   experience: number;
   skills: string[];
   status: string;
+  atsScore?: number;
 }
 
 @Component({
   selector: 'app-recruiter-view-candidate',
   templateUrl: './recruiter-view-candidate.component.html',
-  styleUrls: ['./recruiter-view-candidate.component.scss'],
+  styleUrls: ['./recruiter-view-candidate.component.scss']
 })
 export class RecruiterViewCandidateComponent {
-  selectedRange = 5;
-  isScanned = false;
-  expandedJD = false;
 
-  currentPage = 1;
-  pageSize = 5;
+  constructor(private router: Router) {}
 
-  candidates: Candidate[] = [
-    {
-      name: 'Penelope Garcia',
-      role: 'Frontend Developer',
-      experience: 2,
-      skills: ['React', 'TS', 'Node'],
-      status: 'Pending',
-    },
-    {
-      name: 'Yug Inamdar',
-      role: 'Frontend Developer',
-      experience: 3,
-      skills: ['Node', 'Figma'],
-      status: 'Pending',
-    },
-    {
-      name: 'Riley Lopez',
-      role: 'Frontend Developer',
-      experience: 4,
-      skills: ['AWS', 'SQL'],
-      status: 'Pending',
-    },
-    {
-      name: 'Sophia Anderson',
-      role: 'Frontend Developer',
-      experience: 5,
-      skills: ['Docker', 'TS'],
-      status: 'Pending',
-    },
-    {
-      name: 'Thomas Moore',
-      role: 'Frontend Developer',
-      experience: 6,
-      skills: ['GraphQL'],
-      status: 'Pending',
-    },
-    {
-      name: 'Aastha Shah',
-      role: 'Frontend Developer',
-      experience: 7,
-      skills: ['Kubernetes'],
-      status: 'Pending',
-    },
-    {
-      name: 'Bob Brown',
-      role: 'Frontend Developer',
-      experience: 1,
-      skills: ['Spring'],
-      status: 'Pending',
-    },
-    {
-      name: 'Charlie Miller',
-      role: 'Frontend Developer',
-      experience: 2,
-      skills: ['Rust'],
-      status: 'Pending',
-    },
-    {
-      name: 'Diana Martinez',
-      role: 'Frontend Developer',
-      experience: 3,
-      skills: ['React'],
-      status: 'Pending',
-    },
-    {
-      name: 'Bhargav',
-      role: 'Frontend Developer',
-      experience: 4,
-      skills: ['Python'],
-      status: 'Pending',
-    },
-  ];
-
-  get paginatedCandidates() {
-    const start = (this.currentPage - 1) * this.pageSize;
-    return this.candidates.slice(start, start + this.pageSize);
-  }
-
+  // ✅ JD MODAL
   isJDModalOpen = false;
 
   openJDModal() {
@@ -108,26 +29,60 @@ export class RecruiterViewCandidateComponent {
   closeJDModal() {
     this.isJDModalOpen = false;
   }
-  onScan() {
-    this.isScanned = true;
 
-    // Sort by experience (simulate ATS scoring)
-    this.candidates.sort((a, b) => b.experience - a.experience);
+  // ✅ RANGE SLIDER
+  selectedRange = 5;
+
+  // ✅ PAGINATION
+  currentPage = 1;
+  pageSize = 5;
+
+  // ✅ DATA
+  candidates: Candidate[] = [
+    { name: 'Penelope Garcia', role: 'Frontend Dev', experience: 2, skills: ['React'], status: 'Completed', atsScore: 78 },
+    { name: 'Quinn Rodriguez', role: 'Frontend Dev', experience: 3, skills: ['Node'], status: 'Pending' },
+    { name: 'Riley Lopez', role: 'Frontend Dev', experience: 4, skills: ['AWS'], status: 'Completed', atsScore: 65 },
+    { name: 'Sophia Anderson', role: 'Frontend Dev', experience: 5, skills: ['Docker'], status: 'Completed', atsScore: 82 },
+    { name: 'Thomas Moore', role: 'Frontend Dev', experience: 6, skills: ['GraphQL'], status: 'Pending' },
+    { name: 'Alice Smith', role: 'Frontend Dev', experience: 7, skills: ['Kubernetes'], status: 'Completed', atsScore: 90 },
+    { name: 'Bob Brown', role: 'Frontend Dev', experience: 1, skills: ['Spring Boot'], status: 'Pending' }
+  ];
+
+  // ✅ PAGINATED LIST
+  get paginatedCandidates() {
+    const start = (this.currentPage - 1) * this.pageSize;
+    return this.candidates.slice(start, start + this.pageSize);
   }
 
+  // ✅ CLICK ENABLE BASED ON RANGE
   isClickable(index: number): boolean {
-    return this.isScanned && index < this.selectedRange;
+    return index < this.selectedRange;
   }
 
+  // ✅ CLICK HANDLER
   onCandidateClick(candidate: Candidate, index: number) {
     if (!this.isClickable(index)) return;
 
-    console.log('Selected candidate:', candidate);
-    alert(`Viewing ${candidate.name}`);
+    if (candidate.status === 'Completed') {
+      this.viewReport(candidate);
+    }
   }
 
+  // ✅ NAVIGATION
+  viewReport(candidate: Candidate) {
+    this.router.navigate(['/report'], {
+      state: { data: candidate }
+    });
+  }
+
+  // ✅ SCAN BUTTON
+  onScan() {
+    alert(`Scanning top ${this.selectedRange} candidates`);
+  }
+
+  // ✅ PAGINATION CONTROLS
   nextPage() {
-    if (this.currentPage * this.pageSize < this.candidates.length) {
+    if ((this.currentPage * this.pageSize) < this.candidates.length) {
       this.currentPage++;
     }
   }
@@ -136,9 +91,5 @@ export class RecruiterViewCandidateComponent {
     if (this.currentPage > 1) {
       this.currentPage--;
     }
-  }
-
-  toggleJD() {
-    this.expandedJD = !this.expandedJD;
   }
 }

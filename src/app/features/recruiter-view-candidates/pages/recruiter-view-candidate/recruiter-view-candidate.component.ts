@@ -6,8 +6,9 @@ interface Candidate {
   role: string;
   experience: number;
   skills: string[];
-  status: string;
+  status: 'Completed' | 'Pending'; // Strict types help
   atsScore?: number;
+  selected?: boolean; // For checkboxes
 }
 
 @Component({
@@ -16,28 +17,13 @@ interface Candidate {
   styleUrls: ['./recruiter-view-candidate.component.scss']
 })
 export class RecruiterViewCandidateComponent {
-
   constructor(private router: Router) {}
 
-  // ✅ JD MODAL
   isJDModalOpen = false;
-
-  openJDModal() {
-    this.isJDModalOpen = true;
-  }
-
-  closeJDModal() {
-    this.isJDModalOpen = false;
-  }
-
-  // ✅ RANGE SLIDER
   selectedRange = 5;
-
-  // ✅ PAGINATION
   currentPage = 1;
   pageSize = 5;
 
-  // ✅ DATA
   candidates: Candidate[] = [
     { name: 'Penelope Garcia', role: 'Frontend Dev', experience: 2, skills: ['React'], status: 'Completed', atsScore: 78 },
     { name: 'Quinn Rodriguez', role: 'Frontend Dev', experience: 3, skills: ['Node'], status: 'Pending' },
@@ -45,51 +31,39 @@ export class RecruiterViewCandidateComponent {
     { name: 'Sophia Anderson', role: 'Frontend Dev', experience: 5, skills: ['Docker'], status: 'Completed', atsScore: 82 },
     { name: 'Thomas Moore', role: 'Frontend Dev', experience: 6, skills: ['GraphQL'], status: 'Pending' },
     { name: 'Alice Smith', role: 'Frontend Dev', experience: 7, skills: ['Kubernetes'], status: 'Completed', atsScore: 90 },
-    { name: 'Bob Brown', role: 'Frontend Dev', experience: 1, skills: ['Spring Boot'], status: 'Pending' }
+    { name: 'Bob Brown', role: 'Frontend Dev', experience: 1, skills: ['Spring'], status: 'Pending' },
+    { name: 'Charlie Davis', role: 'Frontend Dev', experience: 4, skills: ['Angular'], status: 'Pending' },
+    { name: 'Diana Prince', role: 'Frontend Dev', experience: 8, skills: ['Vue'], status: 'Completed', atsScore: 95 },
+    { name: 'Ethan Hunt', role: 'Frontend Dev', experience: 5, skills: ['Python'], status: 'Pending' },
+    { name: 'Fiona Gallagher', role: 'Frontend Dev', experience: 2, skills: ['Sass'], status: 'Pending' },
+    { name: 'George Miller', role: 'Frontend Dev', experience: 3, skills: ['Next.js'], status: 'Completed', atsScore: 71 }
   ];
 
-  // ✅ PAGINATED LIST
   get paginatedCandidates() {
     const start = (this.currentPage - 1) * this.pageSize;
     return this.candidates.slice(start, start + this.pageSize);
   }
 
-  // ✅ CLICK ENABLE BASED ON RANGE
-  isClickable(index: number): boolean {
-    return index < this.selectedRange;
-  }
-
-  // ✅ CLICK HANDLER
-  onCandidateClick(candidate: Candidate, index: number) {
-    if (!this.isClickable(index)) return;
-
-    if (candidate.status === 'Completed') {
-      this.viewReport(candidate);
-    }
-  }
-
-  // ✅ NAVIGATION
-  viewReport(candidate: Candidate) {
-    this.router.navigate(['/report'], {
-      state: { data: candidate }
+  // Checkbox Logic: Ignore completed ones for bulk selection
+  toggleSelectAll(event: any) {
+    const isChecked = event.target.checked;
+    this.paginatedCandidates.forEach(c => {
+      if (c.status !== 'Completed') {
+        c.selected = isChecked;
+      }
     });
   }
 
-  // ✅ SCAN BUTTON
-  onScan() {
-    alert(`Scanning top ${this.selectedRange} candidates`);
+  onScan(candidate?: Candidate) {
+    const name = candidate ? candidate.name : `selected items`;
+    alert(`Initiating Scan for: ${name}`);
   }
 
-  // ✅ PAGINATION CONTROLS
-  nextPage() {
-    if ((this.currentPage * this.pageSize) < this.candidates.length) {
-      this.currentPage++;
-    }
+  viewReport(candidate: Candidate) {
+    this.router.navigate(['/report'], { state: { data: candidate } });
   }
 
-  prevPage() {
-    if (this.currentPage > 1) {
-      this.currentPage--;
-    }
-  }
+  // Pagination
+  nextPage() { if ((this.currentPage * this.pageSize) < this.candidates.length) this.currentPage++; }
+  prevPage() { if (this.currentPage > 1) this.currentPage--; }
 }

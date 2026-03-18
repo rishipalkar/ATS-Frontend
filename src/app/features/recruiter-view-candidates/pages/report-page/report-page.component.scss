@@ -67,6 +67,7 @@
   margin-bottom: 25px;
   box-shadow: 0 10px 25px -5px rgba(0,0,0,0.03);
   
+  
   h3 { font-size: 16px; margin-bottom: 20px; color: #4b5563; text-transform: uppercase; letter-spacing: 1px; }
 }
 
@@ -197,4 +198,77 @@
 .no {
   color: #ef4444;
   font-weight: 700;
+}
+
+/* --- Header Layout Fix --- */
+.main-header {
+  display: flex;
+  justify-content: space-between; // Pushes title to left, button to right
+  align-items: center;
+  margin-bottom:30px;
+  padding-bottom: 20px;
+  border-bottom: 2px solid #e2e8f0;
+
+  .header-titles {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
+
+    .name-row {
+      display: flex;
+      align-items: center; /* Vertically centers button with name */
+      gap: 20px;           /* Space between name and button */
+
+      h1 {
+        font-size: 32px;
+        font-weight: 800;
+        color: #1e293b;
+        margin: 0;
+        line-height: 1;
+      }
+    }
+
+    .tagline {
+      color: #64748b;
+      font-size: 15px;
+      margin: 0;
+    }
+  }
+}
+
+/* --- Beautified Preview Button --- */
+.btn-preview {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;   /* Slightly more compact for proximity */
+  font-size: 13px;     /* Adjusted for better balance next to H1 */
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  height: fit-content;
+  
+  background: #ffffff;
+  color: #4f46e5;
+  border: 1.5px solid #4f46e5;
+  border-radius: 8px;
+  
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 4px rgba(79, 70, 229, 0.05);
+
+  .btn-icon {
+    font-size: 16px;
+  }
+
+  &:hover {
+    background-color: #f5f3ff; /* Very light indigo tint */
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(79, 70, 229, 0.15);
+  }
+
+  &:active {
+    transform: scale(0.98);
+  }
 }

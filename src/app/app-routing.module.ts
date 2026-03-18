@@ -11,6 +11,7 @@ const routes: Routes = [
   {path : 'recruiter/view-candidate',component : RecruiterViewCandidateComponent},
   {path : 'recruiter',component : RecruiterViewCandidateComponent},
   {path : 'candidate/fill-application',component : CandidateFormPageComponent},
+  // {path : 'candidate',component : CandidateFormPageComponent},
   {path : 'recruiter/report',component : ReportPageComponent},
   {path : 'report',component : ReportPageComponent},
 

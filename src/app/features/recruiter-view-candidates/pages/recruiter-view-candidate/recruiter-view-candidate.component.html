@@ -1,113 +1,54 @@
-<div class="layout">
-  <!-- SIDEBAR -->
-  <aside class="sidebar">
-    <h2 class="logo">ATS Pro</h2>
-
-    <nav>
-      <a class="active">View Candidates</a>
-      <a>Screening Pipeline</a>
-      <a>View JDs</a>
-      <a>Feedback</a>
-      <a>Dashboard</a>
-    </nav>
-
-    <div class="user">
-      <p>HR Admin</p>
-      <small>hr@company.com</small>
-    </div>
-  </aside>
-
-  <!-- MAIN CONTENT -->
-  <div class="main">
-    <!-- HEADER -->
-    <div class="header">
-      <h2>Spring 2026 Engineering Drive</h2>
-      <span class="status">Active</span>
-    </div>
-
-    <!-- JOB DESCRIPTION -->
-    <div class="card jd">
-      <div class="jd-header">
-        <h3>Job Description Reference</h3>
-        <button class="view-btn" (click)="openJDModal()">View Full JD</button>
-      </div>
-
-      <p class="collapsed">Frontend Engineer role overview...</p>
-    </div>
-
-    <!-- MODAL -->
-    <div class="modal-overlay" *ngIf="isJDModalOpen">
-      <div class="modal">
-        <div class="modal-header">
-          <h3>Job Description</h3>
-          <button class="close-btn" (click)="closeJDModal()">✖</button>
-        </div>
-
-        <div class="modal-body">
-          <p>
-            Frontend Engineer (Spring 2026 Campus Drive)<br /><br />
-
-            We are looking for a passionate Frontend Engineer...<br /><br />
-
-            <strong>Requirements:</strong><br />
-            • 2+ years experience<br />
-            • React / TypeScript<br />
-            • Strong UI skills<br />
-            • Clean code practices
-          </p>
-        </div>
-      </div>
-    </div>
-
-    <!-- CONTROLS -->
-    <div class="controls">
-      <div class="range-box">
-        <label>Select Range: {{ selectedRange }}</label>
-        <input type="range" min="1" max="10" [(ngModel)]="selectedRange" />
-      </div>
-
-      <button class="scan-btn" (click)="onScan()">Scan</button>
-    </div>
-
-    <!-- TABLE -->
-    <table>
+<div class="main">
+  worl
+  <table class="candidate-table">
+    <thead>
       <tr>
+        <th><input type="checkbox" (change)="toggleSelectAll($event)" /></th>
         <th>Name</th>
         <th>Experience</th>
         <th>ATS Score</th>
         <th>Status</th>
-        <th>Action</th>
+        <th>Actions</th>
       </tr>
-
-      <tr *ngFor="let c of candidates">
-        <td>{{ c.name }}</td>
-        <td>{{ c.experience }} yrs</td>
-
+    </thead>
+    <tbody>
+      <tr *ngFor="let c of paginatedCandidates">
         <td>
-          <span *ngIf="c.status === 'Completed'; else notScanned">
+          <input type="checkbox" [(ngModel)]="c.selected" [disabled]="c.status === 'Completed'" />
+        </td>
+        <td class="name-cell">{{ c.name }}</td>
+        <td>{{ c.experience }} yrs</td>
+        <td>
+          <span *ngIf="c.status === 'Completed'; else notScanned" class="score-text">
             {{ c.atsScore }}%
           </span>
-          <ng-template #notScanned>Not Scanned</ng-template>
+          <ng-template #notScanned><span class="muted">--</span></ng-template>
         </td>
-
-        <td>{{ c.status }}</td>
-
         <td>
-          <button
-            *ngIf="c.status === 'Completed'"
-            class="view-btn"
-            (click)="viewReport(c)"
-          >
-            View Report
-          </button>
+          <span class="status-pill" [ngClass]="c.status.toLowerCase()">
+            {{ c.status }}
+          </span>
+        </td>
+        <td>
+          <div class="action-group">
+            <button *ngIf="c.status === 'Completed'" class="btn-view" (click)="viewReport(c)">
+              View Report
+            </button>
+            <button *ngIf="c.status === 'Pending'" class="btn-scan" (click)="onScan(c)">
+              Scan Resume
+            </button>
+          </div>
         </td>
       </tr>
-    </table>
+    </tbody>
+  </table>
 
-    <!-- PAGINATION -->
-    <div class="pagination">
-      <button (click)="prevPage()">Previous</button>
-      <button (click)="nextPage()">Next</button>
+  <div class="pagination-footer">
+    <p>Showing {{paginatedCandidates.length}} of {{candidates.length}} candidates</p>
+    <div class="nav-btns">
+      <button [disabled]="currentPage === 1" (click)="prevPage()">Previous</button>
+      <span class="page-num">{{currentPage}}</span>
+      <button [disabled]="(currentPage * pageSize) >= candidates.length" (click)="nextPage()">Next</button>
     </div>
   </div>
 </div>

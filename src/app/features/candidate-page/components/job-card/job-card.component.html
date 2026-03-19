@@ -1,0 +1,21 @@
+<div class="job-card">
+  <div class="card-header">
+    <div class="title-group">
+      <h4>{{ job.role }}</h4>
+      <span class="job-type">{{ job.type }}</span>
+    </div>
+    <span class="experience-tag">{{ job.experience }} Exp</span>
+  </div>
+
+  <div class="card-body">
+    <p class="description">{{ job.description }}</p>
+    
+    <div class="skills-row">
+      <span class="skill-pill" *ngFor="let skill of job.skills">{{ skill }}</span>
+    </div>
+  </div>
+
+  <div class="card-footer">
+    <button class="btn-apply">Apply Now</button>
+  </div>
+</div>

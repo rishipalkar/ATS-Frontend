@@ -1,0 +1,14 @@
+<div class="calendar-container">
+  <h3>Important Dates</h3>
+  <mat-calendar [(selected)]="selectedDate"></mat-calendar>
+
+  <div class="event-list">
+    <div class="event-item" *ngFor="let ev of importantDates">
+      <span class="event-dot"></span>
+      <div class="event-info">
+        <strong>{{ ev.event }}</strong>
+        <small>{{ ev.date | date:'mediumDate' }}</small>
+      </div>
+    </div>
+  </div>
+</div>

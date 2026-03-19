@@ -1,0 +1,16 @@
+<div class="dashboard-layout">
+  <div class="main-content">
+    <header>
+      <h2>Welcome back, Candidate!</h2>
+      <p>Recommended job openings for your profile</p>
+    </header>
+
+    <div class="job-grid">
+      <app-job-card *ngFor="let job of jobs" [job]="job"></app-job-card>
+    </div>
+  </div>
+
+  <aside class="side-panel">
+    <app-candidate-calendar></app-candidate-calendar>
+  </aside>
+</div>

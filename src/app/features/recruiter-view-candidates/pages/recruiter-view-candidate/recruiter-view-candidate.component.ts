@@ -4,11 +4,11 @@ import { Router } from '@angular/router';
 interface Candidate {
   name: string;
   role: string;
-  experience: number;
   skills: string[];
-  status: 'Completed' | 'Pending'; // Strict types help
+  roleApplied: string;
+  status: 'Completed' | 'Pending';
   atsScore?: number;
-  selected?: boolean; // For checkboxes
+  selected?: boolean;
 }
 
 @Component({
@@ -19,44 +19,49 @@ interface Candidate {
 export class RecruiterViewCandidateComponent {
   constructor(private router: Router) {}
 
+  // UI State
   isJDModalOpen = false;
-  selectedRange = 5;
+  searchText = '';
   currentPage = 1;
   pageSize = 5;
 
   candidates: Candidate[] = [
-    { name: 'Penelope Garcia', role: 'Frontend Dev', experience: 2, skills: ['React'], status: 'Completed', atsScore: 78 },
-    { name: 'Quinn Rodriguez', role: 'Frontend Dev', experience: 3, skills: ['Node'], status: 'Pending' },
-    { name: 'Riley Lopez', role: 'Frontend Dev', experience: 4, skills: ['AWS'], status: 'Completed', atsScore: 65 },
-    { name: 'Sophia Anderson', role: 'Frontend Dev', experience: 5, skills: ['Docker'], status: 'Completed', atsScore: 82 },
-    { name: 'Thomas Moore', role: 'Frontend Dev', experience: 6, skills: ['GraphQL'], status: 'Pending' },
-    { name: 'Alice Smith', role: 'Frontend Dev', experience: 7, skills: ['Kubernetes'], status: 'Completed', atsScore: 90 },
-    { name: 'Bob Brown', role: 'Frontend Dev', experience: 1, skills: ['Spring'], status: 'Pending' },
-    { name: 'Charlie Davis', role: 'Frontend Dev', experience: 4, skills: ['Angular'], status: 'Pending' },
-    { name: 'Diana Prince', role: 'Frontend Dev', experience: 8, skills: ['Vue'], status: 'Completed', atsScore: 95 },
-    { name: 'Ethan Hunt', role: 'Frontend Dev', experience: 5, skills: ['Python'], status: 'Pending' },
-    { name: 'Fiona Gallagher', role: 'Frontend Dev', experience: 2, skills: ['Sass'], status: 'Pending' },
-    { name: 'George Miller', role: 'Frontend Dev', experience: 3, skills: ['Next.js'], status: 'Completed', atsScore: 71 }
+    { name: 'Penelope Garcia', roleApplied: 'Junior Frontend Developer', role: 'Frontend Dev', skills: ['React', 'TypeScript'], status: 'Completed', atsScore: 78 },
+    { name: 'Quinn Rodriguez', roleApplied: 'UI Engineer', role: 'Frontend Dev', skills: ['Node.js', 'Figma'], status: 'Pending' },
+    { name: 'Riley Lopez', roleApplied: 'React Specialist', role: 'Frontend Dev', skills: ['AWS', 'SQL'], status: 'Completed', atsScore: 65 },
+    { name: 'Sophia Anderson', roleApplied: 'Senior Frontend Dev', role: 'Frontend Dev', skills: ['Docker', 'TypeScript'], status: 'Completed', atsScore: 82 },
+    { name: 'Thomas Moore', roleApplied: 'Frontend Architect', role: 'Frontend Dev', skills: ['GraphQL', 'Apollo'], status: 'Pending' },
+    { name: 'Alice Smith', roleApplied: 'Lead Frontend Developer', role: 'Frontend Dev', skills: ['Kubernetes', 'Next.js'], status: 'Completed', atsScore: 90 },
+    { name: 'Bob Brown', roleApplied: 'Junior Web Developer', role: 'Frontend Dev', skills: ['Spring', 'Java'], status: 'Pending' },
+    { name: 'Charlie Davis', roleApplied: 'Angular Developer', role: 'Frontend Dev', skills: ['Angular', 'RxJS'], status: 'Pending' },
+    { name: 'Diana Prince', roleApplied: 'Product Engineer', role: 'Frontend Dev', skills: ['Vue', 'Vite'], status: 'Completed', atsScore: 95 },
+    { name: 'Ethan Hunt', roleApplied: 'Software Engineer', role: 'Frontend Dev', skills: ['Python', 'Django'], status: 'Pending' }
   ];
+
+  // Logic: Filter -> Paginate
+  get filteredCandidates() {
+    return this.candidates.filter(c => 
+      c.name.toLowerCase().includes(this.searchText.toLowerCase()) ||
+      c.roleApplied.toLowerCase().includes(this.searchText.toLowerCase())
+    );
+  }
 
   get paginatedCandidates() {
     const start = (this.currentPage - 1) * this.pageSize;
-    return this.candidates.slice(start, start + this.pageSize);
+    return this.filteredCandidates.slice(start, start + this.pageSize);
   }
 
-  // Checkbox Logic: Ignore completed ones for bulk selection
+  // Modals & Actions
+  openJDModal() { this.isJDModalOpen = true; }
+  closeJDModal() { this.isJDModalOpen = false; }
+
   toggleSelectAll(event: any) {
     const isChecked = event.target.checked;
-    this.paginatedCandidates.forEach(c => {
-      if (c.status !== 'Completed') {
-        c.selected = isChecked;
-      }
-    });
+    this.paginatedCandidates.forEach(c => { if (c.status !== 'Completed') c.selected = isChecked; });
   }
 
   onScan(candidate?: Candidate) {
-    const name = candidate ? candidate.name : `selected items`;
-    alert(`Initiating Scan for: ${name}`);
+    alert(`Initiating Scan for: ${candidate ? candidate.name : 'Selected Candidates'}`);
   }
 
   viewReport(candidate: Candidate) {
@@ -64,6 +69,6 @@ export class RecruiterViewCandidateComponent {
   }
 
   // Pagination
-  nextPage() { if ((this.currentPage * this.pageSize) < this.candidates.length) this.currentPage++; }
+  nextPage() { if ((this.currentPage * this.pageSize) < this.filteredCandidates.length) this.currentPage++; }
   prevPage() { if (this.currentPage > 1) this.currentPage--; }
 }

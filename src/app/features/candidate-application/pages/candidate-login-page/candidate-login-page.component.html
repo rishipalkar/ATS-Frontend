@@ -1,0 +1,46 @@
+<div class="login-wrapper">
+  <div class="login-card">
+    <div class="login-header">
+      <h2 class="logo">ATS Pro</h2>
+      <h3>Candidate Portal</h3>
+      <p>Log in to start your application</p>
+    </div>
+
+    <div class="mode-toggle">
+      <button [class.active]="loginMode === 'email'" (click)="setLoginMode('email')">Email</button>
+      <button [class.active]="loginMode === 'phone'" (click)="setLoginMode('phone')">Phone</button>
+    </div>
+
+    <form class="login-form">
+      <div *ngIf="loginMode === 'email'" class="form-group">
+        <label>Email Address</label>
+        <input type="email" placeholder="name@company.com" />
+        
+        <label>Password</label>
+        <input type="password" placeholder="••••••••" />
+      </div>
+
+      <div *ngIf="loginMode === 'phone'" class="form-group">
+        <label>Phone Number</label>
+        <div class="phone-input">
+          <span>+91</span>
+          <input type="tel" placeholder="98765 43210" />
+        </div>
+        
+        <label>OTP</label>
+        <div class="otp-group">
+          <input type="text" placeholder="Enter 6-digit OTP" />
+          <button type="button" class="btn-link">Get OTP</button>
+        </div>
+      </div>
+
+      <button type="button" class="btn-primary" (click)="onLogin()">
+        Continue
+      </button>
+
+      <div class="form-footer">
+        <p>Don't have an account? <a href="#">Create one</a></p>
+      </div>
+    </form>
+  </div>
+</div>

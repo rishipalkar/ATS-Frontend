@@ -1,54 +1,99 @@
-<div class="main">
-  worl
-  <table class="candidate-table">
-    <thead>
-      <tr>
-        <th><input type="checkbox" (change)="toggleSelectAll($event)" /></th>
-        <th>Name</th>
-        <th>Experience</th>
-        <th>ATS Score</th>
-        <th>Status</th>
-        <th>Actions</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let c of paginatedCandidates">
-        <td>
-          <input type="checkbox" [(ngModel)]="c.selected" [disabled]="c.status === 'Completed'" />
-        </td>
-        <td class="name-cell">{{ c.name }}</td>
-        <td>{{ c.experience }} yrs</td>
-        <td>
-          <span *ngIf="c.status === 'Completed'; else notScanned" class="score-text">
-            {{ c.atsScore }}%
-          </span>
-          <ng-template #notScanned><span class="muted">--</span></ng-template>
-        </td>
-        <td>
-          <span class="status-pill" [ngClass]="c.status.toLowerCase()">
-            {{ c.status }}
-          </span>
-        </td>
-        <td>
-          <div class="action-group">
-            <button *ngIf="c.status === 'Completed'" class="btn-view" (click)="viewReport(c)">
-              View Report
-            </button>
-            <button *ngIf="c.status === 'Pending'" class="btn-scan" (click)="onScan(c)">
-              Scan Resume
-            </button>
-          </div>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+<div class="dashboard-container">
+  <nav class="top-navbar">
+    <div class="nav-left">
+      <span class="logo">ATS Pro</span>
+      <h2 class="drive-title">Spring 2026 Engineering Drive</h2>
+    </div>
+    <div class="nav-right">
+      <span class="status-indicator">Status: <strong class="active">Active</strong></span>
+    </div>
+  </nav>
 
-  <div class="pagination-footer">
-    <p>Showing {{paginatedCandidates.length}} of {{candidates.length}} candidates</p>
-    <div class="nav-btns">
-      <button [disabled]="currentPage === 1" (click)="prevPage()">Previous</button>
-      <span class="page-num">{{currentPage}}</span>
-      <button [disabled]="(currentPage * pageSize) >= candidates.length" (click)="nextPage()">Next</button>
+  <div class="content-body">
+    <div class="jd-ref-card" (click)="openJDModal()">
+      <div class="jd-content">
+        <span class="icon"></span>
+        <span>Job Description Reference</span>
+      </div>
+      <span class="chevron">⌄</span>
+    </div>
+
+    <div class="filter-bar">
+      <div class="search-box">
+        <span class="search-icon"></span>
+        <input type="text" [(ngModel)]="searchText" placeholder="Filter by candidate name or role..." />
+      </div>
+      <button class="btn-bulk-scan" (click)="onScan()">
+        <span class="icon"></span> ATS Scan
+      </button>
+    </div>
+
+    <div class="table-container">
+      <table class="candidate-table">
+        <thead>
+          <tr>
+            <th><input type="checkbox" (change)="toggleSelectAll($event)" /></th>
+            <th>Candidate</th>
+            <th>Role Applied For</th>
+            <th>ATS Score</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let c of paginatedCandidates">
+            <td><input type="checkbox" [(ngModel)]="c.selected" [disabled]="c.status === 'Completed'" /></td>
+            <td class="name-cell"><strong>{{ c.name }}</strong></td>
+            <td class="role-cell">{{ c.roleApplied }}</td>
+            <td>
+              <span *ngIf="c.status === 'Completed'; else notScanned" class="score-text">
+                {{ c.atsScore }}%
+              </span>
+              <ng-template #notScanned><span class="muted">Not scanned</span></ng-template>
+            </td>
+            <td>
+              <span class="status-pill" [ngClass]="c.status.toLowerCase()">{{ c.status }}</span>
+            </td>
+            <td>
+              <div class="action-group">
+                <button *ngIf="c.status === 'Completed'" class="btn-view" (click)="viewReport(c)">View Report</button>
+                <button *ngIf="c.status === 'Pending'" class="btn-scan" (click)="onScan(c)">Scan Resume</button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="pagination-footer">
+      <p>Showing {{paginatedCandidates.length}} of {{filteredCandidates.length}} results</p>
+      <div class="nav-btns">
+        <button [disabled]="currentPage === 1" (click)="prevPage()">Previous</button>
+        <span class="page-num">{{currentPage}}</span>
+        <button [disabled]="(currentPage * pageSize) >= filteredCandidates.length" (click)="nextPage()">Next</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay" *ngIf="isJDModalOpen" (click)="closeJDModal()">
+    <div class="modal-box" (click)="$event.stopPropagation()">
+      <div class="modal-header">
+        <h3>Full Job Description</h3>
+        <button class="close-x" (click)="closeJDModal()">✕</button>
+      </div>
+      <div class="modal-body">
+        <h4>Frontend Engineer (Spring 2026 Drive)</h4>
+        <p><strong>Location:</strong> Pune / Remote</p>
+        <p><strong>Experience:</strong> 0-2 Years (Campus Hiring)</p>
+        <hr>
+        <h5>Requirements:</h5>
+        <ul>
+          <li>Strong proficiency in React.js and TypeScript.</li>
+          <li>Knowledge of state management (Redux/Context API).</li>
+          <li>Experience with RESTful APIs and modern CSS (Sass/Tailwind).</li>
+          <li>Understanding of UI/UX principles.</li>
+        </ul>
+      </div>
     </div>
   </div>
 </div>

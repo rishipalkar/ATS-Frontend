@@ -1,0 +1,19 @@
+.layout-wrapper {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.layout-body {
+  display: flex;
+  flex: 1; // Fills remaining space between top and bottom nav
+  overflow: hidden;
+}
+
+.content-area {
+  flex: 1;
+  overflow-y: auto; // Enables scrolling only for the page content
+  padding: 20px;
+  background-color: #f8fafc;
+}

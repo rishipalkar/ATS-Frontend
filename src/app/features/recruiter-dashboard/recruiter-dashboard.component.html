@@ -1,0 +1,95 @@
+<div class="recruiter-dashboard">
+  
+  <div class="jobs-column">
+    <div class="header-row">
+      <h2>{{ isSearchingCandidates ? 'Candidate Search Results' : 'Active Job Ads' }}</h2>
+
+      <div class="action-buttons">
+        <div class="search-wrapper active">
+          <input 
+            type="text" 
+            [(ngModel)]="searchQuery" 
+            (input)="onSearchChange()" 
+            placeholder="Search roles or skills..." 
+          />
+        </div>
+
+        <button class="btn-primary" routerLink="/recruiter/create-job">
+          + Post New Job
+        </button>
+
+        <button class="btn-secondary" *ngIf="isSearchingCandidates" (click)="viewFullPage()">
+          View Dashboard
+        </button>
+      </div>
+    </div>
+
+    <div class="job-list" *ngIf="!isSearchingCandidates; else candidateView">
+      <div class="recruiter-job-card" *ngFor="let job of filteredJobs">
+        <div class="card-header">
+          <h3>{{ job.role }}</h3>
+          <span class="badge" [class.urgent]="job.status === 'Urgent'">{{ job.status }}</span>
+        </div>
+        <p class="location">{{ job.location }} • Posted on {{ job.postedDate }}</p>
+        
+        <div class="stats-grid">
+          <div class="stat">
+            <span class="val">{{ job.totalCandidates }}</span>
+            <span class="lbl"> Applied</span>
+          </div>
+          <div class="stat">
+            <span class="val">{{ job.shortlisted }}</span>
+            <span class="lbl"> Shortlisted</span>
+          </div>
+          <div class="stat">
+            <span class="val">{{ job.interviewed }}</span>
+            <span class="lbl"> Interviewed</span>
+          </div>
+        </div>
+        
+        <button class="btn-manage">Manage Candidates</button>
+      </div>
+    </div>
+
+    <ng-template #candidateView>
+      <div class="candidate-grid">
+        <div class="candidate-card" *ngFor="let person of filteredCandidates">
+          <div class="candidate-header">
+            <div class="avatar-placeholder"></div>
+            <div class="meta">
+              <h4>{{ person.name }}</h4>
+              <span class="role-text">{{ person.role }}</span>
+            </div>
+            <span class="status-pill">{{ person.status }}</span>
+          </div>
+          <div class="skills-row">
+            <span class="skill-tag" *ngFor="let s of person.skills">{{ s }}</span>
+          </div>
+          <button class="btn-manage">View Full Profile</button>
+        </div>
+      </div>
+    </ng-template>
+  </div>
+
+  <div class="schedule-column">
+    <div class="calendar-card">
+      <h3 class="panel-title">Interview Calendar</h3>
+      <app-candidate-calendar (dateSelected)="handleDateSelect($event)"></app-candidate-calendar>
+    </div>
+
+    <div class="event-details-card" *ngIf="selectedEvent">
+      <div class="card-tag">Upcoming Interview</div>
+      <h4>{{ selectedEvent.task }}</h4>
+      <div class="detail-row"><strong>Candidate:</strong> <span>{{ selectedEvent.candidate }}</span></div>
+      <div class="detail-row"><strong>Time:</strong> <span>{{ selectedEvent.time }}</span></div>
+      <div class="actions">
+        <a [href]="selectedEvent.meetLink" target="_blank" class="btn-meet">Join Meet</a>
+        <button class="btn-reschedule">Reschedule</button>
+      </div>
+    </div>
+
+    <div class="no-event-placeholder" *ngIf="!selectedEvent">
+      <p>Select a date to view scheduled interviews</p>
+    </div>
+  </div>
+</div>

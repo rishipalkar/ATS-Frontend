@@ -1,0 +1,231 @@
+// 1. Variables
+$primary: #4f46e5;
+$primary-light: #f5f3ff;
+$bg-body: #f8fafc;
+$text-dark: #1e293b;
+$text-muted: #64748b;
+$border-color: #e2e8f0;
+$white: #ffffff;
+
+// 2. Main Container
+.create-job-container {
+  padding: 40px;
+  background: $bg-body;
+  min-height: 100vh;
+  font-family: 'Inter', sans-serif;
+
+  // Header & Stepper
+  .page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 40px;
+
+    .btn-back {
+      background: transparent;
+      border: none;
+      color: $primary;
+      font-weight: 700;
+      font-size: 14px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 0;
+      transition: transform 0.2s ease;
+
+      &:hover {
+        transform: translateX(-4px);
+      }
+    }
+
+    .stepper {
+      text-align: right;
+      h1 {
+        margin: 0;
+        font-size: 28px;
+        font-weight: 800;
+        color: $text-dark;
+      }
+      .step-indicator {
+        font-size: 12px;
+        font-weight: 800;
+        color: $text-muted;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+    }
+  }
+}
+
+// 3. AI Generator Card
+.generator-card {
+  background: linear-gradient(135deg, $white 0%, $primary-light 100%);
+  padding: 30px;
+  border-radius: 20px;
+  border: 2px solid rgba($primary, 0.1);
+  margin-bottom: 30px;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05);
+
+  h3 {
+    margin: 0 0 15px 0;
+    font-size: 18px;
+    font-weight: 800;
+    color: $primary;
+  }
+
+  .gen-input {
+    display: flex;
+    gap: 12px;
+
+    input {
+      flex: 1;
+      padding: 14px 20px;
+      border: 1px solid $border-color;
+      border-radius: 12px;
+      font-size: 14px;
+      outline: none;
+      
+      &:focus {
+        border-color: $primary;
+        box-shadow: 0 0 0 4px rgba($primary, 0.1);
+      }
+    }
+
+    .btn-generate {
+      background: $primary;
+      color: $white;
+      border: none;
+      padding: 0 24px;
+      border-radius: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s ease;
+
+      &:disabled {
+        background: #cbd5e1;
+        cursor: not-allowed;
+      }
+
+      &:hover:not(:disabled) {
+        background: darken($primary, 5%);
+        transform: translateY(-1px);
+      }
+    }
+  }
+}
+
+// 4. Form Sections & Rows
+.form-section {
+  background: $white;
+  padding: 35px;
+  border-radius: 20px;
+  border: 1px solid $border-color;
+  margin-bottom: 24px;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05);
+
+  label {
+    display: block;
+    font-size: 11px;
+    font-weight: 900;
+    color: $primary;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin-bottom: 25px;
+    border-left: 4px solid $primary;
+    padding-left: 12px;
+  }
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
+}
+
+.field {
+  margin-bottom: 25px;
+
+  span {
+    display: block;
+    font-size: 14px;
+    font-weight: 700;
+    color: #475569;
+    margin-bottom: 10px;
+  }
+
+  input, textarea, select {
+    width: 100%;
+    padding: 14px;
+    border: 1px solid $border-color;
+    border-radius: 12px;
+    font-size: 14px;
+    background: #fcfcfd;
+    color: $text-dark;
+    transition: all 0.2s ease;
+
+    &:focus {
+      outline: none;
+      background: $white;
+      border-color: $primary;
+      box-shadow: 0 0 0 4px rgba($primary, 0.1);
+    }
+  }
+
+  textarea {
+    resize: vertical;
+  }
+}
+
+// 5. Action Buttons (Next, Publish, Cancel)
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 16px;
+  padding: 20px 0 60px 0;
+
+  .btn-primary {
+    background: $primary;
+    color: $white;
+    border: none;
+    padding: 16px 32px;
+    border-radius: 14px;
+    font-weight: 700;
+    font-size: 15px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    &:hover {
+      background: darken($primary, 5%);
+      box-shadow: 0 10px 15px -3px rgba(79, 70, 229, 0.3);
+    }
+  }
+
+  .btn-publish {
+    @extend .btn-primary; // Reuses the primary button base
+    padding: 16px 45px;
+    
+    &:disabled {
+      background: #cbd5e1;
+      box-shadow: none;
+      cursor: not-allowed;
+    }
+  }
+
+  .btn-cancel {
+    background: $white;
+    color: $text-muted;
+    border: 1px solid $border-color;
+    padding: 16px 28px;
+    border-radius: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    &:hover {
+      background: #f1f5f9;
+      color: $text-dark;
+      border-color: #cbd5e1;
+    }
+  }
+}

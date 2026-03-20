@@ -1,0 +1,138 @@
+<div class="create-job-container">
+  <header class="page-header">
+    <button class="btn-back" routerLink="/recruiter/dashboard">← Back to Dashboard</button>
+    <div class="stepper">
+      <h1>{{ currentStep === 1 ? 'Job Description' : 'Hiring Details' }}</h1>
+      <span class="step-indicator">Step {{ currentStep }} of 2</span>
+    </div>
+  </header>
+
+  <form [formGroup]="jobForm" (ngSubmit)="onSubmit()">
+    
+    <div class="step-content" *ngIf="currentStep === 1">
+      <div class="card generator-card">
+        <h3>AI JD Generator</h3>
+        <div class="gen-input">
+          <input type="text" placeholder="Describe the job in one line..." #prompt>
+          <button type="button" class="btn-generate" (click)="generateJD()" [disabled]="isGenerating">
+            {{ isGenerating ? 'Crafting...' : 'Generate with AI' }}
+          </button>
+        </div>
+      </div>
+
+      <div class="form-section">
+        <div class="row">
+          <div class="field">
+            <span>Job Title</span>
+            <input formControlName="jobTitle" placeholder="e.g. Frontend Developer">
+          </div>
+          <div class="field">
+            <span>Job Category/Role</span>
+            <input formControlName="jobRole" placeholder="e.g. Engineering">
+          </div>
+        </div>
+        <div class="field">
+          <span>Required Skills & Certifications</span>
+          <textarea formControlName="skills" rows="3"></textarea>
+        </div>
+        <div class="field">
+          <span>Key Challenges</span>
+          <textarea formControlName="challenges" rows="2"></textarea>
+        </div>
+        <div class="row">
+          <div class="field">
+            <span>Benefits</span>
+            <textarea formControlName="benefits" rows="2"></textarea>
+          </div>
+          <div class="field">
+            <span>Work Culture</span>
+            <textarea formControlName="culture" rows="2"></textarea>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <button type="button" class="btn-primary" (click)="nextStep()">Next: Hiring Details →</button>
+      </div>
+    </div>
+
+    <div class="step-content" *ngIf="currentStep === 2">
+      <div class="form-section">
+        <label>Work Parameters</label>
+        <div class="row">
+          <div class="field">
+            <span>Role / Position</span>
+            <input formControlName="rolePosition" placeholder="e.g. Lead Engineer">
+          </div>
+          <div class="field">
+            <span>Number of Openings</span>
+            <input type="number" formControlName="openingsCount">
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="field">
+            <span>Work Model</span>
+            <select formControlName="workModel">
+              <option value="On-site">On-site</option>
+              <option value="Remote">Remote</option>
+              <option value="Hybrid">Hybrid</option>
+            </select>
+          </div>
+          <div class="field">
+            <span>Work Location</span>
+            <input formControlName="workLocation" placeholder="City, State">
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="field">
+            <span>Work Hours</span>
+            <input formControlName="workHours" placeholder="e.g. 9 AM - 6 PM">
+          </div>
+          <div class="field">
+            <span>Shift Duty Required?</span>
+            <select formControlName="shiftDuty">
+              <option value="No">No</option>
+              <option value="Yes">Yes</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-section">
+        <label>Candidate Requirements</label>
+        <div class="row">
+          <div class="field">
+            <span>Required Education</span>
+            <input formControlName="requiredEducation" placeholder="e.g. B.Tech in CS">
+          </div>
+          <div class="field">
+            <span>Min Experience (Years)</span>
+            <input formControlName="minExperience" placeholder="e.g. 3+ Years">
+          </div>
+        </div>
+        <div class="row">
+          <div class="field">
+            <span>Gross Package (PA)</span>
+            <input formControlName="grossPackage" placeholder="e.g. 12-15 LPA">
+          </div>
+          <div class="field">
+            <span>Joining Period</span>
+            <input formControlName="joiningPeriod" placeholder="e.g. 30 Days or Less">
+          </div>
+        </div>
+        <div class="field">
+          <span>Max Age (Years) - Optional</span>
+          <input type="number" formControlName="maxAge">
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <button type="button" class="btn-cancel" (click)="prevStep()">← Back to JD</button>
+        <button type="submit" class="btn-publish" [disabled]="!jobForm.valid">Publish Job Opening</button>
+      </div>
+    </div>
+
+  </form>
+</div>

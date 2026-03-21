@@ -1,0 +1,73 @@
+<div class="advanced-search-page">
+  <header class="page-header">
+    <button class="btn-back" routerLink="/recruiter/dashboard">← Back to Dashboard</button>
+    <h1>Advanced Candidate Search</h1>
+  </header>
+
+  <section class="criteria-panel">
+    <form [formGroup]="searchForm" (ngSubmit)="performAdvancedSearch()">
+      <div class="input-grid">
+        <div class="field"><span>Role / Position</span><input formControlName="role" placeholder="e.g. Lead Engineer"></div>
+        <div class="field"><span>Qualification</span><input formControlName="qualification" placeholder="e.g. B.Tech / M.Tech"></div>
+        <div class="field"><span>Tools / Technologies</span><input formControlName="technologies" placeholder="e.g. Angular, AWS"></div>
+        <div class="field"><span>Current Location</span><input formControlName="location" placeholder="e.g. Pune, Remote"></div>
+        <div class="field"><span>Experience</span><input formControlName="experience" placeholder="e.g. 5+ Years"></div>
+        <div class="field"><span>Domain</span><input formControlName="domain" placeholder="e.g. Fintech / E-commerce"></div>
+        <div class="field"><span>Task / Responsibility</span><input formControlName="responsibility" placeholder="e.g. Team Management"></div>
+        <div class="field"><span>Competencies / Skills</span><input formControlName="competencies" placeholder="e.g. Communication, Problem Solving"></div>
+      </div>
+      <div class="form-actions">
+        <button type="reset" class="btn-reset">Clear All</button>
+        <button type="submit" class="btn-search">Search Candidates</button>
+      </div>
+    </form>
+  </section>
+
+  <section class="results-section" *ngIf="hasSearched">
+    <div class="results-header">
+      <h3>Search Results ({{ results.length }})</h3>
+    </div>
+
+    <div class="candidate-table">
+      <div class="table-row header">
+        <span>Candidate</span>
+        <span>Adequacy</span>
+        <span>Last Job Change</span>
+        <span>Notice Days</span>
+        <span>Match Score</span>
+        <span>Action</span>
+      </div>
+
+      <div class="table-row" *ngFor="let person of results">
+        <div class="user-cell">
+          <div class="avatar"></div>
+          <div class="info">
+            <strong>{{ person.name }}</strong>
+            <small>{{ person.role }}</small>
+          </div>
+        </div>
+        
+        <div class="adequacy-cell">
+          <span class="status-pill green">{{ person.adequacy }}</span>
+        </div>
+
+        <div class="change-cell">{{ person.lastChange }}</div>
+
+        <div class="notice-cell">
+          <span class="notice-badge">{{ person.noticeDays }}</span>
+        </div>
+
+        <div class="match-cell">
+          <div class="match-bar">
+            <div class="fill" [style.width.%]="person.match"></div>
+          </div>
+          <span class="score">{{ person.match }}%</span>
+        </div>
+
+        <div class="action-cell">
+          <button class="btn-profile">View Profile</button>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>

@@ -1,34 +1,80 @@
 <div class="create-job-container">
   <header class="page-header">
-    <button class="btn-back" routerLink="/recruiter/dashboard">← Back to Dashboard</button>
+    <button class="btn-back" routerLink="/recruiter/dashboard">
+      ← Back to Dashboard
+    </button>
     <div class="stepper">
-      <h1>{{ currentStep === 1 ? 'Job Description' : 'Hiring Details' }}</h1>
+      <h1>{{ currentStep === 1 ? "Job Description" : "Hiring Details" }}</h1>
       <span class="step-indicator">Step {{ currentStep }} of 2</span>
     </div>
   </header>
 
   <form [formGroup]="jobForm" (ngSubmit)="onSubmit()">
-    
     <div class="step-content" *ngIf="currentStep === 1">
       <div class="card generator-card">
         <h3>AI JD Generator</h3>
         <div class="gen-input">
-          <input type="text" placeholder="Describe the job in one line..." #prompt>
-          <button type="button" class="btn-generate" (click)="generateJD()" [disabled]="isGenerating">
-            {{ isGenerating ? 'Crafting...' : 'Generate with AI' }}
+          <input
+            type="text"
+            placeholder="Describe the job in one line..."
+            #prompt
+          />
+          <button
+            type="button"
+            class="btn-generate"
+            (click)="generateJD()"
+            [disabled]="isGenerating"
+          >
+            {{ isGenerating ? "Crafting..." : "Generate with AI" }}
+          </button>
+        </div>
+        <div class="divider-text">or</div>
+
+        <div class="upload-wrapper">
+          <input
+            type="file"
+            #fileInput
+            (change)="onFileSelected($event)"
+            accept=".pdf,.doc,.docx,.txt"
+            hidden
+          />
+          <button type="button" class="btn-upload" (click)="fileInput.click()">
+            <svg
+              width="18"
+              height="18"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v4"></path>
+              <polyline points="17 8 12 3 7 8"></polyline>
+              <line x1="12" y1="3" x2="12" y2="15"></line>
+            </svg>
+            Upload JD
           </button>
         </div>
       </div>
+      <div class="upload-status" *ngIf="uploadedFileName">
+    <span>Attached: {{ uploadedFileName }}</span>
+    <button (click)="removeFile()">✕</button>
+  </div>
+
 
       <div class="form-section">
         <div class="row">
           <div class="field">
             <span>Job Title</span>
-            <input formControlName="jobTitle" placeholder="e.g. Frontend Developer">
+            <input
+              formControlName="jobTitle"
+              placeholder="e.g. Frontend Developer"
+            />
           </div>
           <div class="field">
             <span>Job Category/Role</span>
-            <input formControlName="jobRole" placeholder="e.g. Engineering">
+            <input formControlName="jobRole" placeholder="e.g. Engineering" />
           </div>
         </div>
         <div class="field">
@@ -52,7 +98,9 @@
       </div>
 
       <div class="form-actions">
-        <button type="button" class="btn-primary" (click)="nextStep()">Next: Hiring Details →</button>
+        <button type="button" class="btn-primary" (click)="nextStep()">
+          Next: Hiring Details →
+        </button>
       </div>
     </div>
 
@@ -62,11 +110,14 @@
         <div class="row">
           <div class="field">
             <span>Role / Position</span>
-            <input formControlName="rolePosition" placeholder="e.g. Lead Engineer">
+            <input
+              formControlName="rolePosition"
+              placeholder="e.g. Lead Engineer"
+            />
           </div>
           <div class="field">
             <span>Number of Openings</span>
-            <input type="number" formControlName="openingsCount">
+            <input type="number" formControlName="openingsCount" />
           </div>
         </div>
 
@@ -81,14 +132,14 @@
           </div>
           <div class="field">
             <span>Work Location</span>
-            <input formControlName="workLocation" placeholder="City, State">
+            <input formControlName="workLocation" placeholder="City, State" />
           </div>
         </div>
 
         <div class="row">
           <div class="field">
             <span>Work Hours</span>
-            <input formControlName="workHours" placeholder="e.g. 9 AM - 6 PM">
+            <input formControlName="workHours" placeholder="e.g. 9 AM - 6 PM" />
           </div>
           <div class="field">
             <span>Shift Duty Required?</span>
@@ -105,34 +156,49 @@
         <div class="row">
           <div class="field">
             <span>Required Education</span>
-            <input formControlName="requiredEducation" placeholder="e.g. B.Tech in CS">
+            <input
+              formControlName="requiredEducation"
+              placeholder="e.g. B.Tech in CS"
+            />
           </div>
           <div class="field">
             <span>Min Experience (Years)</span>
-            <input formControlName="minExperience" placeholder="e.g. 3+ Years">
+            <input
+              formControlName="minExperience"
+              placeholder="e.g. 3+ Years"
+            />
           </div>
         </div>
         <div class="row">
           <div class="field">
             <span>Gross Package (PA)</span>
-            <input formControlName="grossPackage" placeholder="e.g. 12-15 LPA">
+            <input
+              formControlName="grossPackage"
+              placeholder="e.g. 12-15 LPA"
+            />
           </div>
           <div class="field">
             <span>Joining Period</span>
-            <input formControlName="joiningPeriod" placeholder="e.g. 30 Days or Less">
+            <input
+              formControlName="joiningPeriod"
+              placeholder="e.g. 30 Days or Less"
+            />
           </div>
         </div>
         <div class="field">
           <span>Max Age (Years) - Optional</span>
-          <input type="number" formControlName="maxAge">
+          <input type="number" formControlName="maxAge" />
         </div>
       </div>
 
       <div class="form-actions">
-        <button type="button" class="btn-cancel" (click)="prevStep()">← Back to JD</button>
-        <button type="submit" class="btn-publish" [disabled]="!jobForm.valid">Publish Job Opening</button>
+        <button type="button" class="btn-cancel" (click)="prevStep()">
+          ← Back to JD
+        </button>
+        <button type="submit" class="btn-publish" [disabled]="!jobForm.valid">
+          Publish Job Opening
+        </button>
       </div>
     </div>
-
   </form>
 </div>

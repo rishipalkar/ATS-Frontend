@@ -1,25 +1,77 @@
 <div class="recruiter-dashboard">
-  
   <div class="jobs-column">
     <div class="header-row">
-      <h2>{{ isSearchingCandidates ? 'Candidate Search Results' : 'Active Job Ads' }}</h2>
+      <h2>
+        {{
+          isSearchingCandidates ? "Candidate Search Results" : "Active Job Ads"
+        }}
+      </h2>
 
       <div class="action-buttons">
         <div class="search-wrapper active">
-          <input 
-            type="text" 
-            [(ngModel)]="searchQuery" 
-            (input)="onSearchChange()" 
-            placeholder="Search roles or skills..." 
+          <input
+            type="text"
+            [(ngModel)]="searchQuery"
+            (input)="onSearchChange()"
+            placeholder="Search roles or skills..."
           />
+        </div>
+        <div class="filter-group">
+          <button
+            class="btn-secondary btn-filter"
+            (click)="toggleFilterDropdown($event)"
+          >
+            <svg
+              width="18"
+              height="18"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <polygon
+                points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"
+              ></polygon>
+            </svg>
+            Filters
+          </button>
+
+          <div class="filter-dropdown" *ngIf="isFilterOpen">
+            <div class="dropdown-label">Search Scope</div>
+            <button class="dropdown-item" (click)="setSearchScope('job')">
+              Search by Job Ad
+            </button>
+            <button class="dropdown-item" (click)="setSearchScope('candidate')">
+              Search by Candidate
+            </button>
+            <button class="dropdown-item" (click)="setSearchScope('role')">
+              Search by Role
+            </button>
+
+            <div class="dropdown-divider"></div>
+
+            <div class="dropdown-label">Job Status</div>
+            <button class="dropdown-item" (click)="filterByStatus('Active')">
+              Active Only
+            </button>
+            <button class="dropdown-item" (click)="filterByStatus('Urgent')">
+              Urgent Priority
+            </button>
+          </div>
         </div>
 
         <button class="btn-primary" routerLink="/recruiter/create-job">
           + Post New Job
         </button>
 
-        <button class="btn-secondary" *ngIf="isSearchingCandidates" (click)="viewFullPage()">
-          View Dashboard
+        <button
+          class="btn-secondary"
+          
+          routerLink="/recruiter/advanced-search"
+        >
+          Advanced Search
         </button>
       </div>
     </div>
@@ -28,10 +80,14 @@
       <div class="recruiter-job-card" *ngFor="let job of filteredJobs">
         <div class="card-header">
           <h3>{{ job.role }}</h3>
-          <span class="badge" [class.urgent]="job.status === 'Urgent'">{{ job.status }}</span>
+          <span class="badge" [class.urgent]="job.status === 'Urgent'">{{
+            job.status
+          }}</span>
         </div>
-        <p class="location">{{ job.location }} • Posted on {{ job.postedDate }}</p>
-        
+        <p class="location">
+          {{ job.location }} • Posted on {{ job.postedDate }}
+        </p>
+
         <div class="stats-grid">
           <div class="stat">
             <span class="val">{{ job.totalCandidates }}</span>
@@ -46,8 +102,8 @@
             <span class="lbl"> Interviewed</span>
           </div>
         </div>
-        
-        <button class="btn-manage">Manage Candidates</button>
+
+        <button class="btn-manage" routerLink="/recruiter/view-candidate">Manage Candidates</button>
       </div>
     </div>
 
@@ -63,7 +119,9 @@
             <span class="status-pill">{{ person.status }}</span>
           </div>
           <div class="skills-row">
-            <span class="skill-tag" *ngFor="let s of person.skills">{{ s }}</span>
+            <span class="skill-tag" *ngFor="let s of person.skills">{{
+              s
+            }}</span>
           </div>
           <button class="btn-manage">View Full Profile</button>
         </div>
@@ -74,16 +132,24 @@
   <div class="schedule-column">
     <div class="calendar-card">
       <h3 class="panel-title">Interview Calendar</h3>
-      <app-candidate-calendar (dateSelected)="handleDateSelect($event)"></app-candidate-calendar>
+      <app-candidate-calendar
+        (dateSelected)="handleDateSelect($event)"
+      ></app-candidate-calendar>
     </div>
 
     <div class="event-details-card" *ngIf="selectedEvent">
       <div class="card-tag">Upcoming Interview</div>
       <h4>{{ selectedEvent.task }}</h4>
-      <div class="detail-row"><strong>Candidate:</strong> <span>{{ selectedEvent.candidate }}</span></div>
-      <div class="detail-row"><strong>Time:</strong> <span>{{ selectedEvent.time }}</span></div>
+      <div class="detail-row">
+        <strong>Candidate:</strong> <span>{{ selectedEvent.candidate }}</span>
+      </div>
+      <div class="detail-row">
+        <strong>Time:</strong> <span>{{ selectedEvent.time }}</span>
+      </div>
       <div class="actions">
-        <a [href]="selectedEvent.meetLink" target="_blank" class="btn-meet">Join Meet</a>
+        <a [href]="selectedEvent.meetLink" target="_blank" class="btn-meet"
+          >Join Meet</a
+        >
         <button class="btn-reschedule">Reschedule</button>
       </div>
     </div>

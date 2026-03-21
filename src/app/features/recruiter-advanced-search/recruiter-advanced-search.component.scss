@@ -1,0 +1,272 @@
+// Variables
+$primary: #4f46e5;
+$border: #e2e8f0;
+$text-main: #1e293b;
+$text-muted: #64748b;
+.results-section {
+  margin-top: 40px;
+
+  h3 {
+    font-size: 18px;
+    font-weight: 800;
+    color: $text-main;
+    margin-bottom: 20px;
+  }
+}
+
+.candidate-table {
+  background: #ffffff;
+  border: 1px solid $border;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+
+  .table-row {
+    display: grid;
+    // Defining fixed widths for each column to prevent shifting
+    grid-template-columns: 2.5fr 1.5fr 1.5fr 1.2fr 1.5fr 1.2fr;
+    padding: 16px 24px;
+    align-items: center;
+    border-bottom: 1px solid #f1f5f9;
+    transition: background 0.2s ease;
+
+    &:last-child {
+      border-bottom: none;
+    }
+
+    &:hover:not(.header) {
+      background: #f8fafc;
+    }
+
+    &.header {
+      background: #f8fafc;
+      font-size: 11px;
+      font-weight: 800;
+      color: #94a3b8;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      border-bottom: 2px solid $border;
+    }
+
+    // Cell Specifics
+    .user-cell {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+
+      .avatar {
+        width: 40px;
+        height: 40px;
+        background: #eef2ff;
+        border-radius: 10px;
+        flex-shrink: 0;
+      }
+
+      .info {
+        display: flex;
+        flex-direction: column;
+        strong { color: $text-main; font-size: 15px; }
+        small { color: $text-muted; font-size: 12px; }
+      }
+    }
+
+    .adequacy-cell {
+      .status-pill {
+        padding: 6px 12px;
+        border-radius: 50px;
+        font-size: 12px;
+        font-weight: 700;
+        background: #ecfdf5;
+        color: #10b981;
+        display: inline-block;
+      }
+    }
+
+    .change-cell, .notice-cell {
+      font-size: 14px;
+      color: $text-main;
+      font-weight: 500;
+    }
+
+    .notice-badge {
+      background: #fef2f2;
+      color: #ef4444;
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-weight: 700;
+    }
+
+    .match-cell {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+
+      .match-bar {
+        flex: 1;
+        height: 8px;
+        background: #f1f5f9;
+        border-radius: 10px;
+        overflow: hidden;
+
+        .fill {
+          height: 100%;
+          background: $primary;
+          border-radius: 10px;
+        }
+      }
+
+      .score {
+        font-weight: 800;
+        color: $primary;
+        font-size: 14px;
+        min-width: 35px;
+      }
+    }
+
+    .btn-profile {
+      background: #ffffff;
+      border: 1.5px solid $primary;
+      color: $primary;
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 13px;
+      cursor: pointer;
+      transition: all 0.2s;
+
+      &:hover {
+        background: $primary;
+        color: #ffffff;
+      }
+    }
+  }
+}
+// Apply box-sizing globally to prevent padding from expanding the width
+* {
+  box-sizing: border-box;
+}
+
+.criteria-panel {
+  background: #ffffff;
+  padding: 32px;
+  border-radius: 16px;
+  border: 1px solid $border;
+  margin-bottom: 30px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+
+  .input-grid {
+    display: grid;
+    // Using a 4-column layout with 24px gap for breathing room
+    grid-template-columns: repeat(4, 1fr); 
+    column-gap: 24px; // Horizontal space
+    row-gap: 20px;    // Vertical space
+    width: 100%;
+    margin-bottom: 30px;
+  }
+
+  .field {
+    display: flex;
+    flex-direction: column;
+    min-width: 0; // Essential for preventing grid overflow
+
+    span {
+      display: block;
+      font-size: 13px;
+      font-weight: 700;
+      color: $text-muted;
+      margin-bottom: 8px;
+      white-space: nowrap; // Keeps labels on one line
+    }
+
+    input {
+      width: 100%;
+      padding: 12px 16px;
+      border: 1px solid $border;
+      border-radius: 10px;
+      font-size: 14px;
+      color: $text-main;
+      background-color: #fcfcfd;
+      transition: all 0.2s ease;
+
+      &::placeholder {
+        color: #94a3b8;
+        opacity: 0.7;
+      }
+
+      &:focus {
+        outline: none;
+        border-color: $primary;
+        background-color: #fff;
+        // Subtle glow that doesn't overlap neighbors
+        box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1); 
+      }
+    }
+  }
+
+  .form-actions {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 16px;
+    padding-top: 24px;
+    border-top: 1px solid #f1f5f9;
+
+    .btn-reset {
+      background: #fff;
+      border: 1px solid $border;
+      color: $text-main;
+      padding: 10px 24px;
+      border-radius: 10px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+
+      &:hover {
+        background: #f8fafc;
+        border-color: #cbd5e1;
+      }
+    }
+
+    .btn-search {
+      background: $primary;
+      color: #fff;
+      border: none;
+      padding: 10px 32px;
+      border-radius: 10px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+
+      &:hover {
+        background: darken($primary, 5%);
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(79, 70, 229, 0.2);
+      }
+    }
+  }
+}
+
+// Optional: Responsive fix for smaller screens
+@media (max-width: 1200px) {
+  .criteria-panel .input-grid {
+    grid-template-columns: repeat(2, 1fr); // Drop to 2 columns on medium screens
+  }
+}
+
+  .btn-back {
+      background: transparent;
+      border: none;
+      color: $primary;
+      font-weight: 700;
+      font-size: 14px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 0;
+      transition: transform 0.2s ease;
+
+      &:hover {
+        transform: translateX(-4px);
+      }
+    }

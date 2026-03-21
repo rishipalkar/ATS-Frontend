@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-
+import { HostListener } from '@angular/core';   
 @Component({
   selector: 'app-recruiter-dashboard',
   templateUrl: './recruiter-dashboard.component.html',
@@ -10,6 +10,8 @@ export class RecruiterDashboardComponent implements OnInit {
   selectedEvent: any = null;
   searchQuery: string = '';
   isSearchingCandidates: boolean = false;
+  isFilterOpen: boolean = false;
+  searchScope:string='all';
 
   activeJobs = [
     { role: 'Senior Frontend Developer', location: 'Pune / Remote', totalCandidates: 45, shortlisted: 12, interviewed: 5, postedDate: 'March 10, 2026', status: 'Active' },
@@ -63,4 +65,31 @@ goToCreateJob() {
     const dateString = date.toISOString().split('T')[0];
     this.selectedEvent = this.interviews[dateString] || null;
   }
+  toggleFilters(): void {
+  this.isFilterOpen = !this.isFilterOpen;
+  console.log('Filter Menu Toggled:', this.isFilterOpen);
+  
+}
+toggleFilterDropdown(event: Event) {
+  event.stopPropagation(); // Prevents immediate closing
+  this.isFilterOpen = !this.isFilterOpen;
+}
+
+setSearchScope(scope: string) {
+  this.searchScope = scope;
+  this.isFilterOpen = false;
+  console.log('Searching by:', scope);
+  // Trigger your search logic here based on scope
+}
+
+filterByStatus(status: string) {
+  this.isFilterOpen = false;
+  // Trigger your status filter logic
+}
+
+// Close dropdown if user clicks anywhere else on the screen
+@HostListener('document:click')
+closeDropdown() {
+  this.isFilterOpen = false;
+}
 }

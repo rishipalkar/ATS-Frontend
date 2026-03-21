@@ -10,6 +10,7 @@ import { RecruiterViewCandidateComponent } from './features/recruiter-view-candi
 import { ReportPageComponent } from './features/recruiter-view-candidates/pages/report-page/report-page.component';
 import { RecruiterDashboardComponent } from './features/recruiter-dashboard/recruiter-dashboard.component';
 import { CreateJobComponent } from './features/recruiter-create-job/recruiter-create-job.component';
+import { RecruiterAdvancedSearchComponent } from './features/recruiter-advanced-search/recruiter-advanced-search.component';
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: 'login', component: CandidateLoginPageComponent },
@@ -22,7 +23,8 @@ const routes: Routes = [
       { path: 'recruiter/view-candidate', component: RecruiterViewCandidateComponent },
       { path: 'report', component: ReportPageComponent },
       { path: 'recruiter/dashboard', component: RecruiterDashboardComponent },
-      {path : 'recruiter/create-job', component: CreateJobComponent}
+      {path : 'recruiter/create-job', component: CreateJobComponent},
+      {path : 'recruiter/advanced-search', component: RecruiterAdvancedSearchComponent}
     ]
   }
 ];

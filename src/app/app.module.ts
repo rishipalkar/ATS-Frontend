@@ -33,6 +33,7 @@ import { DiversitySectionComponent } from './features/candidate-application/comp
 import { PageHeaderComponent } from './features/candidate-application/components/page-header/page-header.component';
 import { RecruiterDashboardComponent } from './features/recruiter-dashboard/recruiter-dashboard.component';
 import { CreateJobComponent } from './features/recruiter-create-job/recruiter-create-job.component';
+import { RecruiterAdvancedSearchComponent } from './features/recruiter-advanced-search/recruiter-advanced-search.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -52,7 +53,8 @@ import { CreateJobComponent } from './features/recruiter-create-job/recruiter-cr
     DiversitySectionComponent,
     PageHeaderComponent,
     RecruiterDashboardComponent,
-    CreateJobComponent
+    CreateJobComponent,
+    RecruiterAdvancedSearchComponent
   ],
   imports: [
     BrowserModule,

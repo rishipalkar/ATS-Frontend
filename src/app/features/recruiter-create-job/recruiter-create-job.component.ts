@@ -5,14 +5,18 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-recruiter-create-job',
   templateUrl: './recruiter-create-job.component.html',
-  styleUrls: ['./recruiter-create-job.component.scss']
+  styleUrls: ['./recruiter-create-job.component.scss'],
 })
 export class CreateJobComponent implements OnInit {
   jobForm: FormGroup;
   currentStep: number = 1; // 1: JD Generation, 2: Security/Details
   isGenerating: boolean = false;
+  uploadedFileName: string | null = null;
 
-  constructor(private fb: FormBuilder, private router: Router) {
+  constructor(
+    private fb: FormBuilder,
+    private router: Router,
+  ) {
     this.jobForm = this.fb.group({
       // Step 1: JD Fields
       jobTitle: ['', Validators.required],
@@ -33,7 +37,7 @@ export class CreateJobComponent implements OnInit {
       minExperience: ['', Validators.required],
       grossPackage: ['', Validators.required],
       joiningPeriod: ['', Validators.required],
-      maxAge: [''] // Optional
+      maxAge: [''], // Optional
     });
   }
 
@@ -59,9 +63,10 @@ export class CreateJobComponent implements OnInit {
         jobTitle: 'Senior UI/UX Engineer',
         jobRole: 'Full Stack Design',
         skills: 'Angular, SCSS, Figma, User Research, Prototyping',
-        challenges: 'Building a consistent design system across 4 distinct recruiter platforms.',
+        challenges:
+          'Building a consistent design system across 4 distinct recruiter platforms.',
         benefits: 'Unlimited PTO, Health & Wellness stipend, Remote Work.',
-        culture: 'Design-driven, engineering-led, and highly collaborative.'
+        culture: 'Design-driven, engineering-led, and highly collaborative.',
       });
       this.isGenerating = false;
     }, 1200);
@@ -73,5 +78,34 @@ export class CreateJobComponent implements OnInit {
       alert('Job Successfully Published!');
       this.router.navigate(['/recruiter/dashboard']);
     }
+  }
+  onFileSelected(event: any) {
+    const file: File = event.target.files[0];
+
+    if (file) {
+      this.uploadedFileName = file.name;
+      this.isGenerating = true; // Show loading state while "parsing"
+
+      // Simulated Parsing Logic
+      setTimeout(() => {
+        this.jobForm.patchValue({
+          jobTitle: 'Backend Developer (Parsed)',
+          jobRole: 'Engineering',
+          skills: 'Node.js, Express, MongoDB, AWS, Redis',
+          challenges:
+            'Extracted from uploaded document: Managing high-concurrency requests and database optimization.',
+          benefits:
+            'Parsed from file: Remote work, flexible hours, health insurance.',
+          culture:
+            'Extracted: High-growth startup environment with a focus on ownership.',
+        });
+        this.isGenerating = false;
+      }, 1500);
+    }
+  }
+
+  removeFile() {
+    this.uploadedFileName = null;
+    this.jobForm.reset();
   }
 }

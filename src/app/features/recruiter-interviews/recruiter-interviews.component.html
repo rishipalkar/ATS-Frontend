@@ -1,0 +1,98 @@
+<div class="interviews-wrapper">
+  <header class="page-header">
+    <div class="header-left">
+      <span class="badge">RECRUITER HUB • SCHEDULE</span>
+      <h1>Interviews</h1>
+    </div>
+    <div class="header-right">
+      <button class="btn-primary">Schedule New</button>
+    </div>
+  </header>
+
+  <div class="interview-grid">
+    <div class="interview-card" *ngFor="let interview of interviews" (click)="openDetail(interview)">
+      <div class="card-header">
+        <span class="role">{{ interview.jobRole }}</span>
+        <span class="status Scheduled">{{ interview.status }}</span>
+      </div>
+      <div class="card-body">
+        <h2>{{ interview.candidateName }}</h2>
+        <p>Applied for: {{ interview.jobRole }}</p>
+      </div>
+      <div class="card-footer">
+        <div class="date-time">
+          <span>Date: {{ interview.dateTime | date:'MMM dd, yyyy' }}</span>
+          <span>Time: {{ interview.dateTime | date:'h:mm a' }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay" *ngIf="isModalOpen" (click)="closeModal()">
+    <div class="modal-card" (click)="$event.stopPropagation()">
+      <button class="btn-close" (click)="closeModal()">✕</button>
+      
+      <div class="modal-header">
+        <div class="candidate-meta">
+          <h2>{{ selectedInterview?.candidateName }}</h2>
+          <p>{{ selectedInterview?.candidateEmail }}</p>
+        </div>
+        <span class="status Scheduled">{{ selectedInterview?.status }}</span>
+      </div>
+
+      <div class="modal-body">
+        <div class="detail-grid">
+          <div class="detail-item">
+            <label>Job Role</label>
+            <p>{{ selectedInterview?.jobRole }}</p>
+          </div>
+          <div class="detail-item">
+            <label>Location</label>
+            <p>{{ selectedInterview?.location }}</p>
+          </div>
+          <div class="detail-item">
+            <label>Date</label>
+            <p>{{ selectedInterview?.dateTime | date:'EEEE, MMMM dd, yyyy' }}</p>
+          </div>
+          <div class="detail-item">
+            <label>Time</label>
+            <p>{{ selectedInterview?.dateTime | date:'h:mm a' }}</p>
+          </div>
+        </div>
+        
+        <div class="job-description">
+          <label>Job Description Summary</label>
+          <p>{{ selectedInterview?.jobDescription }}</p>
+        </div>
+
+        <div class="meet-link-section">
+          <label>Meeting Link</label>
+          <div class="link-display" *ngIf="selectedInterview?.meetLink">
+            <span class="link-url">{{ selectedInterview?.meetLink }}</span>
+            <span class="link-type">{{ selectedInterview?.location }}</span>
+          </div>
+          <div class="link-placeholder" *ngIf="!selectedInterview?.meetLink">
+            <span>No link generated yet</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn-secondary" (click)="closeModal()">Close</button>
+        
+        <button class="btn-action generate" 
+                *ngIf="selectedInterview?.location === 'Google Meet' && !selectedInterview?.meetLink"
+                [disabled]="isGeneratingLink"
+                (click)="generateMeetLink()">
+          {{ isGeneratingLink ? 'Generating...' : 'Generate Meet Link' }}
+        </button>
+
+        <button class="btn-primary" 
+                [disabled]="!selectedInterview?.meetLink || isSending"
+                (click)="sendToCandidate()">
+          {{ isSending ? 'Sending...' : 'Send to Candidate' }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

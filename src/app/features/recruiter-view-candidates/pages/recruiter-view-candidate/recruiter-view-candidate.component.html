@@ -1,108 +1,233 @@
-
-<div class="dashboard-container">
-  <nav class="top-navbar">
-    <div class="nav-left">
-      <span class="logo">ATS Pro</span>
-      <h2 class="drive-title">Spring 2026 Engineering Drive</h2>
-    </div>
-    <div class="nav-right">
-      <span class="status-indicator">Status: <strong class="active">Active</strong></span>
-    </div>
-  </nav>
-
-  <div class="content-body">
-    <div class="jd-ref-card" (click)="openJDModal()">
-      <div class="jd-content">
-        <span class="icon"></span>
-        <span>Job Description Reference</span>
-      </div>
-      <span class="chevron">⌄</span>
-    </div>
-
-     <div class="Back-to-dashboard" >
-      <button class="btn-back" routerLink="/recruiter/dashboard">
-        <span class="icon"></span> Back to Dashboard
-      </button>
-    </div>
-
-   
-
-    <div class="filter-bar">
-      <div class="search-box">
-        <span class="search-icon"></span>
-        <input type="text" [(ngModel)]="searchText" placeholder="Filter by candidate name or role..." />
-      </div>
-      <button class="btn-bulk-scan" (click)="onScan()">
-        <span class="icon"></span> ATS Scan
-      </button>
-    </div>
-
-    <div class="table-container">
-      <table class="candidate-table">
-        <thead>
-          <tr>
-            <th><input type="checkbox" (change)="toggleSelectAll($event)" /></th>
-            <th>Candidate</th>
-            <th>Role Applied For</th>
-            <th>ATS Score</th>
-            <th>Status</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let c of paginatedCandidates">
-            <td><input type="checkbox" [(ngModel)]="c.selected" [disabled]="c.status === 'Completed'" /></td>
-            <td class="name-cell"><strong>{{ c.name }}</strong></td>
-            <td class="role-cell">{{ c.roleApplied }}</td>
-            <td>
-              <span *ngIf="c.status === 'Completed'; else notScanned" class="score-text">
-                {{ c.atsScore }}%
-              </span>
-              <ng-template #notScanned><span class="muted">Not scanned</span></ng-template>
-            </td>
-            <td>
-              <span class="status-pill" [ngClass]="c.status.toLowerCase()">{{ c.status }}</span>
-            </td>
-            <td>
-              <div class="action-group">
-                <button *ngIf="c.status === 'Completed'" class="btn-view" (click)="viewReport(c)">View Report</button>
-                <button *ngIf="c.status === 'Pending'" class="btn-scan" (click)="onScan(c)">Scan Resume</button>
-              </div>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-
-    <div class="pagination-footer">
-      <p>Showing {{paginatedCandidates.length}} of {{filteredCandidates.length}} results</p>
-      <div class="nav-btns">
-        <button [disabled]="currentPage === 1" (click)="prevPage()">Previous</button>
-        <span class="page-num">{{currentPage}}</span>
-        <button [disabled]="(currentPage * pageSize) >= filteredCandidates.length" (click)="nextPage()">Next</button>
+<div class="candidates-container">
+  <header class="page-header">
+    <div class="title-group">
+      <h1>Candidate Pipeline</h1>
+      <div class="job-selector">
+        <span>Targeting Job:</span>
+        <select [(ngModel)]="selectedJob">
+          <option>Frontend Developer - Pune</option>
+          <option>Backend Lead - Remote</option>
+        </select>
       </div>
     </div>
+    <div class="actions">
+      <button class="btn-primary">ATS Scan Selected</button>
+    </div>
+  </header>
+
+  <div class="table-card">
+    <table class="candidate-table">
+      <thead>
+        <tr>
+          <th class="check-col">
+            <input
+              type="checkbox"
+              [checked]="allSelected"
+              (change)="toggleAll($event)"
+            />
+          </th>
+          <th>Candidate Name</th>
+          <th>Role</th>
+          <th>Experience</th>
+          <th>ATS Status</th>
+          <th class="action-col">Action</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr
+          *ngFor="let c of pagedCandidates"
+          (click)="openCandidatePopup(c)"
+          class="clickable-row"
+          [class.row-selected]="c.isShortlisted"
+          [class.row-disabled]="c.isScanned"
+        >
+          <td class="check-col" (click)="$event.stopPropagation()">
+            <input
+              type="checkbox"
+              *ngIf="!c.isScanned"
+              [(ngModel)]="c.isShortlisted"
+              (change)="checkSelection()"
+            />
+
+            <div
+              class="scanned-lock"
+              *ngIf="c.isScanned"
+              title="Scanned candidates cannot be bulk-selected"
+            >
+              <svg
+                width="14"
+                height="14"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="#94a3b8"
+                stroke-width="2"
+              >
+                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+              </svg>
+            </div>
+          </td>
+
+          <td class="clickable-name">
+            <strong>{{ c.name }}</strong>
+          </td>
+          <td>{{ c.role }}</td>
+          <td>{{ c.experience }}</td>
+          <td>
+            <span *ngIf="c.isScanned" class="match-badge"
+              >{{ c.matchScore }}% Match</span
+            >
+            <span *ngIf="!c.isScanned" class="pending-badge">Not Scanned</span>
+          </td>
+          <td class="action-col" (click)="$event.stopPropagation()">
+            <button
+              *ngIf="!c.isScanned"
+              class="btn-scan"
+              (click)="triggerScan(c)"
+            >
+              ATS Scan
+            </button>
+
+            <div class="decision-group" *ngIf="c.isScanned">
+              <button
+                class="btn-report-icon"
+                routerLink="/report"
+                title="View Report"
+              >
+                <svg
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path
+                    d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"
+                  ></path>
+                  <polyline points="14 2 14 8 20 8"></polyline>
+                </svg>
+              </button>
+
+              <ng-container *ngIf="!c.status || c.status === 'pending'">
+                <button
+                  class="btn-action shortlist"
+                  (click)="shortlistCandidate(c)"
+                >
+                  Shortlist
+                </button>
+                <button class="btn-action reject" (click)="rejectCandidate(c)">
+                  Reject
+                </button>
+              </ng-container>
+
+              <span
+                *ngIf="c.status === 'shortlisted'"
+                class="status-label shortlisted"
+                >Shortlisted</span
+              >
+              <span
+                *ngIf="c.status === 'rejected'"
+                class="status-label rejected"
+                >Rejected</span
+              >
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <footer class="table-footer">
+      <button class="btn-text" (click)="deselectAll()">Deselect All</button>
+      <div class="pagination-controls">
+        <span class="page-info">
+          Page {{ currentPage }} of {{ Math.ceil(totalCandidates / pageSize) }}
+        </span>
+        <div class="nav-buttons">
+          <button
+            class="btn-nav"
+            (click)="prevPage()"
+            [disabled]="currentPage === 1"
+          >
+            ← Previous
+          </button>
+          <button
+            class="btn-nav"
+            (click)="nextPage()"
+            [disabled]="currentPage * pageSize >= totalCandidates"
+          >
+            Next →
+          </button>
+        </div>
+      </div>
+    </footer>
   </div>
+</div>
 
-  <div class="modal-overlay" *ngIf="isJDModalOpen" (click)="closeJDModal()">
-    <div class="modal-box" (click)="$event.stopPropagation()">
-      <div class="modal-header">
-        <h3>Full Job Description</h3>
-        <button class="close-x" (click)="closeJDModal()">✕</button>
+<div class="modal-overlay" *ngIf="isModalOpen" (click)="closeModal()">
+  <div class="modal-card" (click)="$event.stopPropagation()">
+    <button class="btn-close" (click)="closeModal()">✕</button>
+
+    <div class="modal-header">
+      <div class="avatar-large">{{ selectedCandidate?.name?.charAt(0) }}</div>
+      <div class="header-info">
+        <h2>{{ selectedCandidate?.name }}</h2>
+        <span class="role-badge">{{ selectedCandidate?.role }}</span>
       </div>
-      <div class="modal-body">
-        <h4>Frontend Engineer (Spring 2026 Drive)</h4>
-        <p><strong>Location:</strong> Pune / Remote</p>
-        <p><strong>Experience:</strong> 0-2 Years (Campus Hiring)</p>
-        <hr>
-        <h5>Requirements:</h5>
-        <ul>
-          <li>Strong proficiency in React.js and TypeScript.</li>
-          <li>Knowledge of state management (Redux/Context API).</li>
-          <li>Experience with RESTful APIs and modern CSS (Sass/Tailwind).</li>
-          <li>Understanding of UI/UX principles.</li>
-        </ul>
+    </div>
+
+    <div class="modal-body">
+      <div class="detail-grid">
+        <div class="detail-item">
+          <label>Experience</label>
+          <p>{{ selectedCandidate?.experience }}</p>
+        </div>
+        <div class="detail-item">
+          <label>Location</label>
+          <p>{{ selectedCandidate?.location }}</p>
+        </div>
+        <div class="detail-item">
+          <label>Applied On</label>
+          <p>{{ selectedCandidate?.joinedSince }}</p>
+        </div>
+        <div class="detail-item">
+          <label>Notice Status</label>
+          <p>
+            <span
+              class="status-indicator"
+              [class.on-notice]="selectedCandidate?.isOnNotice"
+            >
+              {{
+                selectedCandidate?.isOnNotice
+                  ? "Serving Notice"
+                  : "Not on Notice"
+              }}
+            </span>
+          </p>
+        </div>
       </div>
+
+      <div class="profile-section">
+        <h3>Expertise Summary</h3>
+        <p class="summary-text">{{ selectedCandidate?.summary }}</p>
+      </div>
+
+      <div class="profile-section">
+        <h3>Core Competencies</h3>
+        <div class="skill-pills">
+          <span class="pill" *ngFor="let skill of selectedCandidate?.skills">
+            {{ skill }}
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-footer">
+      <button class="btn-secondary" (click)="closeModal()">Close</button>
+      <button class="btn-primary" (click)="triggerScan(selectedCandidate)">
+        🚀 Start ATS Scan
+      </button>
     </div>
   </div>
 </div>

@@ -1,0 +1,105 @@
+<div class="feedback-container">
+  <header class="page-header">
+    <div class="header-titles">
+      <span class="badge">RECRUITER HUB • EVALUATION</span>
+      <h1>Interview Feedback</h1>
+    </div>
+    
+    <div class="filter-bar">
+      <label>Stage:</label>
+      <select [(ngModel)]="selectedStage" (change)="filterCandidates()">
+        <option value="All Stages">All Stages</option>
+        <option value="Interview Round 1">Interview Round 1</option>
+        <option value="Interview Round 3">Interview Round 3</option>
+      </select>
+    </div>
+  </header>
+
+  <div class="table-card">
+    <table class="feedback-table">
+      <thead>
+        <tr>
+          <th>Candidate</th>
+          <th>Role</th>
+          <th>Stage</th>
+          <th class="action-col">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let c of filteredCandidates" class="clickable-row" (click)="openModal(c, 'profile')">
+          <td>
+            <div class="candidate-info">
+              <div class="avatar-sm">{{ c.avatar }}</div>
+              <strong>{{ c.name }}</strong>
+            </div>
+          </td>
+          <td>{{ c.role }}</td>
+          <td><span class="stage-tag">{{ c.currentStage }}</span></td>
+          <td class="action-col" (click)="$event.stopPropagation()">
+            <button class="btn-feedback" (click)="openModal(c, 'feedback')">Add Feedback</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="modal-overlay" *ngIf="isModalOpen" (click)="closeModal()">
+    <div class="modal-card" (click)="$event.stopPropagation()">
+      
+      <button class="btn-close-modal" (click)="closeModal()">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+
+      <div class="modal-header">
+        <div class="avatar-large">{{ selectedCandidate?.avatar }}</div>
+        <div class="header-info">
+          <h2>{{ selectedCandidate?.name }}</h2>
+          <p>{{ viewMode === 'profile' ? 'Candidate Profile' : 'Interview Scorecard' }}</p>
+        </div>
+      </div>
+
+      <div class="modal-body">
+        <div class="detail-grid">
+          <div class="detail-item"><label>Experience</label><p>{{ selectedCandidate?.experience }}</p></div>
+          <div class="detail-item"><label>Location</label><p>{{ selectedCandidate?.location }}</p></div>
+          <div class="detail-item"><label>Degree</label><p>{{ selectedCandidate?.degree }}</p></div>
+          <div class="detail-item"><label>Applied On</label><p>{{ selectedCandidate?.joinedSince }}</p></div>
+        </div>
+
+        <div class="form-section" *ngIf="viewMode === 'feedback'">
+          <div class="form-group">
+            <label>Rating (1-5)</label>
+            <div class="rating-selector">
+              <button *ngFor="let n of [1,2,3,4,5]" [class.active]="rating === n" (click)="rating = n">{{n}}</button>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Key Observations</label>
+            <textarea [(ngModel)]="strengths"></textarea>
+          </div>
+          <div class="form-group">
+            <label>Final Decision</label>
+            <select [(ngModel)]="recommendation">
+              <option value="">Select Recommendation</option>
+              <option value="hire">Hire</option>
+              <option value="reject">Reject</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-section" *ngIf="viewMode === 'profile'">
+          <label class="section-label">Professional Summary</label>
+          <p class="summary-text">{{ selectedCandidate?.summary }}</p>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn-secondary" (click)="closeModal()">Close</button>
+        <button class="btn-primary" *ngIf="viewMode === 'feedback'" [disabled]="!rating || !recommendation" (click)="submitFeedback()">Save Evaluation</button>
+      </div>
+    </div>
+  </div>
+</div>  

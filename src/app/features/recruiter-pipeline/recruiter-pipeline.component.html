@@ -1,0 +1,55 @@
+<div class="pipeline-wrapper">
+  <header class="pipeline-header">
+    <div class="header-left">
+      <span class="badge">RECRUITER HUB • V2.4.0</span>
+      <h1>Pipeline</h1>
+      <div class="sub-header">
+        <h2>Hiring Pipeline</h2>
+        <p>Manage your candidates across different stages</p>
+      </div>
+    </div>
+    <div class="header-right">
+      <button class="btn-secondary"> Sync Schedule</button>
+      <button class="btn-primary">+ Add New pipeline</button>
+    </div>
+  </header>
+
+  <div class="pipeline-actions">
+    <button class="btn-filter"> Filters</button>
+    <button class="btn-primary">+ Add Stage</button>
+  </div>
+
+  <div class="kanban-board" cdkDropListGroup>
+  
+  <div class="kanban-column" *ngFor="let stage of stages">
+    <div class="column-header">
+      <h3>{{ stage.title }}</h3>
+      <span class="count">{{ stage.candidates.length }}</span>
+    </div>
+
+    <div 
+      class="column-content"
+      cdkDropList
+      [cdkDropListData]="stage.candidates"
+      (cdkDropListDropped)="drop($event)">
+      
+      <div class="candidate-card" *ngFor="let c of stage.candidates" cdkDrag>
+        
+        <div class="card-placeholder" *cdkDragPlaceholder></div>
+
+        <div class="card-body">
+          <div class="avatar">{{ c.avatar }}</div>
+          <div class="info">
+            <h4>{{ c.name }}</h4>
+            <p>{{ c.role }}</p>
+          </div>
+        </div>
+        <div class="card-footer">
+          <span class="score-badge">{{ c.score }}</span>
+          <span class="time">{{ c.timeAgo }}</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

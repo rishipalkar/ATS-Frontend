@@ -1,0 +1,59 @@
+<div class="login-wrapper">
+  <div class="login-card">
+    <div class="brand-section">
+      <div class="logo-box"></div>
+      <h1>TalentFlow</h1>
+      <p>Sign in to your dashboard</p>
+    </div>
+
+    <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
+      
+      <div class="field">
+        <span>Login As</span>
+        <select formControlName="userType">
+          <option *ngFor="let type of userTypes" [value]="type.value">{{ type.label }}</option>
+        </select>
+      </div>
+
+      <div class="method-toggle">
+        <button type="button" 
+                [class.active]="loginMethod === 'email'" 
+                (click)="setLoginMethod('email')">Email</button>
+        <button type="button" 
+                [class.active]="loginMethod === 'phone'" 
+                (click)="setLoginMethod('phone')">Phone</button>
+      </div>
+
+      <div class="field" *ngIf="loginMethod === 'email'">
+        <span>Email Address</span>
+        <input type="email" formControlName="email" placeholder="Rudra@example.com">
+      </div>
+
+      <div class="field" *ngIf="loginMethod === 'phone'">
+        <span>Phone Number</span>
+        <div class="phone-input-group">
+          <span class="prefix">+91</span>
+          <input type="tel" formControlName="phone" placeholder="9876543210">
+        </div>
+      </div>
+
+      <div class="field">
+        <span>Password</span>
+        <input type="password" formControlName="password" placeholder="••••••••">
+      </div>
+
+      <div class="login-footer">
+        <label class="remember-me"><input type="checkbox"> Remember me</label>
+        <a href="#" class="forgot-link">Forgot Password?</a>
+      </div>
+
+      <button type="submit" class="btn-login" [disabled]="!loginForm.valid || isLoading">
+        {{ isLoading ? 'Verifying...' : 'Sign In' }}
+      </button>
+
+    </form>
+    <div class="signup-section">
+      <p>New to TalentFlow? <a routerLink="/signup">Create an account</a></p>
+    </div>
+  </div>
+</div>

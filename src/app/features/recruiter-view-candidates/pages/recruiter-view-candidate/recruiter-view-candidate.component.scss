@@ -1,362 +1,360 @@
-// /* ===== LAYOUT ===== */
-// .layout {
-//   display: flex;
-//   height: 100vh;
-//   font-family: 'Segoe UI', sans-serif;
-// }
+// 1. Variables & Global Styles
+$primary: #4f46e5;      // Indigo
+$success: #10b981;      // Emerald Green
+$error: #ef4444;        // Red
+$warning: #f59e0b;      // Amber
+$bg-soft: #f8fafc;
+$border: #e2e8f0;
+$text-main: #1e293b;
+$text-muted: #64748b;
 
-// /* ===== SIDEBAR ===== */
-// .sidebar {
-//   width: 240px;
-//   background: #111827;
-//   color: white;
-//   padding: 20px;
-//   display: flex;
-//   flex-direction: column;
-//   justify-content: space-between;
-// }
-
-// .logo {
-//   font-size: 20px;
-//   font-weight: bold;
-//   margin-bottom: 20px;
-// }
-
-// .sidebar nav {
-//   display: flex;
-//   flex-direction: column;
-//   gap: 12px;
-// }
-
-// .sidebar nav a {
-//   color: #9ca3af;
-//   cursor: pointer;
-//   padding: 8px;
-//   border-radius: 6px;
-//   transition: 0.2s;
-// }
-
-// .sidebar nav a:hover,
-// .sidebar nav a.active {
-//   background: #1f2937;
-//   color: white;
-// }
-
-// .user {
-//   font-size: 14px;
-//   border-top: 1px solid #374151;
-//   padding-top: 10px;
-// }
-
-// /* ===== MAIN ===== */
-// .main {
-//   flex: 1;
-//   padding: 20px;
-//   background: #f9fafb;
-//   overflow-y: auto;
-// }
-
-// /* ===== HEADER ===== */
-// .header {
-//   display: flex;
-//   justify-content: space-between;
-//   align-items: center;
-// }
-
-// .status {
-//   background: #dcfce7;
-//   color: #166534;
-//   padding: 5px 10px;
-//   border-radius: 6px;
-//   font-size: 12px;
-// }
-
-// /* ===== CARD ===== */
-// .card {
-//   background: white;
-//   padding: 15px;
-//   margin-top: 15px;
-//   border-radius: 10px;
-//   border: 1px solid #e5e7eb;
-// }
-
-// .jd-header {
-//   display: flex;
-//   justify-content: space-between;
-//   align-items: center;
-// }
-
-// .collapsed {
-//   color: #6b7280;
-// }
-
-// /* ===== BUTTONS ===== */
-// .view-btn {
-//   background: #4f46e5;
-//   color: white;
-//   border: none;
-//   padding: 6px 12px;
-//   border-radius: 6px;
-//   cursor: pointer;
-// }
-
-// .scan-btn {
-//   background: #22c55e;
-//   color: white;
-//   border: none;
-//   padding: 8px 16px;
-//   border-radius: 6px;
-//   cursor: pointer;
-// }
-
-// /* ===== CONTROLS ===== */
-// .controls {
-//   display: flex;
-//   justify-content: space-between;
-//   align-items: center;
-//   margin: 15px 0;
-// }
-
-// .range-box {
-//   display: flex;
-//   align-items: center;
-//   gap: 10px;
-// }
-
-// /* ===== TABLE ===== */
-// table {
-//   width: 100%;
-//   border-collapse: collapse;
-//   background: white;
-//   border-radius: 10px;
-//   overflow: hidden;
-// }
-
-// th, td {
-//   padding: 12px;
-//   text-align: left;
-//   border-bottom: 1px solid #e5e7eb;
-// }
-
-// th {
-//   background: #f3f4f6;
-// }
-
-// tr:hover {
-//   background: #f9fafb;
-// }
-
-// /* ===== PAGINATION ===== */
-// .pagination {
-//   display: flex;
-//   justify-content: space-between;
-//   margin-top: 15px;
-// }
-
-// /* ===== MODAL ===== */
-// .modal-overlay {
-//   position: fixed;
-//   top: 0;
-//   left: 0;
-//   width: 100%;
-//   height: 100%;
-//   background: rgba(0,0,0,0.5);
-
-//   display: flex;
-//   justify-content: center;
-//   align-items: center;
-
-//   z-index: 9999;
-// }
-
-// .modal {
-//   background: white;
-//   width: 500px;
-//   border-radius: 10px;
-//   padding: 20px;
-// }
-
-// .modal-header {
-//   display: flex;
-//   justify-content: space-between;
-// }
-
-// .close-btn {
-//   background: none;
-//   border: none;
-//   font-size: 18px;
-//   cursor: pointer;
-// }
-// .status-pill {
-//   display: inline-block;
-//   padding: 4px 16px;
-//   border-radius: 50px; // This creates the capsule shape
-//   font-size: 12px;
-//   font-weight: 600;
-//   text-transform: uppercase;
-//   letter-spacing: 0.5px;
-
-//   &.completed {
-//     background-color: #dcfce7; // Light Green
-//     color: #166534;           // Dark Green text
-//     border: 1px solid #bbf7d0;
-//   }
-
-//   &.pending {
-//     background-color: #fef9c3; // Light Yellow
-//     color: #854d0e;           // Dark Brown/Yellow text
-//     border: 1px solid #fef08a;
-//   }
-// }
-
-// .action-group {
-//   display: flex;
-//   gap: 8px;
-
-//   button {
-//     padding: 6px 12px;
-//     border-radius: 6px;
-//     font-size: 13px;
-//     cursor: pointer;
-//     border: none;
-//     transition: 0.2s;
-
-//     &.btn-view { background: #4f46e5; color: white; &:hover { background: #4338ca; } }
-//     &.btn-scan { background: #0ea5e9; color: white; &:hover { background: #0284c7; } }
-//   }
-// }
-
-// .muted { color: #94a3b8; font-style: italic; }
-
-// .pagination-footer {
-//   display: flex;
-//   justify-content: space-between;
-//   align-items: center;
-//   margin-top: 20px;
-//   padding: 15px;
-//   background: white;
-//   border-radius: 10px;
+.actions {
+  display: flex;
+  align-items: center;
+  margin-left: auto; // Pushes it to the far right
   
-//   .nav-btns {
-//     display: flex;
-//     align-items: center;
-//     gap: 15px;
-//     button { padding: 8px 16px; border-radius: 5px; border: 1px solid #e2e8f0; background: white; cursor: pointer; }
-//     .page-num { font-weight: bold; color: #4f46e5; }
-//   }
-// }
-
-$primary: #4f46e5;
-.dashboard-container {
-  background: #f8fafc;
+  .btn-primary {
+    height: 44px; // Consistent height with the job selector
+  }
+}
+.candidates-container {
+  padding: 40px;
+  background: $bg-soft;
   min-height: 100vh;
+  font-family: 'Inter', sans-serif;
 }
 
-/* NAVBAR */
-.top-navbar {
+// 2. Page Header & Job Selector
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 32px;
+
+  h1 { 
+    font-size: 28px; 
+    font-weight: 800; 
+    color: $text-main; 
+    margin: 0; 
+  }
+
+  .job-selector {
+    margin-top: 8px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    span { font-size: 13px; font-weight: 700; color: $text-muted; }
+    select {
+      padding: 8px 16px;
+      border-radius: 10px;
+      border: 1px solid $border;
+      font-weight: 600;
+      color: $primary;
+      background: white;
+      outline: none;
+      cursor: pointer;
+      &:focus { border-color: $primary; }
+    }
+  }
+}
+
+// 3. Table Layout
+.table-card {
   background: white;
-  padding: 15px 40px;
+  border-radius: 20px;
+  border: 1px solid $border;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+  overflow: hidden;
+}
+
+.candidate-table {
+  width: 100%;
+  border-collapse: collapse;
+  
+  thead {
+    background: #f1f5f9;
+    th {
+      padding: 16px 20px;
+      text-align: left;
+      font-size: 11px;
+      font-weight: 800;
+      color: #94a3b8;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+  }
+
+  tbody tr {
+    border-bottom: 1px solid #f1f5f9;
+    transition: background 0.2s;
+    
+    &.clickable-row:hover { background: #f8fafc; cursor: pointer; }
+    &.row-selected { background: #f5f3ff !important; }
+    &.row-disabled { background: #fafafa; }
+  }
+
+  td { padding: 16px 20px; font-size: 14px; color: #475569; vertical-align: middle; }
+}
+
+// 4. Columns & Specific Elements
+.check-col {
+  width: 60px;
+  text-align: center;
+  input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    accent-color: $primary;
+    cursor: pointer;
+  }
+  .scanned-lock { opacity: 0.5; cursor: help; }
+}
+
+.clickable-name {
+  color: $text-main;
+  font-weight: 700;
+  &:hover { color: $primary; text-decoration: underline; }
+}
+
+.match-badge {
+  background: #ecfdf5;
+  color: $success;
+  padding: 4px 10px;
+  border-radius: 50px;
+  font-weight: 800;
+  font-size: 12px;
+}
+
+.pending-badge {
+  background: #f1f5f9;
+  color: #94a3b8;
+  padding: 4px 10px;
+  border-radius: 50px;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+// 5. Action Column & Button Fixes
+.action-col {
+  min-width: 240px; // Prevents overlap
+}
+
+.decision-group {
+  display: flex;
+  align-items: center;
+  gap: 8px; // Crucial for spacing
+}
+
+.btn-report-icon {
+  background: white;
+  border: 1px solid $border;
+  padding: 8px;
+  border-radius: 8px;
+  color: $text-muted;
+  display: flex;
+  cursor: pointer;
+  flex-shrink: 0;
+  &:hover { color: $primary; border-color: $primary; background: #f5f3ff; }
+}
+
+.btn-scan {
+  background: $primary;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 13px;
+  cursor: pointer;
+  &:hover { background: darken($primary, 5%); }
+}
+
+.btn-action {
+  padding: 6px 14px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  border: 1px solid transparent;
+  white-space: nowrap; // Keeps text on one line
+  flex-shrink: 0;
+
+  &.shortlist {
+    background: #ecfdf5;
+    color: $success;
+    border-color: #d1fae5;
+    &:hover { background: $success; color: white; }
+  }
+
+  &.reject {
+    background: #fef2f2;
+    color: $error;
+    border-color: #fee2e2;
+    &:hover { background: $error; color: white; }
+  }
+}
+
+.status-label {
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  border-radius: 6px;
+  letter-spacing: 0.5px;
+
+  &.shortlisted { background: #d1fae5; color: #065f46; }
+  &.rejected { background: #fee2e2; color: #991b1b; }
+}
+
+// 6. Pagination Footer
+.table-footer {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 1px solid #e2e8f0;
+  padding: 24px;
+  background: #fcfcfd;
+  border-top: 1px solid $border;
 
-  .nav-left {
+  .btn-text {
+    background: transparent;
+    border: none;
+    color: $error;
+    font-weight: 700;
+    cursor: pointer;
+    &:hover { text-decoration: underline; }
+  }
+
+  .pagination-controls {
     display: flex;
     align-items: center;
-    gap: 30px;
-    .logo { color: #4f46e5; font-weight: 800; font-size: 20px; }
-    .drive-title { font-size: 18px; margin: 0; color: #1e293b; }
-  }
-  .active { color: #10b981; font-weight: bold; }
-}
-
-/* JD CARD */
-.jd-ref-card {
-  margin: 20px 40px;
-  background: white;
-  border: 1px solid #e2e8f0;
-  border-radius: 12px;
-  padding: 15px 25px;
-  display: flex;
-  justify-content: space-between;
-  cursor: pointer;
-  &:hover { background: #f1f5f9; }
-  .jd-content { display: flex; gap: 10px; font-weight: 500; color: #475569; }
-}
-
-/* FILTER BAR */
-.filter-bar {
-  margin: 0 40px 20px;
-  display: flex;
-  justify-content: space-between;
-
-  .search-box {
-    background: white;
-    border: 1px solid #e2e8f0;
-    border-radius: 8px;
-    padding: 10px 15px;
-    width: 400px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    input { border: none; outline: none; width: 100%; font-size: 14px; }
-  }
-
-  .btn-bulk-scan {
-    background: #4f46e5; color: white; border: none; padding: 10px 20px;
-    border-radius: 8px; font-weight: bold; cursor: pointer;
-    &:hover { background: #4338ca; }
-  }
-}
-
-/* TABLE & STATUS */
-.table-container { margin: 0 40px; background: white; border-radius: 12px; border: 1px solid #e2e8f0; overflow: hidden; }
-.candidate-table {
-  width: 100%; border-collapse: collapse;
-  th { text-align: left; padding: 15px; background: #f8fafc; color: #64748b; font-size: 12px; text-transform: uppercase; }
-  td { padding: 15px; border-bottom: 1px solid #f1f5f9; font-size: 14px; }
-}
-
-.status-pill {
-  padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 600;
-  &.completed { background: #dcfce7; color: #166534; }
-  &.pending { background: #fef9c3; color: #854d0e; }
-}
-
-/* MODAL */
-.modal-overlay {
-  position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-  background: rgba(0,0,0,0.5); display: flex; justify-content: center; align-items: center; z-index: 1000;
-}
-.modal-box {
-  background: white; width: 600px; border-radius: 16px; overflow: hidden;
-  .modal-header { padding: 20px; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; }
-  .modal-body { padding: 30px; line-height: 1.6; }
-  .close-x { background: none; border: none; font-size: 20px; cursor: pointer; }
-}
-
-/* PAGINATION */
-.pagination-footer {
-  margin: 20px 40px; display: flex; justify-content: space-between; align-items: center;
-  .nav-btns { display: flex; gap: 10px; align-items: center; }
-  button { padding: 8px 15px; border: 1px solid #ddd; background: white; border-radius: 5px; cursor: pointer; }
-}
-
-.btn-back {
-      background: transparent;
-      border: none;
-      color: $primary;
-      font-weight: 700;
-      font-size: 14px;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      padding: 0;
-      transition: transform 0.2s ease;
-
-      &:hover {
-        transform: translateX(-4px);
+    gap: 20px;
+    .page-info { font-size: 13px; font-weight: 600; color: $text-muted; }
+    .nav-buttons {
+      display: flex; gap: 8px;
+      .btn-nav {
+        padding: 8px 16px; border-radius: 8px; border: 1px solid $border;
+        background: white; font-weight: 700; cursor: pointer;
+        &:disabled { opacity: 0.5; cursor: not-allowed; }
+        &:not(:disabled):hover { border-color: $primary; color: $primary; }
       }
     }
+  }
+}
+
+// 7. Modal / Popup Overlay
+.modal-overlay {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(15, 23, 42, 0.6);
+  backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  animation: fadeIn 0.2s ease;
+}
+
+.modal-card {
+  background: white;
+  width: 100%;
+  max-width: 550px;
+  border-radius: 24px;
+  padding: 32px;
+  position: relative;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  animation: slideUp 0.3s ease-out;
+
+  .btn-close {
+    position: absolute; top: 24px; right: 24px;
+    background: transparent; border: none; font-size: 20px;
+    color: #94a3b8; cursor: pointer;
+    &:hover { color: $text-main; }
+  }
+}
+
+.modal-header {
+  display: flex; align-items: center; gap: 20px; margin-bottom: 28px;
+  .avatar-large {
+    width: 64px; height: 64px; background: #eef2ff; color: $primary;
+    border-radius: 16px; display: flex; align-items: center; justify-content: center;
+    font-size: 24px; font-weight: 800;
+  }
+  h2 { margin: 0; font-size: 24px; color: $text-main; }
+  .role-badge { color: $text-muted; font-weight: 600; }
+}
+
+.detail-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid #f1f5f9;
+
+  label { display: block; font-size: 11px; font-weight: 800; color: #94a3b8; text-transform: uppercase; margin-bottom: 4px; }
+  p { margin: 0; font-weight: 700; color: #334155; }
+  
+  .status-indicator {
+    color: $success;
+    &.on-notice { color: $warning; }
+  }
+}
+
+.profile-section {
+  margin-top: 24px;
+  h3 { font-size: 12px; font-weight: 800; color: #94a3b8; text-transform: uppercase; margin-bottom: 12px; }
+  .summary-text { font-size: 14px; line-height: 1.6; color: #475569; margin: 0; }
+}
+
+.skill-pills {
+  display: flex; flex-wrap: wrap; gap: 8px;
+  .pill {
+    background: #f1f5f9; color: #475569; padding: 6px 12px;
+    border-radius: 50px; font-size: 12px; font-weight: 700;
+    border: 1px solid #e2e8f0;
+  }
+}
+
+.modal-footer {
+  display: flex; justify-content: flex-end; gap: 12px; margin-top: 32px;
+  .btn-secondary { background: #f1f5f9; border: none; padding: 12px 24px; border-radius: 12px; font-weight: 700; cursor: pointer; }
+  .btn-primary { background: $primary; color: white; border: none; padding: 12px 28px; border-radius: 12px; font-weight: 700; cursor: pointer; }
+}
+// GLOBAL BUTTON BASE - Add this to ensure all scan buttons are styled
+.btn-primary, .btn-scan {
+  background: #4f46e5 !important; // Forced $primary color
+  color: white !important;
+  border: none;
+  padding: 10px 22px;
+  border-radius: 10px;
+  font-weight: 700;
+  font-size: 14px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+
+  &:hover {
+    background: #4338ca !important; // Darker indigo
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(79, 70, 229, 0.2);
+  }
+
+  &:disabled {
+    background: #cbd5e1 !important;
+    cursor: not-allowed;
+    transform: none;
+  }
+}
+
+// Specifically for the button inside the table (slightly smaller)
+.candidate-table .btn-scan {
+  padding: 8px 16px;
+  font-size: 13px;
+  border-radius: 8px;
+}
+// 8. Animations
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }

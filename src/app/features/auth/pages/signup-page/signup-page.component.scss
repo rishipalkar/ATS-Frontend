@@ -1,0 +1,137 @@
+$primary: #4f46e5;
+$bg-soft: #f8fafc;
+$border: #e2e8f0;
+
+.signup-container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: $bg-soft;
+  padding: 20px;
+}
+
+.signup-card {
+  width: 100%;
+  max-width: 520px;
+  background: white;
+  padding: 40px;
+  border-radius: 24px;
+  border: 1px solid $border;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
+
+  .brand-header {
+    text-align: center;
+    margin-bottom: 30px;
+    .logo-placeholder { width: 44px; height: 44px; background: $primary; border-radius: 12px; margin: 0 auto 16px; }
+    h1 { font-size: 24px; font-weight: 800; color: #1e293b; margin: 0; }
+    p { color: #64748b; font-size: 14px; margin-top: 8px; }
+  }
+}
+
+.input-group {
+  margin-bottom: 20px;
+  label { display: block; font-size: 13px; font-weight: 700; color: #475569; margin-bottom: 8px; }
+  input {
+    width: 100%; padding: 12px 16px; border: 1px solid $border; border-radius: 12px;
+    background: #fcfcfd; font-size: 14px;
+    &:focus { outline: none; border-color: $primary; box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.1); }
+  }
+}
+
+.role-selector {
+  margin-bottom: 24px;
+  .toggle-pills {
+    display: flex; gap: 10px; margin-top: 8px;
+    button {
+      flex: 1; padding: 10px; border: 1px solid $border; background: white;
+      border-radius: 10px; font-weight: 600; color: #64748b; cursor: pointer;
+      &.active { background: #f5f3ff; border-color: $primary; color: $primary; }
+    }
+  }
+}
+
+.row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+.btn-primary {
+  width: 100%; padding: 14px; background: $primary; color: white; border: none;
+  border-radius: 12px; font-weight: 700; font-size: 16px; cursor: pointer;
+  &:disabled { background: #cbd5e1; cursor: not-allowed; }
+}
+
+.footer-link {
+  text-align: center; margin-top: 24px; font-size: 14px; color: #64748b;
+  a { color: $primary; font-weight: 700; text-decoration: none; }
+}
+$primary: #4f46e5;
+$border: #e2e8f0;
+
+// Apply box-sizing to ensure padding doesn't push widths outward
+.signup-card * {
+  box-sizing: border-box;
+}
+
+.recruiter-section {
+  margin-top: 20px;
+  padding: 20px;
+  background: #f8fafc; // Light blue-gray background to distinguish the section
+  border-radius: 12px;
+  border: 1px dashed $border;
+  animation: fadeIn 0.3s ease-in-out;
+
+  .row {
+    display: grid;
+    // 1fr 1fr splits the space exactly in half
+    grid-template-columns: 1fr 1fr; 
+    // column-gap creates the physical space between the two fields
+    column-gap: 20px; 
+    row-gap: 15px;
+    width: 100%;
+  }
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  // CRITICAL: Prevents the field from expanding past its 1fr boundary
+  min-width: 0; 
+
+  span {
+    display: block;
+    font-size: 13px;
+    font-weight: 700;
+    color: #475569;
+    margin-bottom: 8px;
+    white-space: nowrap; // Prevents the label from wrapping and looking messy
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  input {
+    width: 100%; // Takes up the full width of the grid column
+    padding: 12px 16px;
+    border: 1px solid $border;
+    border-radius: 12px;
+    font-size: 14px;
+    background: white;
+    transition: border-color 0.2s;
+
+    &:focus {
+      outline: none;
+      border-color: $primary;
+      box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.1);
+    }
+  }
+}
+
+// Responsive Fix: Stack them on mobile/small screens so they NEVER overlap
+@media (max-width: 480px) {
+  .recruiter-section .row {
+    grid-template-columns: 1fr; // Changes to 1 column on mobile
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-5px); }
+  to { opacity: 1; transform: translateY(0); }
+}

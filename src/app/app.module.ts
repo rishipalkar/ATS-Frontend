@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 // Import the Routing Module
 import { AppRoutingModule } from './app-routing.module';
@@ -19,7 +20,7 @@ import { LeftSidebarComponent } from './core/layout/components/left-sidebar/left
 import { SharedModule } from './core/shared/shared.module'; // Import SharedModule for shared components
 // Feature Components
 import { CandidateFormPageComponent } from './features/candidate-application/pages/candidate-form-page/candidate-form-page.component';
-import { CandidateLoginPageComponent } from './features/candidate-application/pages/candidate-login-page/candidate-login-page.component';
+import { LoginPageComponent } from './features/auth/pages/login-page/login-page.component';
 import { CandidateDashboardComponent } from './features/candidate-page/pages/candidate-dashboard/candidate-dashboard.component';
 import { RecruiterViewCandidateComponent } from './features/recruiter-view-candidates/pages/recruiter-view-candidate/recruiter-view-candidate.component';
 import { ReportPageComponent } from './features/recruiter-view-candidates/pages/report-page/report-page.component';
@@ -34,6 +35,10 @@ import { PageHeaderComponent } from './features/candidate-application/components
 import { RecruiterDashboardComponent } from './features/recruiter-dashboard/recruiter-dashboard.component';
 import { CreateJobComponent } from './features/recruiter-create-job/recruiter-create-job.component';
 import { RecruiterAdvancedSearchComponent } from './features/recruiter-advanced-search/recruiter-advanced-search.component';
+import { SignupPageComponent } from './features/auth/pages/signup-page/signup-page.component';
+import { RecruiterPipelineComponent } from './features/recruiter-pipeline/recruiter-pipeline.component';
+import { RecruiterInterviewsComponent } from './features/recruiter-interviews/recruiter-interviews.component';
+import { RecruiterFeedbackComponent } from './features/recruiter-feedback/recruiter-feedback.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -42,7 +47,7 @@ import { RecruiterAdvancedSearchComponent } from './features/recruiter-advanced-
     NavbarBottomComponent,
     LeftSidebarComponent,
     CandidateFormPageComponent,
-    CandidateLoginPageComponent,
+      LoginPageComponent,
     CandidateDashboardComponent,
     RecruiterViewCandidateComponent,
     ReportPageComponent,
@@ -54,7 +59,11 @@ import { RecruiterAdvancedSearchComponent } from './features/recruiter-advanced-
     PageHeaderComponent,
     RecruiterDashboardComponent,
     CreateJobComponent,
-    RecruiterAdvancedSearchComponent
+    RecruiterAdvancedSearchComponent,
+    SignupPageComponent,
+    RecruiterPipelineComponent,
+    RecruiterInterviewsComponent,
+    RecruiterFeedbackComponent,
   ],
   imports: [
     BrowserModule,
@@ -64,9 +73,10 @@ import { RecruiterAdvancedSearchComponent } from './features/recruiter-advanced-
     ReactiveFormsModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    SharedModule
+    SharedModule,
+    DragDropModule,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { } // Name fixed to be the root module
+export class AppModule {} // Name fixed to be the root module

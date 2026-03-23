@@ -272,3 +272,76 @@
     transform: scale(0.98);
   }
 }
+
+$primary: #4f46e5;
+$text-muted: #64748b;
+
+.main-header {
+  margin-bottom: 30px;
+  
+  .header-titles {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .btn-back {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: transparent;
+    border: none;
+    color: $primary;
+    font-size: 14px;
+    font-weight: 700;
+    padding: 0;
+    cursor: pointer;
+    width: fit-content;
+    transition: transform 0.2s ease;
+
+    svg {
+      transition: transform 0.2s ease;
+    }
+
+    &:hover {
+      color: darken($primary, 10%);
+      
+      svg {
+        transform: translateX(-4px); // Subtle arrow "nudge" on hover
+      }
+    }
+  }
+
+  .name-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    
+    h1 {
+      margin: 0;
+      font-size: 28px;
+      font-weight: 800;
+      color: #1e293b;
+    }
+  }
+}
+
+// Ensure the preview button still looks good
+.btn-preview {
+  background: white;
+  border: 1.5px solid #e2e8f0;
+  padding: 10px 20px;
+  border-radius: 10px;
+  font-weight: 700;
+  color: #475569;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  
+  &:hover {
+    background: #f8fafc;
+    border-color: $primary;
+    color: $primary;
+  }
+}

@@ -1,0 +1,60 @@
+<div class="signup-container">
+  <div class="signup-card">
+    <div class="brand-header">
+      <div class="logo-placeholder"></div>
+      <h1>Join TalentFlow</h1>
+      <p>Create an account to get started.</p>
+    </div>
+
+    <form [formGroup]="signupForm" (ngSubmit)="onSignup()">
+      
+      <div class="input-group">
+        <label>Full Name</label>
+        <input type="text" formControlName="name" placeholder="Hrishikesh M.">
+      </div>
+
+      <div class="input-group">
+        <label>Email Address</label>
+        <input type="email" formControlName="email" placeholder="name@company.com">
+      </div>
+
+      <div class="input-group">
+        <label>Password</label>
+        <input type="password" formControlName="password" placeholder="••••••••">
+      </div>
+
+      <div class="role-selector">
+        <label>I am a:</label>
+        <div class="toggle-pills">
+          <button type="button" 
+                  [class.active]="signupForm.get('userType')?.value === 'candidate'"
+                  (click)="signupForm.patchValue({userType: 'candidate'})">Candidate</button>
+          <button type="button" 
+                  [class.active]="signupForm.get('userType')?.value === 'recruiter'"
+                  (click)="signupForm.patchValue({userType: 'recruiter'})">Recruiter</button>
+        </div>
+      </div>
+
+      <div class="recruiter-section" *ngIf="signupForm.get('userType')?.value === 'recruiter'" [@fadeIn]>
+        <div class="row">
+          <div class="input-group">
+            <label>Company Name</label>
+            <input type="text" formControlName="companyName" placeholder="e.g. Google">
+          </div>
+          <div class="input-group">
+            <label>Employee ID</label>
+            <input type="text" formControlName="employeeId" placeholder="ID-001">
+          </div>
+        </div>
+      </div>
+
+      <button type="submit" class="btn-primary" [disabled]="!signupForm.valid || isLoading">
+        {{ isLoading ? 'Processing...' : 'Create Account' }}
+      </button>
+
+      <div class="footer-link">
+        Already have an account? <a routerLink="/login">Login here</a>
+      </div>
+    </form>
+  </div>
+</div>

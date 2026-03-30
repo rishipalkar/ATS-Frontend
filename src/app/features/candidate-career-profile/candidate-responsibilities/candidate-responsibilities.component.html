@@ -1,0 +1,160 @@
+<div class="career-profile-container">
+  <header class="page-header">
+    <div class="title-group">
+      <h1>My Career Profile</h1>
+      <p>Enhance your visibility by refining your auto-parsed professional data.</p>
+    </div>
+  </header>
+
+  <div class="profile-grid">
+    <section class="profile-card main-info">
+      <div class="card-header">
+        <span class="badge">CORE HIGHLIGHTS</span>
+        <h2>Work Experience Deep-Dive</h2>
+      </div>
+
+      <div class="form-body">
+
+        <!-- ── Parsed Cards Section ──────────────────────────────── -->
+        <div class="parsed-section" *ngIf="hasParsedData">
+          <div class="parsed-header">
+            <label>
+              Auto-extracted Responsibilities
+              <span class="count-badge">{{ parsedCards.length }}</span>
+            </label>
+            <div class="expand-controls">
+              <button class="btn-text" (click)="expandAll()">Expand All</button>
+              <span class="divider-dot">·</span>
+              <button class="btn-text" (click)="collapseAll()">Collapse All</button>
+            </div>
+          </div>
+
+          <div class="resp-cards">
+            <div
+              class="resp-card"
+              *ngFor="let card of parsedCards; let i = index"
+              [class.expanded]="card.isExpanded">
+
+              <!-- ── Card Header — always visible, click to toggle ── -->
+              <div class="resp-card-header" (click)="toggleCard(card)">
+                <div class="resp-card-preview">
+                  <span class="resp-index">{{ i + 1 }}</span>
+                  <p class="resp-preview-text">
+                    {{ card.isExpanded ? card.description : (card.description | slice:0:80) + (card.description.length > 80 ? '...' : '') }}
+                  </p>
+                </div>
+                <div class="resp-card-actions">
+                  <span
+                    class="proficiency-badge"
+                    [ngClass]="card.proficiencyLevel.toLowerCase()">
+                    {{ card.proficiencyLevel }}
+                  </span>
+                  <svg
+                    class="chevron"
+                    [class.rotated]="card.isExpanded"
+                    width="16" height="16"
+                    viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2">
+                    <polyline points="6 9 12 15 18 9"/>
+                  </svg>
+                </div>
+              </div>
+
+              <!-- ── Expanded Content ──────────────────────────────── -->
+              <div class="resp-card-body" *ngIf="card.isExpanded">
+                <div class="form-group">
+                  <label>Full Description</label>
+                  <textarea
+                    [(ngModel)]="card.description"
+                    rows="3">
+                  </textarea>
+                </div>
+
+                <div class="form-row">
+                  <div class="form-group flex-1">
+                    <label>Key Deliverable</label>
+                    <textarea
+                      [(ngModel)]="card.deliverable"
+                      rows="2"
+                      placeholder="What was the tangible output?">
+                    </textarea>
+                  </div>
+                  <div class="form-group">
+                    <label>Proficiency</label>
+                    <select [(ngModel)]="card.proficiencyLevel">
+                      <option value="Beginner">Beginner</option>
+                      <option value="Intermediate">Intermediate</option>
+                      <option value="Advanced">Advanced</option>
+                      <option value="Expert">Expert</option>
+                    </select>
+                  </div>
+                </div>
+
+                <button class="btn-remove" (click)="removeCard(i)">
+                  × Remove
+                </button>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <!-- ── Empty state — shown before resume upload ────────────── -->
+        <div class="empty-state" *ngIf="!hasParsedData">
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none"
+            stroke="#9ca3af" stroke-width="1.5">
+            <path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+          </svg>
+          <p>Upload your resume from the sidebar to auto-extract responsibilities.</p>
+        </div>
+
+        <hr class="divider">
+
+        <!-- ── Manual Entry Form ─────────────────────────────────── -->
+        <div class="manual-entry">
+          <label class="section-label">Add Manually</label>
+
+          <div class="form-group">
+            <label>Responsibility / KRA</label>
+            <textarea
+              [(ngModel)]="responsibilities"
+              rows="3"
+              placeholder="Describe a key responsibility...">
+            </textarea>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group flex-1">
+              <label>Key Deliverable</label>
+              <textarea
+                [(ngModel)]="deliverables"
+                rows="2"
+                placeholder="What was the tangible output?">
+              </textarea>
+            </div>
+            <div class="form-group">
+              <label>Proficiency</label>
+              <select [(ngModel)]="proficiency">
+                <option value="Beginner">Beginner</option>
+                <option value="Intermediate">Intermediate</option>
+                <option value="Advanced">Advanced</option>
+                <option value="Expert">Expert</option>
+              </select>
+            </div>
+          </div>
+
+          <button class="btn-secondary mt-2" (click)="addManualEntry()">
+            + Add Entry
+          </button>
+        </div>
+
+      </div>
+    </section>
+  </div>
+
+  <div class="submit-row">
+    <button class="btn-primary" (click)="saveProfile()">
+      Save Responsibilities
+    </button>
+  </div>
+</div>

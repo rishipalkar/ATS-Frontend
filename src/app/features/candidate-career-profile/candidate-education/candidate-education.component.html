@@ -1,0 +1,101 @@
+<div class="content-card relative">
+  <span class="badge">ACADEMIC HISTORY</span>
+  <h2 class="card-title">Education & Certifications</h2>
+
+  <div class="form-body bg-slate-50 p-4 rounded-lg mb-6">
+    <div class="form-group">
+      <label>UNIVERSITY / SCHOOL NAME</label>
+      <input type="text" [(ngModel)]="newRecord.institution" class="form-control" placeholder="e.g., Stanford University">
+    </div>
+
+    <div class="form-row mt-3">
+      <div class="form-group flex-1">
+        <label>DEGREE / CERTIFICATION</label>
+        <input type="text" [(ngModel)]="newRecord.degree" class="form-control" placeholder="e.g., B.Tech">
+      </div>
+      <div class="form-group flex-1">
+        <label>FIELD OF STUDY</label>
+        <input type="text" [(ngModel)]="newRecord.fieldOfStudy" class="form-control" placeholder="e.g., Computer Science">
+      </div>
+    </div>
+
+    <button class="btn-secondary mt-4" (click)="addEducation()">+ Add Education</button>
+  </div>
+
+  <p class="helper-text">Click a card to upload marksheets (10th, 12th, or Degree).</p>
+
+  <div class="records-grid">
+    <div *ngFor="let record of educationHistory; let i = index" 
+         class="education-card" 
+         [class.is-parsed]="record.isParsed"
+         (click)="openUploadModal(i)">
+      
+      <div class="card-content">
+        <div class="card-main">
+          <span class="parsed-indicator" *ngIf="record.isParsed">AI Mapped</span>
+          <h3>{{ record.degree }}</h3>
+          <p class="institution">{{ record.institution }}</p>
+          <p class="meta">{{ record.fieldOfStudy }} • {{ record.endDate || 'Ongoing' }}</p>
+        </div>
+        
+        <div class="card-status">
+          <span class="doc-badge" [class.uploaded]="record.documents.degreeCertificate">
+            {{ record.documents.degreeCertificate ? '✓ Cert' : '○ Cert' }}
+          </span>
+          <span class="doc-badge" [class.uploaded]="record.documents.transcript">
+            {{ record.documents.transcript ? '✓ Marks' : '○ Marks' }}
+          </span>
+        </div>
+      </div>
+
+      <button class="delete-btn" (click)="$event.stopPropagation(); removeEducation(i)">×</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" *ngIf="showDocumentModal && activeRecordForDocs">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h2>Upload Marksheets / Documents</h2>
+      <button class="close-modal-btn" (click)="closeUploadModal()">×</button>
+    </div>
+
+    <div class="modal-body">
+      <div class="input-group">
+        <label>INSTITUTION</label>
+        <input type="text" [value]="activeRecordForDocs.institution" disabled class="form-control disabled-input">
+      </div>
+
+      <div class="upload-section mt-4">
+        <label class="section-label">SELECT FILES (10TH / 12TH / DEGREE)</label>
+        <div class="upload-row">
+          <div class="upload-item">
+            <p>Degree Certificate</p>
+            <input type="file" hidden #file1 (change)="onFileSelected($event, 'degree')">
+            <button class="btn-outline" (click)="file1.click()">
+              {{ activeRecordForDocs.documents.degreeCertificate ? 'Change File' : 'Choose File' }}
+            </button>
+            <small class="file-name" *ngIf="activeRecordForDocs.documents.degreeCertificate">
+              {{ activeRecordForDocs.documents.degreeCertificate.name }}
+            </small>
+          </div>
+
+          <div class="upload-item">
+            <p>Marksheet / Transcript</p>
+            <input type="file" hidden #file2 (change)="onFileSelected($event, 'transcript')">
+            <button class="btn-outline" (click)="file2.click()">
+              {{ activeRecordForDocs.documents.transcript ? 'Change File' : 'Choose File' }}
+            </button>
+            <small class="file-name" *ngIf="activeRecordForDocs.documents.transcript">
+              {{ activeRecordForDocs.documents.transcript.name }}
+            </small>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-footer">
+      <button class="btn-secondary" (click)="closeUploadModal()">Save & Exit</button>
+    </div>
+  </div>
+</div>

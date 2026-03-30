@@ -1,0 +1,387 @@
+// ── Parsed section ────────────────────────────────────────────────
+$primary: #6b63ff;
+$border: #e2e8f0;
+$bg-card: #f8fafc;
+$text-dark: #0f172a;
+.parsed-section {
+  margin-bottom: 28px;
+}
+
+.parsed-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+
+  label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    font-weight: 800;
+    color: #64748b;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 0; // override .form-group label margin
+  }
+}
+
+.count-badge {
+  background: $primary;
+  color: white;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 999px;
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+.expand-controls {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.btn-text {
+  background: none;
+  border: none;
+  color: $primary;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 0;
+
+  &:hover { text-decoration: underline; }
+}
+
+.divider-dot {
+  color: #cbd5e1;
+  font-size: 16px;
+}
+
+// ── Cards list ────────────────────────────────────────────────────
+.resp-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 24px;
+}
+
+.resp-card {
+  border: 1px solid $border;
+  border-radius: 14px;
+  overflow: hidden;
+  transition: box-shadow 0.2s, border-color 0.2s;
+  background: $bg-card;
+
+  &:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.07);
+  }
+
+  &.expanded {
+    border-color: $primary;
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.12);
+  }
+}
+
+// ── Card header — clickable row ───────────────────────────────────
+.resp-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 18px;
+  cursor: pointer;
+  background: #f8fafc;
+  gap: 12px;
+  user-select: none;
+
+  &:hover { background: #f1f5f9; }
+}
+
+.resp-card-preview {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  flex: 1;
+  min-width: 0;
+}
+
+.resp-index {
+  background: rgba(99, 102, 241, 0.1);
+  color: $primary;
+  font-size: 11px;
+  font-weight: 800;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.resp-preview-text {
+  font-size: 14px;
+  color: $text-dark;
+  line-height: 1.55;
+  margin: 0;
+  word-break: break-word;
+}
+
+.resp-card-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+// ── Chevron ───────────────────────────────────────────────────────
+.chevron {
+  color: #94a3b8;
+  transition: transform 0.25s ease;
+  flex-shrink: 0;
+
+  &.rotated { transform: rotate(180deg); }
+}
+
+// ── Proficiency badges ────────────────────────────────────────────
+.proficiency-badge {
+  font-size: 10px;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 999px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+
+  &.beginner     { background: #fef9c3; color: #854d0e; }
+  &.intermediate { background: rgba(99, 102, 241, 0.1); color: $primary; }
+  &.advanced     { background: #dcfce7; color: #166534; }
+  &.expert       { background: #f3e8ff; color: #6b21a8; }
+}
+
+// ── Expanded body ─────────────────────────────────────────────────
+.resp-card-body {
+  padding: 20px;
+  border-top: 1px solid $border;
+  background: white;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  // reuse existing textarea styles from .form-group
+  .form-group {
+    margin-bottom: 0;
+  }
+}
+
+.btn-remove {
+  align-self: flex-start;
+  background: none;
+  border: 1px solid #fca5a5;
+  color: #dc2626;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 5px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.15s;
+
+  &:hover { background: #fee2e2; }
+}
+
+// ── Empty state ───────────────────────────────────────────────────
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 36px 20px;
+  text-align: center;
+  color: #94a3b8;
+  font-size: 14px;
+  border: 2px dashed $border;
+  border-radius: 14px;
+  margin-bottom: 24px;
+
+  p { margin: 0; line-height: 1.5; }
+}
+
+// ── Manual entry section ──────────────────────────────────────────
+.section-label {
+  display: block;
+  font-size: 12px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #64748b;
+  margin-bottom: 14px;
+}
+
+// ── Fix manual entry form layout ──────────────────────────────────
+.manual-entry {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  .form-group {
+    margin-bottom: 0;
+    display: flex;
+    flex-direction: column;
+
+    label {
+      display: block;
+      font-size: 12px;
+      font-weight: 800;
+      color: #64748b;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 8px;
+    }
+
+    textarea {
+      width: 100%;
+      padding: 14px 16px;
+      border-radius: 12px;
+      border: 1px solid $border;
+      font-family: inherit;
+      font-size: 14px;
+      color: $text-dark;
+      resize: vertical;
+      min-height: 90px;
+      box-sizing: border-box;
+      transition: border-color 0.2s, box-shadow 0.2s;
+
+      &:focus {
+        outline: none;
+        border-color: $primary;
+        box-shadow: 0 0 0 4px rgba(107, 99, 255, 0.1);
+      }
+    }
+
+    select {
+      width: 100%;
+      padding: 12px 16px;
+      border-radius: 12px;
+      border: 1px solid $border;
+      font-family: inherit;
+      font-size: 14px;
+      font-weight: 600;
+      color: $text-dark;
+      background: white;
+      cursor: pointer;
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 12px center;
+
+      &:focus {
+        outline: none;
+        border-color: $primary;
+        box-shadow: 0 0 0 4px rgba(107, 99, 255, 0.1);
+      }
+    }
+  }
+
+  // form-row inside manual entry
+  .form-row {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 16px;
+    align-items: start;
+  }
+}
+
+// ── Fix resp-card-body form fields ────────────────────────────────
+.resp-card-body {
+  .form-group {
+    margin-bottom: 0;
+    display: flex;
+    flex-direction: column;
+
+    label {
+      display: block;
+      font-size: 12px;
+      font-weight: 800;
+      color: #64748b;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 8px;
+    }
+
+    textarea {
+      width: 100%;
+      padding: 14px 16px;
+      border-radius: 12px;
+      border: 1px solid $border;
+      font-family: inherit;
+      font-size: 14px;
+      color: $text-dark;
+      resize: vertical;
+      min-height: 80px;
+      box-sizing: border-box;
+      transition: border-color 0.2s, box-shadow 0.2s;
+
+      &:focus {
+        outline: none;
+        border-color: $primary;
+        box-shadow: 0 0 0 4px rgba(107, 99, 255, 0.1);
+      }
+    }
+
+    select {
+      width: 100%;
+      padding: 12px 16px;
+      border-radius: 12px;
+      border: 1px solid $border;
+      font-family: inherit;
+      font-size: 14px;
+      font-weight: 600;
+      color: $text-dark;
+      background: white;
+      cursor: pointer;
+
+      &:focus {
+        outline: none;
+        border-color: $primary;
+        box-shadow: 0 0 0 4px rgba(107, 99, 255, 0.1);
+      }
+    }
+  }
+
+  .form-row {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 16px;
+    align-items: start;
+  }
+}
+
+// ── Divider ───────────────────────────────────────────────────────
+.divider {
+  border: none;
+  border-top: 1px solid $border;
+  margin: 24px 0;
+}
+
+// ── Add entry button ──────────────────────────────────────────────
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #f1f5f9;
+  border: 1px solid $border;
+  color: $text-dark;
+  font-size: 13px;
+  font-weight: 700;
+  padding: 10px 20px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.15s;
+
+  &:hover {
+    background: $primary;
+    color: white;
+    border-color: $primary;
+  }
+}

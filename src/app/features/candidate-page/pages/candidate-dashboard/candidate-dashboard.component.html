@@ -1,50 +1,40 @@
-<div class="dashboard-wrapper">
-  
-  <div class="main-content">
-    <div class="dashboard-header">
-      <h2>Welcome Candidate!</h2>
-      <p>Recommended job openings for your profile</p>
+<div class="dashboard-layout">
 
-      <div class="search-container">
-        <div class="search-box">
-          <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <circle cx="11" cy="11" r="8"></circle>
-            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-          </svg>
-          <input type="text" [(ngModel)]="searchQuery" (input)="onSearchChange()" placeholder="Search by role, skill, or location..." />
-        </div>
-        <button class="btn-primary">Search</button>
-      </div>
-    </div>
+  <!-- LEFT SIDE (Jobs) -->
+  <div class="left-section">
+    <div class="jobs-grid">
+      <div class="job-card" *ngFor="let job of availableJobs">
 
-    <div class="job-grid">
-      <div class="job-card" *ngFor="let job of filteredJobs">
         <div class="card-header">
-          <div class="title-group">
-            <h4>{{ job.role }}</h4>
-            <span class="job-type">{{ job.type }}</span>
-          </div>
-          <span class="experience-tag">{{ job.experience }} Exp</span>
+          <h2>{{ job.rolePosition }}</h2>
+          <span class="badge">{{ job.workModel }}</span>
         </div>
 
         <div class="card-body">
-          <p class="description">{{ job.description }}</p>
-          <div class="skills-row">
-            <span class="skill-pill" *ngFor="let skill of job.skills">{{ skill }}</span>
-          </div>
+          <p class="company">TalentFlow</p> 
+          <p class="location">{{ job.workLocation }}</p>
+          <p><strong>Experience:</strong> {{ job.minExperienceYears }} yrs</p>
+          <p class="skills">
+            <strong>Skills:</strong> {{ job.requiredSkills }}
+          </p>
         </div>
 
         <div class="card-footer">
-          <button class="btn-apply" (click)="applyToJob(job.role)">Apply Now</button>
+          <button class="btn-apply">View Details</button>
         </div>
+
       </div>
     </div>
   </div>
 
-  <div class="side-panel">
+  <!-- RIGHT SIDE (Calendar) -->
+  <div class="right-section">
     <div class="calendar-card">
-      <h3>Important Dates</h3>
-      <app-candidate-calendar></app-candidate-calendar>
+      <h3 class="panel-title">Interview Calendar</h3>
+
+      <app-candidate-calendar
+        (dateSelected)="handleDateSelect($event)">
+      </app-candidate-calendar>
     </div>
   </div>
 

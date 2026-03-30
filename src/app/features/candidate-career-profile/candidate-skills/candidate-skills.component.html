@@ -1,0 +1,75 @@
+<div class="content-card">
+  <span class="badge">CORE HIGHLIGHTS</span>
+  <h2 class="card-title">Skills & Competencies</h2>
+
+  <div class="add-skill-section">
+    <div class="input-group skill-input">
+      <label>ADD NEW SKILL</label>
+      <input 
+        type="text" 
+        [(ngModel)]="newSkillName" 
+        (keyup.enter)="addSkill()"
+        placeholder="e.g., React, System Design, Agile" 
+        class="form-control"
+      >
+    </div>
+
+    <div class="input-group proficiency-input">
+      <label>CURRENT PROFICIENCY</label>
+      <select [(ngModel)]="selectedProficiency" class="form-control">
+        <option *ngFor="let level of proficiencyLevels" [value]="level">
+          {{ level }}
+        </option>
+      </select>
+    </div>
+
+    <div class="input-group button-input">
+      <button class="btn-secondary" (click)="addSkill()">Add Skill</button>
+    </div>
+  </div>
+
+  <p class="helper-text">Auto-extracted from your parsed resume. <strong>Click any card to adjust its proficiency level.</strong></p>
+
+  <div class="skills-container">
+    <div class="skill-tag" *ngFor="let skill of candidateSkills; let i = index" (click)="openEditModal(i)" style="cursor: pointer;">
+      <div class="skill-details">
+        <span class="skill-name">{{ skill.name }}</span>
+        <span class="skill-level" [ngClass]="skill.proficiency.toLowerCase()">
+          {{ skill.proficiency }}
+        </span>
+      </div>
+      <button class="delete-btn" (click)="$event.stopPropagation(); removeSkill(i)" aria-label="Remove skill">×</button>
+    </div>
+  </div>
+  <div class="modal-overlay" *ngIf="showEditModal && editingSkill">
+  <div class="modal-content">
+    
+    <div class="modal-header">
+      <h2>Edit Proficiency</h2>
+      <button class="close-modal-btn" (click)="closeEditModal()">×</button>
+    </div>
+
+    <div class="modal-body">
+      <div class="input-group">
+        <label>SKILL</label>
+        <input type="text" [value]="editingSkill.name" disabled class="form-control disabled-input" style="background-color: #f8fafc; color: #94a3b8; cursor: not-allowed;">
+      </div>
+
+      <div class="input-group mt-3" style="margin-top: 16px;">
+        <label>PROFICIENCY LEVEL</label>
+        <select [(ngModel)]="editingSkill.proficiency" class="form-control">
+          <option *ngFor="let level of proficiencyLevels" [value]="level">
+            {{ level }}
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <div class="modal-footer">
+      <button class="btn-cancel" (click)="closeEditModal()">Cancel</button>
+      <button class="btn-secondary" (click)="saveSkillProficiency()">Save Changes</button>
+    </div>
+
+  </div>
+</div>
+</div>

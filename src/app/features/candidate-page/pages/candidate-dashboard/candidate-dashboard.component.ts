@@ -1,13 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { SearchService } from 'src/app/services/search.service';
+import { EventService } from 'src/app/services/single-event.service';
+import { EventResponse } from 'src/app/models/event.model';
+// ✅ Match backend response
+import { JobPosting } from 'src/app/models/job.model'; // ✅ Match backend response
 
-interface Job {
-  role: string;
-  experience: string;
-  type: string;
-  description: string;
-  skills: string[];
-  location: string;
-}
 
 @Component({
   selector: 'app-candidate-dashboard',
@@ -15,74 +13,88 @@ interface Job {
   styleUrls: ['./candidate-dashboard.component.scss']
 })
 export class CandidateDashboardComponent implements OnInit {
-  
-  // Search query bound via [(ngModel)]
-  searchQuery: string = '';
 
-  // The "Source of Truth" - This never changes
-  allJobs: Job[] = [
-    {
-      role: 'Frontend Developer',
-      experience: '0-2 Years',
-      type: 'Full-time',
-      description: 'Design and implement UI components for a modern ATS platform using Angular and SCSS.',
-      skills: ['Angular', 'TypeScript', 'SCSS'],
-      location: 'Remote'
-    },
-    {
-      role: 'UI Engineer Intern',
-      experience: 'Fresher',
-      type: 'Internship',
-      description: 'Work closely with UX designers to build interactive prototypes and maintain design systems.',
-      skills: ['React', 'Figma', 'Tailwind'],
-      location: 'Pune'
-    },
-    {
-      role: 'Backend Developer',
-      experience: '3-5 Years',
-      type: 'Full-time',
-      description: 'Develop scalable microservices and manage PostgreSQL databases for high-traffic applications.',
-      skills: ['Node.js', 'PostgreSQL', 'Docker'],
-      location: 'Bangalore'
-    }
-  ];
+  availableJobs: JobPosting[] = [];
+  isLoading: boolean = true;
+  errorMessage: string = '';
+  events: EventResponse[] = [];
 
-  // The list actually rendered in the HTML (*ngFor="let job of filteredJobs")
-  filteredJobs: Job[] = [];
 
-  constructor() { }
+  constructor(
+    private http: HttpClient,
+    private searchService: SearchService,
+    private eventService: EventService
+  ) {}
 
   ngOnInit(): void {
-    // Initialize the list with all jobs on page load
-    this.filteredJobs = [...this.allJobs];
-  }
+    this.fetchLiveJobs();
 
-  /**
-   * Called on every keystroke in the search bar
-   */
-  onSearchChange(): void {
-    const query = this.searchQuery.toLowerCase().trim();
-
-    if (!query) {
-      this.filteredJobs = [...this.allJobs];
-      return;
-    }
-
-    this.filteredJobs = this.allJobs.filter(job => {
-      return (
-        job.role.toLowerCase().includes(query) ||
-        job.location.toLowerCase().includes(query) ||
-        job.skills.some(skill => skill.toLowerCase().includes(query))
-      );
+    // 🔥 Listen to navbar search
+    this.searchService.search$.subscribe((query) => {
+      this.handleSearch(query);
     });
   }
 
-  /**
-   * Placeholder for the Apply Now button logic
-   */
-  applyToJob(jobRole: string): void {
-    console.log(`Applying for: ${jobRole}`);
-    // You can navigate to the application form or show a success toast here
-    alert(`Application submitted for ${jobRole}!`);
+  // ✅ Fetch all jobs
+  fetchLiveJobs(): void {
+    this.isLoading = true;
+    this.errorMessage = '';
+
+    const apiUrl = 'http://localhost:5168/api/jobs'; // ✅ FIXED
+
+    this.http.get<JobPosting[]>(apiUrl).subscribe({
+      next: (response) => {
+        this.availableJobs = response;
+        this.isLoading = false;
+      },
+      error: (error) => {
+        console.error('API Error:', error);
+        this.errorMessage = 'Could not load job postings.';
+        this.isLoading = false;
+      }
+    });
   }
+
+  // 🔥 Handle search from navbar
+  handleSearch(query: string): void {
+
+    if (!query || !query.trim()) {
+      this.fetchLiveJobs(); // reset
+      return;
+    }
+
+    this.isLoading = true;
+
+    const apiUrl = `http://localhost:5168/api/job/search?query=${query}`;
+
+    this.http.get<JobPosting[]>(apiUrl).subscribe({
+      next: (response) => {
+        this.availableJobs = response;
+        this.isLoading = false;
+      },
+      error: () => {
+        this.errorMessage = 'Search failed';
+        this.isLoading = false;
+      }
+    });
+  }
+  handleDateSelect(date: Date) {
+  this.isLoading = true;
+
+  const formattedDate = date.toISOString();
+
+  this.eventService.getEventsByDate(formattedDate)
+    .subscribe({
+      next: (res) => {
+        this.events = res;
+        this.isLoading = false;
+      },
+      error: (err) => {
+        console.error('Error fetching events', err);
+        this.events = [];
+        this.isLoading = false;
+      }
+    });
+}
+  
 }

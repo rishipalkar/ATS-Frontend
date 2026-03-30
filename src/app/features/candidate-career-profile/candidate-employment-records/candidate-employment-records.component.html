@@ -1,0 +1,125 @@
+<div class="content-card relative">
+  <span class="badge">PROFESSIONAL TIMELINE</span>
+  <h2 class="card-title">Employment Records</h2>
+
+  <div class="form-body">
+    <div class="form-group">
+      <label>ORGANIZATION NAME</label>
+      <input type="text" [(ngModel)]="newRecord.organization" placeholder="e.g., Google, Microsoft">
+    </div>
+
+    <div class="form-row">
+      <div class="form-group flex-1">
+        <label>JOB ROLE</label>
+        <input type="text" [(ngModel)]="newRecord.jobRole" placeholder="e.g., Senior Software Engineer">
+      </div>
+      <div class="form-group flex-1">
+        <label>WORK LOCATION</label>
+        <input type="text" [(ngModel)]="newRecord.workLocation" placeholder="e.g., Bangalore, India">
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group flex-1">
+        <label>FROM DATE</label>
+        <input type="month" [(ngModel)]="newRecord.fromDate">
+      </div>
+      <div class="form-group flex-1">
+        <label>TO DATE (Leave blank if current)</label>
+        <input type="month" [(ngModel)]="newRecord.toDate">
+      </div>
+    </div>
+
+    <button class="btn-secondary mt-2" (click)="addEmployment()">+ Add Employment</button>
+  </div>
+
+  <hr class="divider">
+
+  <div class="records-list">
+    <div class="record-card" *ngFor="let record of employmentHistory; let i = index">
+      <div class="record-details">
+        <h3>{{ record.jobRole }} at {{ record.organization }}</h3>
+        <p>{{ record.fromDate }} - {{ record.toDate || 'Present' }} | {{ record.workLocation }}</p>
+      </div>
+      <div class="record-actions">
+        <button class="btn-upload-sm" (click)="openUploadModal(record)">
+          Upload Docs
+        </button>
+        <button class="delete-btn" (click)="removeEmployment(i)">×</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" *ngIf="showDocumentModal && activeRecordForDocs">
+  <div class="modal-content">
+    
+    <div class="modal-header">
+      <h2>Upload Documents</h2>
+      <button class="close-modal-btn" (click)="closeUploadModal()">×</button>
+    </div>
+
+    <div class="modal-body">
+      <div class="form-group">
+        <label>SELECTED ORGANIZATION</label>
+        <input type="text" [value]="activeRecordForDocs.organization" disabled class="disabled-input">
+      </div>
+
+      <div class="form-row">
+        <div class="form-group flex-1">
+          <label>ROLE POSITION AT JOINING</label>
+          <input type="text" [(ngModel)]="activeRecordForDocs.documents.roleAtJoining" placeholder="e.g., Junior Dev">
+        </div>
+        <div class="form-group flex-1">
+          <label>WORK LOCATION AT JOINING</label>
+          <input type="text" [(ngModel)]="activeRecordForDocs.documents.locationAtJoining" placeholder="e.g., Pune">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>LAST CTC (Annual)</label>
+        <input type="text" [(ngModel)]="activeRecordForDocs.documents.lastCtc" placeholder="e.g., 12,00,000 INR">
+      </div>
+
+      <hr class="divider">
+      <label class="section-label">REQUIRED DOCUMENTS</label>
+
+      <div class="upload-grid">
+        
+        <div class="upload-box">
+          <span class="doc-title">Appointment Letter</span>
+          <span class="file-name" *ngIf="activeRecordForDocs.documents.appointmentLetter">
+            ✓ {{ activeRecordForDocs.documents.appointmentLetter.name }}
+          </span>
+          <input type="file" hidden #appLetter (change)="onFileSelected($event, 'appointment')">
+          <button class="btn-outline" (click)="appLetter.click()">Choose File</button>
+        </div>
+
+        <div class="upload-box">
+          <span class="doc-title">Relieving Letter</span>
+          <span class="file-name" *ngIf="activeRecordForDocs.documents.relievingLetter">
+            ✓ {{ activeRecordForDocs.documents.relievingLetter.name }}
+          </span>
+          <input type="file" hidden #relLetter (change)="onFileSelected($event, 'relieving')">
+          <button class="btn-outline" (click)="relLetter.click()">Choose File</button>
+        </div>
+
+        <div class="upload-box">
+          <span class="doc-title">Experience Certificate</span>
+          <span class="file-name" *ngIf="activeRecordForDocs.documents.experienceCertificate">
+            ✓ {{ activeRecordForDocs.documents.experienceCertificate.name }}
+          </span>
+          <input type="file" hidden #expCert (change)="onFileSelected($event, 'experience')">
+          <button class="btn-outline" (click)="expCert.click()">Choose File</button>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="modal-footer">
+      <button class="btn-cancel" (click)="closeUploadModal()">Cancel</button>
+      <button class="btn-primary" (click)="saveDocuments()">Save Documents</button>
+    </div>
+
+  </div>
+</div>

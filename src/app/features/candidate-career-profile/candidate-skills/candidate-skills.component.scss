@@ -1,0 +1,279 @@
+.content-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 30px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.02);
+}
+
+.badge {
+  background-color: #eef2ff;
+  color: #6b63ff; /* Matching your purple theme */
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 4px 8px;
+  border-radius: 4px;
+  letter-spacing: 0.5px;
+}
+
+.card-title {
+  margin-top: 12px;
+  margin-bottom: 24px;
+  font-size: 1.5rem;
+  color: #1a202c;
+}
+
+/* Form Layout */
+.add-skill-section {
+  display: flex;
+  gap: 16px;
+  align-items: flex-end;
+  margin-bottom: 8px;
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.skill-input { flex: 2; }
+.proficiency-input { flex: 1; }
+.button-input { flex: 0; }
+
+label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #64748b;
+  margin-bottom: 6px;
+  text-transform: uppercase;
+}
+
+.form-control {
+  padding: 10px 14px;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.form-control:focus {
+  border-color: #6b63ff;
+}
+
+.btn-secondary {
+  background-color: #f1f5f9;
+  color: #475569;
+  border: 1px solid #cbd5e1;
+  padding: 11px 20px;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  height: 42px; /* matches input heights */
+}
+
+.btn-secondary:hover {
+  background-color: #e2e8f0;
+}
+
+.helper-text {
+  font-size: 0.85rem;
+  color: #64748b;
+  margin-bottom: 24px;
+}
+
+/* Skills Tags Styling */
+.skills-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.skill-tag {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 10px 14px;
+  min-width: 200px;
+}
+
+.skill-details {
+  display: flex;
+  flex-direction: column;
+}
+
+.skill-name {
+  font-weight: 600;
+  color: #1e293b;
+  font-size: 0.95rem;
+}
+
+.skill-level {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: #64748b;
+  margin-top: 2px;
+}
+
+.delete-btn {
+  background: none;
+  border: none;
+  color: #94a3b8;
+  font-size: 1.25rem;
+  cursor: pointer;
+  padding: 0 4px;
+}
+
+.delete-btn:hover {
+  color: #ef4444; /* red on hover */
+}
+.modal-overlay {
+  position: fixed; 
+  top: 0; 
+  left: 0; 
+  width: 100vw; 
+  height: 100vh; 
+  background-color: rgba(15, 23, 42, 0.6);
+}
+/* Container/Background styling (Assumes a wrapper with class .modal-content) */
+.modal-content {
+  background: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+  max-width: 450px;
+  margin: 2rem auto;
+  overflow: hidden;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+/* Header Section */
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 24px;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.modal-header h2 {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #1e293b;
+}
+
+.close-modal-btn {
+  background: none;
+  border: none;
+  font-size: 24px;
+  color: #64748b;
+  cursor: pointer;
+  padding: 4px 8px;
+  line-height: 1;
+  transition: color 0.2s;
+}
+
+.close-modal-btn:hover {
+  color: #0f172a;
+}
+
+/* Body and Form Groups */
+.modal-body {
+  padding: 24px;
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.input-group label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #64748b;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+/* Shared Input/Select Styles */
+.form-control {
+  width: 100%;
+  padding: 10px 12px;
+  font-size: 0.95rem;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  color: #334155;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  box-sizing: border-box; /* Ensures padding doesn't break width */
+}
+
+.form-control:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+/* Specifically for the Disabled Skill Input */
+.disabled-input {
+  border-color: #e2e8f0;
+  font-weight: 500;
+}
+
+/* Spacing utility */
+.mt-3 {
+  margin-top: 16px;
+}
+/* Footer Container */
+.modal-footer {
+  display: flex;
+  justify-content: flex-end; /* Aligns buttons to the right */
+  gap: 12px;
+  padding: 16px 24px;
+  background-color: #f8fafc; /* Slight contrast from the body */
+  border-top: 1px solid #e2e8f0;
+}
+
+/* Base Button Styles */
+button {
+  padding: 8px 16px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: 1px solid transparent;
+}
+
+/* The Cancel Button (Secondary) */
+.btn-secondary {
+  background-color: #ffffff;
+  border-color: #cbd5e1;
+  color: #475569;
+}
+
+.btn-secondary:hover {
+  background-color: #f1f5f9;
+  border-color: #94a3b8;
+  color: #1e293b;
+}
+
+/* The Save Button (Primary) */
+.btn-primary {
+  background-color: #2563eb;
+  color: #ffffff;
+}
+
+.btn-primary:hover {
+  background-color: #1d4ed8;
+  box-shadow: 0 4px 6px -1px rgba(37, 99, 235, 0.2);
+}
+
+/* Active/Click state for both */
+button:active {
+  transform: translateY(1px);
+}

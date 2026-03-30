@@ -1,0 +1,17 @@
+.main-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  margin-left: 230px; // MUST MATCH THE SIDEBAR WIDTH
+  width: calc(100% - 230px);
+  min-height: 100vh;
+  background: #f8fafc;
+  transition: all 0.3s ease;
+}
+
+// Ensure the page content has healthy breathing room now that the sidebar is smaller
+.page-container {
+  padding: 40px;
+  max-width: 1200px;
+  margin: 0 auto;
+}

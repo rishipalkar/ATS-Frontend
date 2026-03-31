@@ -62,7 +62,7 @@
           </div>
         </div>
 
-        <button class="btn-primary" routerLink="/recruiter/create-job">
+        <button class="btn-primary" routerLink="/create-job">
           + Post New Job
         </button>
 
@@ -76,16 +76,18 @@
       </div>
     </div>
 
-    <div class="job-list" *ngIf="!isSearchingCandidates; else candidateView">
+  <div class="job-list" *ngIf="!isSearchingCandidates; else candidateView">
       <div class="recruiter-job-card" *ngFor="let job of filteredJobs">
         <div class="card-header">
-          <h3>{{ job.role }}</h3>
-          <span class="badge" [class.urgent]="job.status === 'Urgent'">{{
-            job.status
-          }}</span>
+          <h3>{{ job.rolePosition }}</h3>
+          
+          <span class="badge" [class.urgent]="job.status.toUpperCase() === 'URGENT'">
+            {{ job.status }}
+          </span>
         </div>
+        
         <p class="location">
-          {{ job.location }} • Posted on {{ job.postedDate }}
+          {{ job.workLocation }} • Posted on {{ job.createdAt | date:'longDate' }}
         </p>
 
         <div class="stats-grid">
@@ -102,8 +104,12 @@
             <span class="lbl"> Interviewed</span>
           </div>
         </div>
+        
+        <div class="card-actions">
+          <button class="btn-manage" (click)="openJobDetails(job.jobId)">View Details</button>
+          <button class="btn-manage" routerLink="/recruiter/view-candidate">Manage Candidates</button>
+        </div>
 
-        <button class="btn-manage" routerLink="/recruiter/view-candidate">Manage Candidates</button>
       </div>
     </div>
 
@@ -157,5 +163,87 @@
     <div class="no-event-placeholder" *ngIf="!selectedEvent">
       <p>Select a date to view scheduled interviews</p>
     </div>
+  </div>
+</div>
+
+
+<!-- pop up  -->
+<div class="popup-backdrop" *ngIf="isModalOpen" (click)="closeModal()">
+  
+  <div class="job-popup" (click)="$event.stopPropagation()">
+    
+    <div class="popup-loading" *ngIf="isLoadingDetails">
+      <div class="spinner"></div>
+      <p>Loading job details...</p>
+    </div>
+
+    <ng-container *ngIf="!isLoadingDetails && selectedJobDetails">
+      
+      <div class="popup-header">
+        <div class="title-group">
+          <h2>{{ selectedJobDetails.rolePosition }}</h2>
+          <span class="badge" [class.urgent]="selectedJobDetails.status === 'URGENT'">
+            {{ selectedJobDetails.status }}
+          </span>
+        </div>
+        <button class="btn-close" (click)="closeModal()" aria-label="Close Pop-up">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+
+      <div class="popup-body">
+        
+        <div class="quick-stats-grid">
+          <div class="stat-box">
+            <span class="lbl">Location</span>
+            <span class="val">{{ selectedJobDetails.workLocation }}</span>
+          </div>
+          <div class="stat-box">
+            <span class="lbl">Work Model</span>
+            <span class="val">{{ selectedJobDetails.workModel }}</span>
+          </div>
+          <div class="stat-box">
+            <span class="lbl">Openings</span>
+            <span class="val">{{ selectedJobDetails.numberOfOpenings }}</span>
+          </div>
+          <div class="stat-box">
+            <span class="lbl">Experience</span>
+            <span class="val">{{ selectedJobDetails.minExperienceYears }} Years</span>
+          </div>
+        </div>
+
+        <div class="content-section">
+          <h3>Job Description</h3>
+          <p>{{ selectedJobDetails.jobDescription }}</p>
+        </div>
+
+        <div class="content-section">
+          <h3>Required Skills</h3>
+          <div class="skill-tags">
+            <span class="tag">{{ selectedJobDetails.requiredSkills }}</span>
+          </div>
+        </div>
+
+        <div class="content-section" *ngIf="selectedJobDetails.preferredSkills">
+          <h3>Preferred Skills</h3>
+          <p>{{ selectedJobDetails.preferredSkills }}</p>
+        </div>
+
+        <div class="content-section">
+          <h3>Responsibilities</h3>
+          <p>{{ selectedJobDetails.responsibilities }}</p>
+        </div>
+
+      </div>
+
+      <div class="popup-footer">
+        <button class="btn-secondary" (click)="closeModal()">Cancel</button>
+        <button class="btn-primary">Edit Job Ad</button>
+      </div>
+
+    </ng-container>
   </div>
 </div>

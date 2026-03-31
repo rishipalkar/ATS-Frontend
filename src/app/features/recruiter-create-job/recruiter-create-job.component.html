@@ -1,6 +1,6 @@
 <div class="create-job-container">
   <header class="page-header">
-    <button class="btn-back" routerLink="/recruiter/dashboard">
+    <button class="btn-back" routerLink="/dashboard">
       ← Back to Dashboard
     </button>
     <div class="stepper">
@@ -135,19 +135,48 @@
             <input formControlName="workLocation" placeholder="City, State" />
           </div>
         </div>
+      
 
         <div class="row">
           <div class="field">
-            <span>Work Hours</span>
-            <input formControlName="workHours" placeholder="e.g. 9 AM - 6 PM" />
-          </div>
-          <div class="field">
-            <span>Shift Duty Required?</span>
-            <select formControlName="shiftDuty">
-              <option value="No">No</option>
-              <option value="Yes">Yes</option>
+            <span>Work Start Time</span>
+            <select formControlName="workHoursStart">
+              <option value="" disabled selected>Select Start Time</option>
+              <option value="06:00:00">6:00 AM</option>
+              <option value="07:00:00">7:00 AM</option>
+              <option value="08:00:00">8:00 AM</option>
+              <option value="09:00:00">9:00 AM</option>
+              <option value="10:00:00">10:00 AM</option>
+              <option value="11:00:00">11:00 AM</option>
+              <option value="12:00:00">12:00 PM</option>
             </select>
           </div>
+          <div class="field">
+            <span>Work End Time</span>
+            <select formControlName="workHoursEnd">
+              <option value="" disabled selected>Select End Time</option>
+              <option value="14:00:00">2:00 PM</option>
+              <option value="15:00:00">3:00 PM</option>
+              <option value="16:00:00">4:00 PM</option>
+              <option value="17:00:00">5:00 PM</option>
+              <option value="18:00:00">6:00 PM</option>
+              <option value="19:00:00">7:00 PM</option>
+              <option value="20:00:00">8:00 PM</option>
+              <option value="21:00:00">9:00 PM</option>
+              <option value="22:00:00">10:00 PM</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="field">
+            <span>Shift Duty Required?</span>
+            <select formControlName="isShiftDuty">
+              <option [ngValue]="false">No</option>
+              <option [ngValue]="true">Yes</option>
+            </select>
+          </div>
+          <div></div> 
         </div>
       </div>
 
@@ -196,9 +225,55 @@
           ← Back to JD
         </button>
         <button type="submit" class="btn-publish" [disabled]="!jobForm.valid">
-          Publish Job Opening
+          {{ isPublishing ? 'Publishing...' : 'Publish Job Opening' }}        
         </button>
       </div>
     </div>
   </form>
+</div>
+
+
+<!-- modal to display response -->
+
+<div class="modal-overlay" *ngIf="showSuccessModal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <div class="success-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+      </div>
+      <h2>Job Published Successfully!</h2>
+      <p>Your new role is now live and accepting candidates.</p>
+    </div>
+
+    <div class="modal-body" *ngIf="publishedJobDetails">
+      <div class="detail-row">
+        <span class="label">Role:</span>
+        <span class="value">{{ publishedJobDetails.rolePosition }}</span>
+      </div>
+      <div class="detail-row">
+        <span class="label">Openings:</span>
+        <span class="value">{{ publishedJobDetails.numberOfOpenings }}</span>
+      </div>
+      <div class="detail-row">
+        <span class="label">Location:</span>
+        <span class="value">{{ publishedJobDetails.workLocation }} ({{ publishedJobDetails.workModel }})</span>
+      </div>
+      <div class="detail-row">
+        <span class="label">Status:</span>
+        <span class="value status-badge">{{ publishedJobDetails.status }}</span>
+      </div>
+      <div class="detail-row">
+        <span class="label">Job ID:</span>
+        <span class="value id-text">{{ publishedJobDetails.jobId }}</span>
+      </div>
+    </div>
+
+    <div class="modal-footer">
+      <button class="btn-primary" (click)="closeModalAndNavigate()">
+        Go to Dashboard
+      </button>
+    </div>
+  </div>
 </div>

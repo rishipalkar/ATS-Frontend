@@ -1,23 +1,25 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { HostListener } from '@angular/core';   
+import { RecruiterJobsService } from '../../services/recruiter/jobs.service';
+import { Job, JobDetails } from 'src/app/models/job.model';
 @Component({
   selector: 'app-recruiter-dashboard',
   templateUrl: './recruiter-dashboard.component.html',
   styleUrls: ['./recruiter-dashboard.component.scss']
 })
 export class RecruiterDashboardComponent implements OnInit {
+  isModalOpen: boolean = false;
+  isLoadingDetails: boolean = false;
+  selectedJobDetails: JobDetails | null = null;
   selectedEvent: any = null;
   searchQuery: string = '';
   isSearchingCandidates: boolean = false;
   isFilterOpen: boolean = false;
   searchScope:string='all';
 
-  activeJobs = [
-    { role: 'Senior Frontend Developer', location: 'Pune / Remote', totalCandidates: 45, shortlisted: 12, interviewed: 5, postedDate: 'March 10, 2026', status: 'Active' },
-    { role: 'Backend Engineer (Node.js)', location: 'Bangalore', totalCandidates: 32, shortlisted: 8, interviewed: 2, postedDate: 'March 15, 2026', status: 'Urgent' }
-  ];
-  filteredJobs = [...this.activeJobs];
+  activeJobs: Job[] = [];
+  filteredJobs: Job[] = [];
 
   allCandidates = [
     { name: 'Hrishikesh M.', role: 'Frontend Developer', experience: '2 Years', skills: ['Angular', 'SCSS'], status: 'Screening' },
@@ -32,18 +34,63 @@ export class RecruiterDashboardComponent implements OnInit {
   };
 
   ngOnInit() {
-    this.filteredCandidates = [...this.allCandidates];
+    // this.filteredCandidates = [...this.allCandidates];
+    this.loadJobs();
+    
   }
-  constructor(private router: Router) {}
+  constructor(private router: Router, private jobService: RecruiterJobsService) {}
+
+  loadJobs() {
+    this.jobService.getJobs().subscribe({
+      next: (response) => {
+        // Map the API data and append mock stats for the UI
+        this.activeJobs = response.data.map(job => ({
+          ...job,
+          totalCandidates: Math.floor(Math.random() * 50), // Mock data
+          shortlisted: Math.floor(Math.random() * 15),     // Mock data
+          interviewed: Math.floor(Math.random() * 5)       // Mock data
+        }));
+        this.filteredJobs = [...this.activeJobs];
+      },
+      error: (error) => {
+        console.error('Error fetching jobs:', error);
+      }
+    });
+  }
+
+  openJobDetails(jobId: string) {
+    this.isModalOpen = true;
+    this.isLoadingDetails = true;
+    
+    console.log("Opening details for job ID:", jobId);
+
+    this.jobService.getJobById(jobId).subscribe({
+    next: (response: JobDetails) => {
+      this.selectedJobDetails = response;
+      this.isLoadingDetails = false;
+    },
+    error: (err) => {
+      console.error('Error fetching job details:', err);
+      this.isLoadingDetails = false;
+      // Optional: Add logic here to show an error message in the UI
+    }
+  });
+  }
+
+  closeModal() {
+  this.isModalOpen = false;
+  this.selectedJobDetails = null;
+}
 
 goToCreateJob() {
   // Do some logic here...
   this.router.navigate(['recruiter/create-job']);
 }
+
   onSearchChange(): void {
     const query = this.searchQuery.toLowerCase().trim();
     
-    this.filteredJobs = this.activeJobs.filter(job => job.role.toLowerCase().includes(query));
+    this.filteredJobs = this.activeJobs.filter(job => job.rolePosition.toLowerCase().includes(query));
 
     if (query.length > 2) {
       this.isSearchingCandidates = true;

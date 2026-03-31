@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { JobService } from '../../services/recruiter/create-job.service';
 
 @Component({
   selector: 'app-recruiter-create-job',
@@ -12,8 +13,12 @@ export class CreateJobComponent implements OnInit {
   currentStep: number = 1; // 1: JD Generation, 2: Security/Details
   isGenerating: boolean = false;
   uploadedFileName: string | null = null;
+  isPublishing: boolean = false;
+  showSuccessModal: boolean = false;
+  publishedJobDetails: any = null;
 
   constructor(
+    private jobService: JobService,
     private fb: FormBuilder,
     private router: Router,
   ) {
@@ -31,8 +36,9 @@ export class CreateJobComponent implements OnInit {
       openingsCount: [1, [Validators.required, Validators.min(1)]],
       workModel: ['On-site', Validators.required],
       workLocation: ['', Validators.required],
-      workHours: ['', Validators.required],
-      shiftDuty: ['No', Validators.required],
+      workHoursStart: ['', Validators.required],
+      workHoursEnd: ['', Validators.required],
+      isShiftDuty: [false, Validators.required],
       requiredEducation: ['', Validators.required],
       minExperience: ['', Validators.required],
       grossPackage: ['', Validators.required],
@@ -72,13 +78,34 @@ export class CreateJobComponent implements OnInit {
     }, 1200);
   }
 
-  onSubmit() {
+ onSubmit() {
     if (this.jobForm.valid) {
-      console.log('Final Job Data:', this.jobForm.value);
-      alert('Job Successfully Published!');
-      this.router.navigate(['/recruiter/dashboard']);
+      this.isPublishing = true; // Disable button and show loading text
+      
+      this.jobService.createJob(this.jobForm.value).subscribe({
+        next: (response) => {
+          console.log('Job Successfully Created:', response);
+          alert('Job Successfully Published!');
+          this.isPublishing = false;
+          this.router.navigate(['/dashboard']);
+        },
+        error: (error) => {
+          console.error('Error publishing job:', error);
+          alert('There was an error publishing the job. Please try again.');
+          this.isPublishing = false;
+        }
+      });
+    } else {
+      // Optional: mark all fields as touched to show validation errors
+      this.jobForm.markAllAsTouched();
     }
   }
+
+  closeModalAndNavigate() {
+    this.showSuccessModal = false;
+    this.router.navigate(['/dashboard']);
+  }
+
   onFileSelected(event: any) {
     const file: File = event.target.files[0];
 

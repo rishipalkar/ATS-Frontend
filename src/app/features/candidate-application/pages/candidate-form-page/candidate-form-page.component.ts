@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ResumeParserService } from '../../../../core/services/resume-parser.service';
+// import { ResumeParserService } from '../../../../core/services/resume-parser.service';
 import { FormValidators } from 'src/app/core/shared/components/validators/form.validators';
 import confetti from 'canvas-confetti';
 @Component({
@@ -16,7 +16,7 @@ export class CandidateFormPageComponent {
 
   constructor(
     private fb: FormBuilder,
-    private resumeParserService: ResumeParserService,
+   
   ) {
     this.candidateForm = this.fb.group({
       personalDetails: this.fb.group({
@@ -104,17 +104,7 @@ export class CandidateFormPageComponent {
     return this.candidateForm.get('declarations') as FormGroup;
   }
 
-  async onResumeSelected(file: File) {
-    const json = await this.resumeParserService.buildResumeJson(file);
-    this.resumeJsonPreview = json;
-
-    const resumeGroup = this.candidateForm.get('resume') as FormGroup;
-    resumeGroup.patchValue({
-      fileName: file.name,
-      file,
-      jsonPreview: json,
-    });
-  }
+  
 
   onSubmit() {
     console.log(' onSubmit triggered');

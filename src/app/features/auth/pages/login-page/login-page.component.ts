@@ -55,7 +55,7 @@ loginMethod: 'email' | 'phone' = 'email';
         
         // Navigation logic based on the dropdown selection
         if (userType === 'recruiter') {
-          this.router.navigate(['/recruiter/dashboard']);
+          this.router.navigate(['/dashboard']);
         } else if (userType === 'candidate') {
           this.router.navigate(['/candidate/dashboard']);
         } else {

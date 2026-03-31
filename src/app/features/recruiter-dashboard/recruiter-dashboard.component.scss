@@ -12,6 +12,14 @@ $text-dark: #1e293b;
   position: relative; // Keeps dropdown anchored to the button
 }
 
+.card-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 16px; /* Adjust spacing from the stats grid as needed */
+  gap: 12px; /* Prevents buttons from touching on very small screens */
+}
+
 .filter-dropdown {
   position: absolute;
   top: calc(100% + 10px);
@@ -206,4 +214,194 @@ btn-filter {
 .btn-manage {
   width: 100%; padding: 12px; background: white; border: 1.5px solid $primary; color: $primary; border-radius: 10px; font-weight: 700; cursor: pointer;
   &:hover { background: $primary; color: white; }
+}
+
+// Pop-up Variables (Uses your existing variables)
+$popup-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.1), 0 0 0 1px rgba(0, 0, 0, 0.02);
+
+// The Invisible/Blurry Backdrop
+.popup-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(248, 250, 252, 0.6); // Light transparent version of $bg-light
+  backdrop-filter: blur(5px); // Creates a modern frosted glass effect
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+// The Pop-up Card
+.job-popup {
+  background: white;
+  width: 100%;
+  max-width: 650px;
+  max-height: 85vh;
+  display: flex;
+  flex-direction: column;
+  border-radius: 20px;
+  box-shadow: $popup-shadow;
+  border: 1px solid $border;
+  overflow: hidden; // Keeps child elements inside border-radius
+  
+  // Entrance Animation
+  animation: popIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+
+  .popup-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 24px 30px;
+    border-bottom: 1px solid $border;
+    background: #ffffff;
+
+    .title-group {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+
+      h2 {
+        margin: 0;
+        font-size: 22px;
+        font-weight: 800;
+        color: $text-main;
+      }
+
+      .badge {
+        background: #eef2ff;
+        color: $primary;
+        padding: 6px 14px;
+        border-radius: 50px;
+        font-size: 11px;
+        font-weight: 800;
+        text-transform: uppercase;
+        &.urgent { background: #fef2f2; color: #ef4444; }
+      }
+    }
+
+    .btn-close {
+      background: #f1f5f9;
+      border: none;
+      border-radius: 50%;
+      width: 36px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: $text-muted;
+      cursor: pointer;
+      transition: all 0.2s ease;
+
+      &:hover {
+        background: #e2e8f0;
+        color: $text-main;
+      }
+    }
+  }
+
+  .popup-body {
+    padding: 30px;
+    overflow-y: auto; // Makes only the inside scrollable
+    flex: 1;
+
+    // Custom Scrollbar for the pop-up
+    &::-webkit-scrollbar { width: 6px; }
+    &::-webkit-scrollbar-track { background: transparent; }
+    &::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+
+    .quick-stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+      gap: 16px;
+      margin-bottom: 30px;
+
+      .stat-box {
+        background: #f8fafc;
+        border: 1px solid $border;
+        padding: 16px;
+        border-radius: 12px;
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+
+        .lbl { font-size: 11px; color: $text-muted; font-weight: 700; text-transform: uppercase; }
+        .val { font-size: 14px; font-weight: 700; color: $text-main; }
+      }
+    }
+
+    .content-section {
+      margin-bottom: 24px;
+
+      h3 {
+        font-size: 15px;
+        font-weight: 700;
+        color: $text-main;
+        margin: 0 0 12px 0;
+      }
+
+      p {
+        font-size: 14px;
+        line-height: 1.6;
+        color: #475569;
+        margin: 0;
+      }
+
+      .skill-tags .tag {
+        display: inline-block;
+        font-size: 12px;
+        background: #eef2ff;
+        color: $primary;
+        padding: 6px 12px;
+        border-radius: 8px;
+        font-weight: 600;
+      }
+    }
+  }
+
+  .popup-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    padding: 20px 30px;
+    background: #f8fafc;
+    border-top: 1px solid $border;
+  }
+}
+
+.popup-loading {
+  padding: 60px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  color: $text-muted;
+  font-weight: 600;
+
+  .spinner {
+    width: 32px;
+    height: 32px;
+    border: 3px solid #e2e8f0;
+    border-top-color: $primary;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+  }
+}
+
+// Animations
+@keyframes popIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9) translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
 }

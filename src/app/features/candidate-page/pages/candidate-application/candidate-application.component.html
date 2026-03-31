@@ -1,0 +1,58 @@
+<div class="page-container">
+  
+  <div class="page-header">
+    <div>
+      <h1 class="page-title">My Applications</h1>
+      <p class="text-subtitle">Track the status of your recent job applications.</p>
+    </div>
+  </div>
+
+  <div class="filter-tabs">
+    <button class="tab-btn" [class.active]="activeFilter === 'All'" (click)="applyFilter('All')">All Applications</button>
+    <button class="tab-btn" [class.active]="activeFilter === 'Active'" (click)="applyFilter('Active')">Active</button>
+    <button class="tab-btn" [class.active]="activeFilter === 'Archived'" (click)="applyFilter('Archived')">Archived</button>
+  </div>
+
+  <div class="applications-list">
+    
+    <div class="app-card" *ngFor="let app of filteredApplications">
+      
+      <div class="app-main-info">
+        <div class="app-header">
+          <h2 class="job-title">{{ app.jobTitle }}</h2>
+          <span class="status-badge" [ngClass]="getStatusClass(app.status)">
+            {{ app.status }}
+          </span>
+        </div>
+        
+        <div class="app-meta">
+          <span class="meta-item">{{ app.department }}</span>
+          <span class="meta-divider">•</span>
+          <span class="meta-item">{{ app.location }}</span>
+          <span class="meta-divider">•</span>
+          <span class="meta-item">{{ app.workMode }}</span>
+        </div>
+      </div>
+
+      <div class="app-footer">
+        <div class="timeline-info">
+          <p>Applied on {{ app.appliedDate | date:'mediumDate' }}</p>
+          <p class="text-muted">Last updated: {{ app.lastUpdated | date:'short' }}</p>
+        </div>
+        
+        <div class="app-actions">
+          <button class="btn-outline-primary">View Details</button>
+        </div>
+      </div>
+      
+    </div>
+
+    <div class="empty-state" *ngIf="filteredApplications.length === 0">
+      <div class="empty-content">
+        <h3>No applications found</h3>
+        <p>You do not have any applications matching the current filter.</p>
+      </div>
+    </div>
+
+  </div>
+</div>

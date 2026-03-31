@@ -12,10 +12,7 @@ export class CandidateCalendarComponent {
   @Output() dateSelected = new EventEmitter<Date>();
   
   
-  importantDates = [
-    { date: new Date(2026, 2, 25), event: 'Interview with BNY' },
-    { date: new Date(2026, 3, 2), event: 'Application Deadline' }
-  ];
+  
 
   constructor() {}
 

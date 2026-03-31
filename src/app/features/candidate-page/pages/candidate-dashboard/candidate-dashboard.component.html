@@ -1,17 +1,15 @@
 <div class="dashboard-layout">
-
   <!-- LEFT SIDE (Jobs) -->
   <div class="left-section">
     <div class="jobs-grid">
       <div class="job-card" *ngFor="let job of availableJobs">
-
         <div class="card-header">
           <h2>{{ job.rolePosition }}</h2>
           <span class="badge">{{ job.workModel }}</span>
         </div>
 
         <div class="card-body">
-          <p class="company">TalentFlow</p> 
+          <p class="company">TalentFlow</p>
           <p class="location">{{ job.workLocation }}</p>
           <p><strong>Experience:</strong> {{ job.minExperienceYears }} yrs</p>
           <p class="skills">
@@ -19,10 +17,79 @@
           </p>
         </div>
 
-        <div class="card-footer">
-          <button class="btn-apply">View Details</button>
-        </div>
+        <button class="btn-apply" (click)="openJobDetails(job.jobId)">
+          View Details
+        </button>
+      </div>
+    </div>
+  </div>
+  <!-- BACKDROP -->
+  <div
+    class="modal-backdrop"
+    *ngIf="showJobModal"
+    (click)="closeJobModal()"
+  ></div>
 
+  <!-- MODAL -->
+  <div class="job-modal" *ngIf="showJobModal">
+    <div class="modal-header">
+      <h2>Job Details</h2>
+      <button class="close-btn" (click)="closeJobModal()">×</button>
+    </div>
+
+    <!-- LOADING -->
+    <div *ngIf="isLoadingJob" class="loading">Loading job details...</div>
+
+    <!-- CONTENT -->
+    <div *ngIf="!isLoadingJob && selectedJob" class="modal-body">
+      <div class="section">
+        <p><strong>Work Model:</strong> {{ selectedJob.workModel }}</p>
+        <p><strong>Location:</strong> {{ selectedJob.workLocation }}</p>
+        <p>
+          <strong>Experience:</strong>
+          {{ selectedJob.minExperienceYears }} years
+        </p>
+        <p><strong>Education:</strong> {{ selectedJob.requiredEducation }}</p>
+      </div>
+
+      <div class="section">
+        <h4>Description</h4>
+        <p>{{ selectedJob.jobDescription }}</p>
+      </div>
+
+      <div>
+        <h4>Required Skills</h4>
+        <span
+          class="skill-chip"
+          *ngFor="let skill of selectedJob.requiredSkills?.split(',')"
+        >
+          {{ skill.trim() }}
+        </span>
+      </div>
+
+       <div>
+        <h4>Preferred Skills</h4>
+        <span
+          class="skill-chip"
+          *ngFor="let skill of selectedJob.preferredSkills?.split(',')"
+        >
+          {{ skill.trim() }}
+        </span>
+      </div>
+
+      <div class="section">
+        <h4>Responsibilities</h4>
+        <p>{{ selectedJob.responsibilities }}</p>
+      </div>
+
+      <div class="section">
+        <h4>Challenges</h4>
+        <p>{{ selectedJob.challenges }}</p>
+      </div>
+
+      <div class="section">
+        <h4>Benefits & Work Culture</h4>
+        <p>{{ selectedJob.benefitsWorkCulture }}</p>
       </div>
     </div>
   </div>
@@ -32,10 +99,26 @@
     <div class="calendar-card">
       <h3 class="panel-title">Interview Calendar</h3>
 
-      <app-candidate-calendar
-        (dateSelected)="handleDateSelect($event)">
+      <app-candidate-calendar (dateSelected)="onDateSelected($event)">
       </app-candidate-calendar>
     </div>
-  </div>
+    <div class="events-container">
+      <div class="events-container">
+        <h3 class="section-title">Events on Selected Date</h3>
 
+        <!-- MAIN BLOCK -->
+        <ng-container *ngIf="events.length > 0; else noEvents">
+          <div class="event-card" *ngFor="let event of events">
+            <strong>{{ event.roundName }}</strong>
+            <p>{{ event.scheduledAt | date: "medium" }}</p>
+          </div>
+        </ng-container>
+
+        <!-- EMPTY STATE TEMPLATE -->
+        <ng-template #noEvents>
+          <div class="no-events">No events scheduled for this date</div>
+        </ng-template>
+      </div>
+    </div>
+  </div>
 </div>

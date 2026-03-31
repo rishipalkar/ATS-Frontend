@@ -22,6 +22,7 @@ import { CandidateEducationComponent } from './features/candidate-career-profile
 import { CandidateEmploymentRecordsComponent } from './features/candidate-career-profile/candidate-employment-records/candidate-employment-records.component';
 import { CandidateSkillsComponent } from './features/candidate-career-profile/candidate-skills/candidate-skills.component';
 import { MainLayoutComponent } from './features/candidate-career-profile/main-layout/main-layout.component';
+import { CandidateApplicationComponent } from './features/candidate-page/pages/candidate-application/candidate-application.component';
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: 'login', component: LoginPageComponent },
@@ -57,6 +58,7 @@ const routes: Routes = [
       // Auto-redirect /candidate to the dashboard or profile
       { path: '', redirectTo: 'career-profile', pathMatch: 'full' },
       { path: 'dashboard', component: CandidateDashboardComponent },
+      {path: 'application', component: CandidateApplicationComponent},
       // PARENT: The Career Profile Layout (Has the right-side progress bar)
       {
         path: 'career-profile',

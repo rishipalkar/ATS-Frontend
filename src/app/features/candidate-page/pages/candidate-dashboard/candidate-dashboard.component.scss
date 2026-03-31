@@ -285,3 +285,254 @@
     position: static;
   }
 }
+/* --- EVENT SECTION --- */
+.event-section {
+  margin-top: 24px;
+  
+  /* "Events on Selected Date" Header */
+  h4 {
+    font-size: 1rem;
+    font-weight: 400;
+    color: #334155; 
+    margin-bottom: 16px;
+    letter-spacing: 0.01em;
+  }
+}
+
+/* --- EVENT CARD --- */
+/* =========================
+   EVENTS SECTION
+   ========================= */
+.events-container {
+  margin-top: 20px;
+  padding: 16px;
+  background: #ffffff;
+  border-radius: 10px;
+  border: 1px solid #e2e8f0;
+}
+
+/* HEADER */
+.section-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #1e293b;
+  margin-bottom: 12px;
+}
+
+/* EMPTY STATE */
+.no-events {
+  font-size: 0.9rem;
+  color: #94a3b8;
+  text-align: center;
+  padding: 20px;
+}
+
+/* =========================
+   EVENT CARD
+   ========================= */
+.event-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  padding: 14px;
+  margin-bottom: 10px;
+
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+  background: #f8fafc;
+
+  transition: all 0.2s ease;
+
+  &:hover {
+    background: #f1f5f9;
+    border-color: #3b82f6;
+    transform: translateY(-1px);
+  }
+}
+
+/* LEFT DOT */
+.event-dot {
+  width: 10px;
+  height: 10px;
+  background: #3b82f6;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+/* CONTENT */
+.event-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.event-title {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #1e293b;
+  margin: 0;
+}
+
+.event-time {
+  font-size: 0.8rem;
+  color: #64748b;
+  margin-top: 2px;
+}
+
+/* 1. ANIMATIONS */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(20px) scale(0.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* =========================
+   BACKDROP (GLASS EFFECT)
+   ========================= */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+
+  backdrop-filter: blur(8px);
+  background: rgba(15, 23, 42, 0.5);
+
+  z-index: 1000;
+}
+
+/* =========================
+   MODAL CONTAINER
+   ========================= */
+.job-modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  width: 700px;
+  max-height: 85vh;
+
+  background: #ffffff;
+  border-radius: 14px;
+  padding: 24px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  overflow: hidden;
+  z-index: 1001;
+
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+}
+
+/* =========================
+   HEADER
+   ========================= */
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  border-bottom: 1px solid #e2e8f0;
+  padding-bottom: 12px;
+}
+
+.modal-header h2 {
+  font-size: 20px;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.close-btn {
+  background: transparent;
+  border: none;
+  font-size: 22px;
+  cursor: pointer;
+  color: #64748b;
+
+  transition: all 0.2s;
+}
+
+.close-btn:hover {
+  color: #ef4444;
+  transform: scale(1.1);
+}
+
+/* =========================
+   BODY SCROLL AREA
+   ========================= */
+.modal-body {
+  overflow-y: auto;
+  padding-right: 6px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+/* =========================
+   SECTION BLOCKS
+   ========================= */
+.section {
+  background: #f8fafc;
+  padding: 14px 16px;
+  border-radius: 10px;
+  border: 1px solid #e2e8f0;
+}
+
+.section h4 {
+  font-size: 13px;
+  font-weight: 700;
+  color: #334155;
+  margin-bottom: 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.section p {
+  font-size: 14px;
+  color: #475569;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* =========================
+   INFO GRID (TOP DETAILS)
+   ========================= */
+.section:first-child {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  background: #f1f5f9;
+}
+
+.section:first-child p {
+  font-size: 13px;
+}
+
+/* =========================
+   SKILL TAGS (OPTIONAL UPGRADE)
+   ========================= */
+.skill-chip {
+  display: inline-block;
+  background: #e0f2fe;
+  color: #0369a1;
+  font-size: 12px;
+  padding: 4px 8px;
+  border-radius: 6px;
+  margin: 2px;
+}
+
+/* =========================
+   LOADING STATE
+   ========================= */
+.loading {
+  text-align: center;
+  padding: 30px;
+  font-size: 14px;
+  color: #64748b;
+}

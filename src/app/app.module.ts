@@ -51,6 +51,8 @@ import { CandidateProjectsComponent } from './features/candidate-career-profile/
 // import { CandidateCareerProfileComponent } from './features/candidate-career-profile/candidate-career-profile.component';
 import { MainLayoutComponent } from './features/candidate-career-profile/main-layout/main-layout.component';
 import { CommonModule } from '@angular/common';
+import { CandidateApplicationComponent } from './features/candidate-page/pages/candidate-application/candidate-application.component';
+// import { CandidateApplicationComponent } from './core/features/candidate-page/pages/candidate-application/candidate-application.component';
 // import { CandidatePersonlDetailsComponent } from './core/features/candidate-career-profile/candidate-personl-details/candidate-personl-details.component';
 @NgModule({
   declarations: [
@@ -84,6 +86,7 @@ import { CommonModule } from '@angular/common';
     CandidateEducationComponent,
     CandidateProjectsComponent,
     MainLayoutComponent,
+    CandidateApplicationComponent,
     // CandidatePersonlDetailsComponent,
   ],
   imports: [

@@ -82,6 +82,15 @@ export class RecruiterDashboardComponent implements OnInit {
   this.selectedJobDetails = null;
 }
 
+// Replace your existing getJobStatus method with this simpler one:
+getJobStatus(status: string | undefined): string {
+  // If no status is provided, default to OPEN or handle as needed
+  if (!status) return 'OPEN';
+  
+  // Return the backend's status, ensuring it's uppercase for UI consistency
+  return status.toUpperCase();
+}
+
 goToCreateJob() {
   // Do some logic here...
   this.router.navigate(['recruiter/create-job']);

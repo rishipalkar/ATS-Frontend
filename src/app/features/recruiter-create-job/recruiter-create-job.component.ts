@@ -24,15 +24,16 @@ export class CreateJobComponent implements OnInit {
   ) {
     this.jobForm = this.fb.group({
       // Step 1: JD Fields
-      jobTitle: ['', Validators.required],
+      // jobTitle: ['', Validators.required],
+      createdBy: ['a6ae0232-e6a2-4877-8ff8-72ed38e1e49b'],
       jobRole: ['', Validators.required],
       skills: ['', Validators.required],
+      jobDescription: ['', Validators.required],
       challenges: [''],
       benefits: [''],
       culture: [''],
 
       // Step 2: Security & Hiring Details
-      rolePosition: ['', Validators.required],
       openingsCount: [1, [Validators.required, Validators.min(1)]],
       workModel: ['On-site', Validators.required],
       workLocation: ['', Validators.required],
@@ -43,6 +44,7 @@ export class CreateJobComponent implements OnInit {
       minExperience: ['', Validators.required],
       grossPackage: ['', Validators.required],
       joiningPeriod: ['', Validators.required],
+      jobExpiryDate: ['', Validators.required],
       maxAge: [''], // Optional
     });
   }
@@ -78,11 +80,53 @@ export class CreateJobComponent implements OnInit {
     }, 1200);
   }
 
+  private buildCreateJobPayload(): any {
+  const form = this.jobForm.value;
+
+  // Optional: Ensure the date is in a full ISO format if your backend requires it
+  let formattedExpiryDate = form.jobExpiryDate;
+  if (formattedExpiryDate && !formattedExpiryDate.includes('T')) {
+    // Appends time to make it a valid ISO string format if it's just 'YYYY-MM-DD'
+    formattedExpiryDate = `${formattedExpiryDate}T23:59:59.000Z`; 
+  }
+
+  return {
+    createdBy: form.createdBy,
+    rolePosition: form.jobRole,
+    numberOfOpenings: Number(form.openingsCount) || 1, // Cast to Number
+    workModel: form.workModel,
+    workLocation: form.workLocation,
+    workHoursStart: form.workHoursStart,
+    workHoursEnd: form.workHoursEnd,
+    isShiftDuty: form.isShiftDuty,
+    isRotationalShift: false,
+    requiredEducation: form.requiredEducation,
+    
+    // Cast string inputs to Numbers to match your Postman payload
+    minExperienceYears: Number(form.minExperience) || 0,
+    joiningPeriodDays: Number(form.joiningPeriod) || 0,
+    
+    // Handle optional fields: send null instead of "" so the backend integer validation doesn't fail
+    maxAgeYears: form.maxAge ? Number(form.maxAge) : null,
+    
+    jobDescription: form.jobDescription,
+    requiredSkills: form.skills,
+    preferredSkills: '',
+    responsibilities: '',
+    challenges: form.challenges,
+    benefitsWorkCulture: `${form.benefits} ${form.culture}`.trim(),
+    jobExpiryDate: formattedExpiryDate
+  };
+}
+
  onSubmit() {
     if (this.jobForm.valid) {
       this.isPublishing = true; // Disable button and show loading text
       
-      this.jobService.createJob(this.jobForm.value).subscribe({
+      const payload = this.buildCreateJobPayload();
+      console.log(payload);
+
+      this.jobService.createJob(payload).subscribe({
         next: (response) => {
           console.log('Job Successfully Created:', response);
           alert('Job Successfully Published!');

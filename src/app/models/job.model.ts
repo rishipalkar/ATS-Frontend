@@ -75,6 +75,30 @@ export interface JobDetails {
   structuredJdData: any | null; 
   parsedJd: any | null; 
   status: string;
+  jobExpiryDate: string;
   createdAt: string;
   updatedAt: string;
+}
+
+export interface CreateJobRequest {
+  createdBy: string;
+  rolePosition: string;
+  numberOfOpenings: number;
+  workModel: string;
+  workLocation: string;
+  workHoursStart: string;
+  workHoursEnd: string;
+  isShiftDuty: boolean;
+  isRotationalShift: boolean;
+  requiredEducation: string;
+  minExperienceYears: number;
+  joiningPeriodDays: number;
+  maxAgeYears?: number;
+  jobDescription: string;
+  requiredSkills: string;
+  preferredSkills?: string;
+  responsibilities?: string;
+  challenges?: string;
+  benefitsWorkCulture?: string;
+  jobExpiryDate: string;
 }

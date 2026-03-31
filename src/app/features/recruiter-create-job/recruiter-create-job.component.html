@@ -65,21 +65,25 @@
 
       <div class="form-section">
         <div class="row">
-          <div class="field">
+          <!-- <div class="field">
             <span>Job Title</span>
             <input
               formControlName="jobTitle"
               placeholder="e.g. Frontend Developer"
             />
-          </div>
+          </div> -->
           <div class="field">
-            <span>Job Category/Role</span>
+            <span>Job Title/Role</span>
             <input formControlName="jobRole" placeholder="e.g. Engineering" />
           </div>
         </div>
         <div class="field">
           <span>Required Skills & Certifications</span>
           <textarea formControlName="skills" rows="3"></textarea>
+        </div>
+        <div class="field">
+          <span>Job Description</span>
+          <textarea formControlName="jobDescription" rows="2"></textarea>
         </div>
         <div class="field">
           <span>Key Challenges</span>
@@ -109,15 +113,16 @@
         <label>Work Parameters</label>
         <div class="row">
           <div class="field">
-            <span>Role / Position</span>
-            <input
-              formControlName="rolePosition"
-              placeholder="e.g. Lead Engineer"
-            />
-          </div>
-          <div class="field">
             <span>Number of Openings</span>
             <input type="number" formControlName="openingsCount" />
+          </div>
+
+          <div class="field">
+            <span>Shift Duty Required?</span>
+            <select formControlName="isShiftDuty">
+              <option [ngValue]="false">No</option>
+              <option [ngValue]="true">Yes</option>
+            </select>
           </div>
         </div>
 
@@ -167,17 +172,6 @@
             </select>
           </div>
         </div>
-
-        <div class="row">
-          <div class="field">
-            <span>Shift Duty Required?</span>
-            <select formControlName="isShiftDuty">
-              <option [ngValue]="false">No</option>
-              <option [ngValue]="true">Yes</option>
-            </select>
-          </div>
-          <div></div> 
-        </div>
       </div>
 
       <div class="form-section">
@@ -214,9 +208,15 @@
             />
           </div>
         </div>
-        <div class="field">
-          <span>Max Age (Years) - Optional</span>
-          <input type="number" formControlName="maxAge" />
+        <div class="row">
+          <div class="field">
+            <span>Max Age (Years) - Optional</span>
+            <input type="number" formControlName="maxAge" />
+          </div>
+          <div class="field">
+            <span>Job Expiry Date</span>
+            <input type="date" formControlName="jobExpiryDate" />
+          </div>
         </div>
       </div>
 

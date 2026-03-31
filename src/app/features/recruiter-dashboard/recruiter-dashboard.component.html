@@ -81,8 +81,8 @@
         <div class="card-header">
           <h3>{{ job.rolePosition }}</h3>
           
-          <span class="badge" [class.urgent]="job.status.toUpperCase() === 'URGENT'">
-            {{ job.status }}
+          <span class="badge" [class.urgent]="getJobStatus(job.status) === 'URGENT'">
+            {{ getJobStatus(job.status) }}
           </span>
         </div>
         
@@ -182,9 +182,7 @@
       <div class="popup-header">
         <div class="title-group">
           <h2>{{ selectedJobDetails.rolePosition }}</h2>
-          <span class="badge" [class.urgent]="selectedJobDetails.status === 'URGENT'">
-            {{ selectedJobDetails.status }}
-          </span>
+          <span>{{ getJobStatus(selectedJobDetails.status) }}</span>
         </div>
         <button class="btn-close" (click)="closeModal()" aria-label="Close Pop-up">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">

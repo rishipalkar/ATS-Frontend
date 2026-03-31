@@ -6,7 +6,7 @@ import { EventResponse } from 'src/app/models/event.model';
 // ✅ Match backend response
 import { JobPosting } from 'src/app/models/job.model'; // ✅ Match backend response
 import { JobsDetailsService } from 'src/app/services/job-details.service';
-import { JobDetailsResponse } from 'src/app/models/job-details.model';
+import { JobDetailsResponse } from 'src/app/models/job.model';
 @Component({
   selector: 'app-candidate-dashboard',
   templateUrl: './candidate-dashboard.component.html',
